@@ -144,6 +144,8 @@ public final class Control {
 	public final OptionsVarh varh;
 	public final OptionsValh valh;
 
+	public final OptionsRobust robust; //Jheisson Lopez -> Options to control the robust solutions search
+
 	public final OptionsExtraction extraction;
 
 	public Control(String controlFilename) {
@@ -172,6 +174,8 @@ public final class Control {
 		this.revh = new OptionsRevh();
 		this.varh = new OptionsVarh();
 		this.valh = new OptionsValh();
+		/*** Jheisson Lopez -> Initialization of Robust Options***/
+		this.robust = new OptionsRobust();
 
 		this.extraction = new OptionsExtraction();
 
@@ -704,6 +708,15 @@ public final class Control {
 		public boolean restartAfterSolution = addB("restartAfterSolution", "ras", false, "Must we restart every time a solution is found?");
 		public final boolean luby = addB("luby", "", false, "Must we use a Luby series instead of a geometric one?");
 		public final int solRunLimit = addI("solRunLimit", "srl", 10, "Limit on the number of solutions at each run");
+	}
+
+	/*** Jheisson Lopez -> Definition of Robust Options***/
+	public class OptionsRobust extends OptionGroup {
+		public final int ors = addI("ors", "ors", 0, "The desired ORS (0 for SORS or 1 for LORS)");
+		public final String robustVars = addS("robustVars", "robvars", "", "string with the list of vars requiring robustness");
+		public final int k = addI("k", "k", 1, "The desired number of backup values greater than");
+		public final int h = addI("h", "h", 0, "The desired number of backup values lower than");
+		public final int offset = addI("offset", "offset", 1, "The distance between the neighbours");
 	}
 
 	public class OptionsLNS extends OptionGroup {

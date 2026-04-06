@@ -20,16 +20,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.w3c.dom.Document;
@@ -60,6 +54,8 @@ import utility.Kit;
 import utility.Kit.Color;
 import utility.Reflector;
 import utility.Stopwatch;
+import variables.TimeRobustDomain;
+import variables.Variable;
 
 /**
  * This is the class of the main object (head) in charge of solving a problem instance.
@@ -406,6 +402,46 @@ public class Head extends Thread {
 			return (Problem) Kit.exit("The class " + Input.problemName + " cannot be found.", e);
 		}
 		this.problem = new Problem(api, control.problem.variant, control.problem.data, "", false, Input.argsForProblem, this);
+
+		/***************************************************************************************************************
+		 * Jheisson Lopez
+		 * We are setting the problem to be able to provide the ORS in the indicated variables
+		 * *************************************************************************************************************/
+		if (!control.robust.robustVars.equals("")){
+			ArrayList<Variable> robVars = new ArrayList<>();
+			if(control.robust.robustVars.startsWith("match")){
+				String match = control.robust.robustVars.split("-")[1];
+				ArrayList<Variable> vars = (ArrayList) Arrays.stream(this.problem.variables).filter(variable -> variable.id().startsWith(match)).collect(Collectors.toList());
+				for(Variable v : vars){
+					v.robustnessInvolved = true;
+					robVars.add(v);
+				}
+			}else {
+				String[] allvarsIDs = control.robust.robustVars.split(",");
+				for (String varID : allvarsIDs) {
+					ArrayList<Variable> vars = (ArrayList) Arrays.stream(this.problem.variables).filter(variable -> variable.id().equals(varID)).collect(Collectors.toList());
+					if (vars.size() > 1)
+						System.out.println("Imposible error become possible: several variables with the same ID");
+					vars.get(0).robustnessInvolved = true;
+					robVars.add(vars.get(0));
+				}
+			}
+			this.problem.scpRobustness = new Variable[robVars.size()];
+			for(int j =0; j < robVars.size(); j++){
+				this.problem.scpRobustness[j] = robVars.get(j);
+			}
+		}
+
+		int offset = control.robust.offset;
+		int k = control.robust.k;
+		int h = control.robust.h;
+		Arrays.stream(problem.variables).forEach(v->{
+			if(v.robustnessInvolved) {
+				v.robustDomain = new TimeRobustDomain(v, v.dom.size(), k, h, offset);
+			}
+		});
+		/***************************************************************************************************************/
+
 		for (ObserverOnConstruction obs : observersConstruction) {
 			obs.afterProblemConstruction(this.problem.variables.length);
 		}

@@ -91,10 +91,8 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 		 *            the problem to which the integer variable is attached
 		 * @param id
 		 *            the id (name) of the variable
-		 * @param interval
-		 *            the interval of values of the domain
 		 */
-		public VariableInteger(Problem problem, String id, int minValue, int maxValue) {
+		public VariableInteger(Problem problem, String id, int minValue, int maxValue) { /** minValue and maxValue define an interval **/
 			super(problem, id);
 			this.dom = DomainRange.buildDomainRange(this, minValue, maxValue);
 		}
@@ -162,6 +160,9 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 	@Override
 	public void restoreBefore(int depth) {
 		dom.restoreBefore(depth);
+		/** Jheisson Lopez - Return the robust domain to the corresponding state **/
+		//if(robustnessInvolved)
+		//	robustDomain.backtrackTo(depth);
 	}
 
 	@Override
@@ -561,6 +562,12 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 	 */
 	public Domain dom;
 
+	/** Jheisson Lopez - Extra domain for robustness **/
+	public TimeRobustDomain robustDomain;
+
+	/** Jheisson Lopez - Flag to recognize when a variable is requiring robustness **/
+	public boolean robustnessInvolved = false;
+
 	/**
 	 * The number of the variable. This is an integer between 0 and n-1, where n is the number of variables in the constraint network.
 	 */
@@ -801,6 +808,9 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 	public final void assign(int a) {
 		assert !assigned() && dom.contains(a) : assigned() + " " + dom.contains(a);
 		dom.reduceToElementary(a);
+		///** Jheisson Lopez - Being sure that robust domain reflects assignment **/
+		//if(robustnessInvolved)
+		//	robustDomain.isolateRobustAssignment();
 		assignmentLevel = problem.solver.depth(); // keep at this position
 		for (Constraint c : ctrs)
 			c.doPastVariable(this);

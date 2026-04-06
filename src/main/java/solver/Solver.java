@@ -24,14 +24,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -64,6 +58,8 @@ import utility.Kit;
 import utility.Profiler;
 import utility.Profiler.ProfilerFake;
 import utility.Profiler.ProfilerReal;
+import utility.SolutionChecker;
+import utility.SolutionTracker;
 import variables.Domain;
 import variables.DomainFinite.DomainFiniteSpecial;
 import variables.DomainInfinite;
@@ -753,6 +749,35 @@ public class Solver implements ObserverOnBacktracksSystematic {
 
 	public final Profiler profiler;
 
+	public class SolverTracker {
+		// Map: Level -> Set of Variables modified at that level
+		private final Map<Integer, Set<Variable>> modifiedAtLevel = new HashMap<>();
+
+		/**
+		 * Called by TimeRobustDomain whenever a 'clearShadowBit' occurs
+		 * for the first time at a new level.
+		 */
+		public void markAsModified(Variable var, int level) {
+			modifiedAtLevel.computeIfAbsent(level, k -> new HashSet<>()).add(var);
+		}
+
+		/**
+		 * Returns the variables that need restoration for a specific level.
+		 */
+		public Set<Variable> getModified(int level) {
+			return modifiedAtLevel.getOrDefault(level, Collections.emptySet());
+		}
+
+		/**
+		 * Clears the set for a level once backtracking is complete.
+		 */
+		public void clearLevel(int level) {
+			modifiedAtLevel.remove(level);
+		}
+	}
+
+	public SolverTracker solverTracker = new SolverTracker();
+
 	/**
 	 * @return true if after full exploration of the search space no solution has been found
 	 */
@@ -1027,7 +1052,14 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		for (ObserverOnDecisions observer : observersOnDecisions)
 			observer.beforeNegativeDecision(x, a);
 		decisions.addNegativeDecision(x, a);
-		x.dom.removeElementary(a);
+
+		// --- CASE 2 REFUTATION ---
+		if (x.robustnessInvolved) {
+			x.robustDomain.removeAsBaseOnly(a, depth()); // Keep in shadow, remove from choices
+		} else {
+			x.dom.removeElementary(a);
+		}
+
 		nRemovalsJustAfterRefutation = problem.nValueRemovals;
 
 		boolean consistent = x.dom.size() > 0;
@@ -1057,13 +1089,32 @@ public class Solver implements ObserverOnBacktracksSystematic {
 	 */
 	private void manageContradiction(ConstraintGlobal oc) {
 		for (boolean consistent = false; !consistent && stopping != Stopping.FULL_EXPLORATION;) {
+			int currentLevel = depth();
 			Variable x = futVars.lastPast();
 			if (x == lastPastBeforeRun[nRecursiveRuns - 1] && !head.control.lns.enabled)
 				stopping = Stopping.FULL_EXPLORATION;
 			else {
+				// 2. Get the set of variables that were modified at this specific level
+				Set<Variable> changedVars = solverTracker.getModified(currentLevel);
+				if (changedVars != null) {
+					for (Variable var : changedVars) {
+						// 3. Tell the Virtual Domain to restore its bitset
+						// This will internally call updateRobustness()
+						var.robustDomain.backtrackTo(currentLevel-1);
+					}
+					// 4. Clear the tracker for this level so it's fresh for the next branch
+					solverTracker.clearLevel(currentLevel);
+				}
 				int a = x.dom.single();
 				backtrack(x);
-				consistent = x.dom.size() == 1 ? false : tryRefutation(x, a) && propagation.propagate(oc);
+				// 3. LOGIC GUARD: Only try refutation if 'a' is a valid value (not -1)
+				if (a != -1) {
+					consistent = x.dom.size() == 1 ? false : tryRefutation(x, a) && propagation.propagate(oc);
+				} else {
+					// If a was -1, the domain was already broken.
+					// We don't refute; the loop will continue to the next 'lastPast'.
+					consistent = false;
+				}
 			}
 		}
 	}
@@ -1078,6 +1129,12 @@ public class Solver implements ObserverOnBacktracksSystematic {
 			while (!foundSolution && !finished() && !restarter.currRunFinished()) {
 				maxDepth = Math.max(maxDepth, depth());
 				Variable x = heuristic.bestVariable();
+				if(x == Variable.TAG &&
+						!(Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation())  &&
+								Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRGC(depth()))) )
+							x = futVars.first();
+
+
 				if (x == Variable.TAG) { // meaning all variables are fixed
 					assert Stream.of(problem.variables).allMatch(y -> y.dom.size() == 1);
 					assert Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation());
@@ -1100,8 +1157,9 @@ public class Solver implements ObserverOnBacktracksSystematic {
 					int a = x.heuristic.bestValueIndex();
 					profiler.afterSelectingValue();
 					boolean consistent = tryAssignment(x, a, false);
-					if (consistent == false)
+					if (consistent == false) {
 						manageContradiction(null);
+					}
 					else if (futVars.size() == 0)
 						foundSolution = true; // break;
 				}
@@ -1181,8 +1239,14 @@ public class Solver implements ObserverOnBacktracksSystematic {
 	public final Solver doRun() {
 		lastPastBeforeRun[nRecursiveRuns++] = futVars.lastPast();
 		explore();
-		if (stopping != REACHED_GOAL || head instanceof HeadExtraction)
-			backtrackTo(lastPastBeforeRun[--nRecursiveRuns]);
+		Variable v = lastPastBeforeRun[--nRecursiveRuns];
+		backtrackTo(v);
+		for(Variable var : this.problem.scpRobustness) {
+			if(Objects.isNull(v))
+				var.robustDomain.backtrackTo(0);
+			else
+				var.robustDomain.backtrackTo(v.assignmentLevel);
+		}
 		return this;
 	}
 
@@ -1236,20 +1300,3 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		assert Stream.of(problem.variables).allMatch(x -> x.dom.controlStructures());
 	}
 }
-
-// boolean b = restarter.numRun % diviser == 0;
-// if (restarter.numRun % 20 == 0)
-// diviser++;
-// // if (b) {
-// Domain.setMarks(pb.variables);
-// if (solManager.found > 0) {
-// SumSimpleLE c = (SumSimpleLE) pb.optimizer.ctr;
-// Variable x = c.mostImpacting();
-// int v = x.dom.toVal(solManager.lastSolution[x.num]);
-// x.dom.removeValuesGE(v);
-// System.out.println("ccccc most " + x + " " + x.dom.toVal(solManager.lastSolution[x.num]));
-// }
-// }
-
-// if (b)
-// Domain.restoreAtMarks(pb.variables);

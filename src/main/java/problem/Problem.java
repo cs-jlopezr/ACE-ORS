@@ -446,6 +446,9 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 	 */
 	public Variable[] variables;
 
+	/** Jheisson Lopez - Robustness scope **/
+	public Variable[] scpRobustness;
+
 	/**
 	 * The set of constraints of the problem, in the order they have been defined (posted).
 	 */

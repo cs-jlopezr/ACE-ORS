@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -56,6 +57,7 @@ import sets.SetDense;
 import utility.Kit;
 import variables.Domain;
 import variables.DomainInfinite;
+import variables.TimeRobustDomain;
 import variables.Variable;
 
 /**
@@ -831,6 +833,11 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 						long coeff = coeffs[i];
 						long vmin = coeff * (coeff >= 0 ? dom.firstValue() : dom.lastValue());
 						long vmax = coeff * (coeff >= 0 ? dom.lastValue() : dom.firstValue());
+						//if (scp[i].robustnessInvolved){
+						//	TimeRobustDomain trdom = scp[i].robustDomain;
+						//	vmin = coeff * (coeff >= 0 ? trdom.firstValue() : trdom.lastValue());
+						//	vmax = coeff * (coeff >= 0 ? trdom.lastValue() : trdom.firstValue());
+						//}
 						if (dom.size() == 1) {
 							minSing += vmin;
 							maxSing += vmax;
@@ -848,6 +855,11 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 						long coeff = coeffs[i];
 						long vmin = coeff * (coeff >= 0 ? dom.firstValue() : dom.lastValue());
 						long vmax = coeff * (coeff >= 0 ? dom.lastValue() : dom.firstValue());
+						//if (scp[i].robustnessInvolved){
+						//	TimeRobustDomain trdom = scp[i].robustDomain;
+						//	vmin = coeff * (coeff >= 0 ? trdom.firstValue() : trdom.lastValue());
+						//	vmax = coeff * (coeff >= 0 ? trdom.lastValue() : trdom.firstValue());
+						//}
 						if (dom.size() == 1) {
 							minSing += vmin;
 							maxSing += vmax;
@@ -867,6 +879,11 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 					long coeff = coeffs[i];
 					min += coeff * (coeff >= 0 ? dom.firstValue() : dom.lastValue());
 					max += coeff * (coeff >= 0 ? dom.lastValue() : dom.firstValue());
+					//if (scp[i].robustnessInvolved){
+					//	TimeRobustDomain trdom = scp[i].robustDomain;
+					//	min += coeff * (coeff >= 0 ? trdom.firstValue() : trdom.lastValue());
+					//	max += coeff * (coeff >= 0 ? trdom.lastValue() : trdom.firstValue());
+					//}
 				}
 			}
 		}
@@ -1092,6 +1109,10 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 				return ac && !degraded;
 			}
 
+			int h = this.problem.head.control.robust.h;
+			int k = this.problem.head.control.robust.k;
+			int offset = this.problem.head.control.robust.offset;
+
 			@Override
 			public boolean runPropagator(Variable x) {
 				if (problem.solver.justLastRefutedVariable())
@@ -1104,22 +1125,53 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 				boolean useless = min + maxGap <= limit && limit <= max - maxGap;
 				// if (!degraded || Variable.nValidValuesFor(scp) <= RUNNING_LIMIT)
 				if (futvars.size() > 0 && !useless) {
+					boolean isRobust = true;
+					for (Variable v : scp) {
+						if (v.robustnessInvolved && !v.robustDomain.isRobust()) {
+							isRobust = false;
+							break; // Stop immediately on first failure!
+						}
+					}
 					int lastModified = futvars.limit, i = futvars.limit;
+					// Pre-calculate these once in the constructor of your propagator
+					// or pass them in so we don't do multiplication in the loop.
+					long maxKShift = k * offset;
+					long maxHShift = h * offset;
+
 					do {
 						Domain dom = scp[futvars.dense[i]].dom;
 						int sizeBefore = dom.size();
+
 						if (sizeBefore > 1) {
 							long coeff = coeffs[futvars.dense[i]];
+
+							// 1. Standard CP domain contribution
 							min -= coeff * (coeff >= 0 ? dom.firstValue() : dom.lastValue());
 							max -= coeff * (coeff >= 0 ? dom.lastValue() : dom.firstValue());
-							if (dom.removeValues(LT, limit - max, (int) coeff) == false || dom.removeValues(GT, limit - min, (int) coeff) == false)
+
+							long currentMinPruneBound = limit - max;
+							long currentMaxPruneBound = limit - min;
+
+							// 2. Apply Slack ONLY for the Auxiliary variable (No loops!)
+							if (scp[futvars.dense[i]].id().contains("_ax_") && isRobust) {
+								currentMinPruneBound -= maxKShift;
+								currentMaxPruneBound += maxHShift;
+							}
+
+							// 3. Prune using the adjusted bounds
+							if (dom.removeValues(LT, currentMinPruneBound, (int) coeff) == false ||
+									dom.removeValues(GT, currentMaxPruneBound, (int) coeff) == false) {
 								return false;
+							}
+
 							if (sizeBefore != dom.size())
 								lastModified = i;
+
+							// 4. Add the standard CP contribution back
 							min += coeff * (coeff >= 0 ? dom.firstValue() : dom.lastValue());
 							max += coeff * (coeff >= 0 ? dom.lastValue() : dom.firstValue());
 						}
-						i = i > 0 ? i - 1 : futvars.limit; // cyclic iteration
+						i = i > 0 ? i - 1 : futvars.limit;
 					} while (lastModified != i);
 				}
 				assert controlFCLevel();

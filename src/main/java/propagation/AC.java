@@ -940,12 +940,12 @@ public class AC extends Forward {
 		// was already singleton (no removed value at the current depth) and AC was already guaranteed.
 		// TODO : the control could be more precise? (is there a constraint for which there is a problem to have
 		// explicitly one less future variable?)
-		if (getClass() != AC.class || x.dom.lastRemovedLevel() == solver.depth() || !hasSolverPropagatedAfterLastButOneDecision() || nNotAC > 0
-				|| x.specialServant != null) {
+		//if (getClass() != AC.class || x.dom.lastRemovedLevel() == solver.depth() || !hasSolverPropagatedAfterLastButOneDecision() || nNotAC > 0
+		//		|| x.specialServant != null) {
 			queue.add(x);
 			if (propagate() == false)
 				return false;
-		}
+		//}
 		assert controlAC(true);
 		// return fvbc != null ? fvbc.enforce() : true;
 		return true;
