@@ -191,8 +191,8 @@ public final class Control {
 			org.xcsp.modeler.Compiler.ev = true;
 		if (general.noPrintColors)
 			Kit.useColors = false;
-		// if (framework == TypeFramework.MAXCSP) optimization.lb = 0L;
-		if (general.runRobin) {
+
+		if (Input.argsForSolving.get("varh") == null && general.runRobin.length() > 0) {
 			varh.clazz = "RunRobin";
 			valh.clazz = "RunRobin";
 			if (valh.solutionSavingStart == -1)
@@ -442,7 +442,7 @@ public final class Control {
 		public final int satisfactionLimit = addI("satisfactionLimit", "satl", PLUS_INFINITY_INT, "Converting the objective into a constraint with this limit");
 		public final long seed = addL("seed", "seed", 0, "The seed that can be used for some random-based methods.");
 		public int verbose = addI("verbose", "v", 0, "Verbosity level (value between -1 and 3)" + s_verbose);
-		public final boolean runRobin = addB("runRobin", "rr", false, "Using a Run Robin search strategy");
+		public final String runRobin = addS("runRobin", "rr", "pwfc", "Mode of a Run Robin search strategy (empty string if none)");
 		public final boolean profiling = addB("profiling", "prof", false, "Using some very basic profiling information?");
 	}
 
@@ -616,6 +616,7 @@ public final class Control {
 		public final int noOverlapRedundLimit = addI("noOverlapRedundLimit", "g_nor", 10, "Arity limit for posting redundant constraints for NoOverlap?");
 		public final int binpacking = addI("binpacking", "g_bp", 0, "Algorithm for BinPacking");
 		public final int cardinality = addI("cardinality", "g_card", 0, "Algorithm for Cardinality");
+		public final int knapsack = addI("knapsack", "g_kna", 0, "Algorithm for Knapsack");
 
 		public final boolean binpackingEnergetic = addB("binpackingEnergetic", "g_bpe", true, "Must we use energectic reasoning for BinPacking");
 		public final boolean binpackingRedun = addB("binpackingRedun", "g_bpr", false, "Redundant constraints for for BinPacking");
@@ -660,6 +661,8 @@ public final class Control {
 		public boolean strongOnce = addB("strongOnce", "so", false, "Must we only apply the strong consistency (if chosen) before search?");
 		public final boolean strongAC = addB("strongAC", "sac", false, "Must we only apply the strong consistency (if chosen) when AC is effective?");
 		public final boolean justRefuted = addB("justRefuted", "jr", false, "Must we try to improve performances by exploiting just refuted variables?");
+
+		public final int apGap = addI("apGap", "apgap", 60, "");
 	}
 
 	public class OptionsShaving extends OptionGroup {
@@ -769,7 +772,7 @@ public final class Control {
 
 		public final int solutionPreserving = addI("solutionPreserving", "sop", 0, "Percentage of the last solution preserved (0: disabled)");
 
-		public final boolean impactless = addB("impactless", "impl", false, "Must we take into acvcounf impactless assignemnts?");
+		public final boolean impactless = addB("impactless", "impl", false, "Must we take into accounf impactless assignments?");
 	}
 
 	public class OptionsValh extends OptionGroup {
