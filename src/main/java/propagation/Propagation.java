@@ -23,8 +23,6 @@ import utility.Reflector;
 import variables.Domain;
 import variables.Variable;
 
-import java.util.HashMap;
-
 /**
  * The is the root class for any object used to manage constraint propagation. For simplicity, propagation and consistency concepts are not distinguished. So,
  * some subclasses are given the name of consistencies.
@@ -265,7 +263,7 @@ public abstract class Propagation {
 
 		// 2. Local Robustness Check
 		if (consistent && x.robustnessInvolved) {
-			consistent = x.robustDomain.checkVariableForRGC(solver.depth());
+			consistent = x.robustDomain.checkVariableForRC(solver.depth());
 		}
 
 		// 3. THE "ASSIGNED NEIGHBORS" CHECK
@@ -275,7 +273,7 @@ public abstract class Propagation {
 				// Only check if it's assigned and not the current variable
 				if (ngh.robustnessInvolved && ngh.assigned()) {
 					// If the assigned value is no longer a robust base, we FAIL
-					if (!ngh.robustDomain.checkVariableForRGC(solver.depth())) {
+					if (!ngh.robustDomain.checkVariableForRC(solver.depth())) {
 						return false;
 					}
 				}

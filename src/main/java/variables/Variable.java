@@ -563,7 +563,7 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 	public Domain dom;
 
 	/** Jheisson Lopez - Extra domain for robustness **/
-	public TimeRobustDomain robustDomain;
+	public RobustDomain robustDomain;
 
 	/** Jheisson Lopez - Flag to recognize when a variable is requiring robustness **/
 	public boolean robustnessInvolved = false;

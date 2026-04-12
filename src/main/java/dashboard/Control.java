@@ -720,6 +720,9 @@ public final class Control {
 		public final int k = addI("k", "k", 1, "The desired number of backup values greater than");
 		public final int h = addI("h", "h", 0, "The desired number of backup values lower than");
 		public final int offset = addI("offset", "offset", 1, "The distance between the neighbours");
+
+		public final String scheme = addS("scheme", "sSch", "", "string with the functions and predicates");
+		public final String rpolicy = addS("rpolicy", "rpolicy", "stride", "string with the functions and predicates");
 	}
 
 	public class OptionsLNS extends OptionGroup {

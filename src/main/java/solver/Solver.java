@@ -58,8 +58,6 @@ import utility.Kit;
 import utility.Profiler;
 import utility.Profiler.ProfilerFake;
 import utility.Profiler.ProfilerReal;
-import utility.SolutionChecker;
-import utility.SolutionTracker;
 import variables.Domain;
 import variables.DomainFinite.DomainFiniteSpecial;
 import variables.DomainInfinite;
@@ -1129,9 +1127,9 @@ public class Solver implements ObserverOnBacktracksSystematic {
 			while (!foundSolution && !finished() && !restarter.currRunFinished()) {
 				maxDepth = Math.max(maxDepth, depth());
 				Variable x = heuristic.bestVariable();
-				if(x == Variable.TAG &&
+				if(x == Variable.TAG && Objects.nonNull(problem.scpRobustness) &&
 						!(Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation())  &&
-								Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRGC(depth()))) )
+								Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()))) )
 							x = futVars.first();
 
 
@@ -1241,12 +1239,13 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		explore();
 		Variable v = lastPastBeforeRun[--nRecursiveRuns];
 		backtrackTo(v);
-		for(Variable var : this.problem.scpRobustness) {
-			if(Objects.isNull(v))
-				var.robustDomain.backtrackTo(0);
-			else
-				var.robustDomain.backtrackTo(v.assignmentLevel);
-		}
+		if(Objects.nonNull(this.problem.scpRobustness))
+			for(Variable var : this.problem.scpRobustness) {
+				if(Objects.isNull(v))
+					var.robustDomain.backtrackTo(0);
+				else
+					var.robustDomain.backtrackTo(v.assignmentLevel);
+			}
 		return this;
 	}
 

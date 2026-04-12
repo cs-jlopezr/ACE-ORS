@@ -57,7 +57,6 @@ import sets.SetDense;
 import utility.Kit;
 import variables.Domain;
 import variables.DomainInfinite;
-import variables.TimeRobustDomain;
 import variables.Variable;
 
 /**

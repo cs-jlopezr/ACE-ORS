@@ -10,7 +10,7 @@ import constraints.Constraint;
  * 2. Support Only: In aliveWords, but NOT in var.dom or baseWords (Case 2)
  * 3. Infeasible: Deleted from aliveWords - dead for everyone (Case 3)
  */
-public class TimeRobustDomain {
+public class TimeRobustDomain implements RobustDomain{
     private final Variable var;
     private final int n;            // Horizon
     private final int K;            // Forward sequence depth (successors)
@@ -54,46 +54,11 @@ public class TimeRobustDomain {
     }
 
     /**
-     * Calculates Robust Bases (Case 1) using bit-shifts on the Shadow Domain.
-     * Logic: Base = Alive AND (has K successors) AND (has H predecessors).
-     */
-    public void updateRobustness() {
-        // Forward reachability (K steps)
-        long[] hasAsc = aliveValues.clone();
-        for (int i = 0; i < K; i++) {
-            hasAsc = shiftAndIntersect(hasAsc, offset, true);
-        }
-
-        // Backward reachability (H steps)
-        long[] hasDesc = aliveValues.clone();
-        for (int i = 0; i < H; i++) {
-            hasDesc = shiftAndIntersect(hasDesc, offset, false);
-        }
-
-        // Combine: Update the current baseValues based on current physical aliveValues
-        for (int i = 0; i < baseValues.length; i++) {
-            baseValues[i] = aliveValues[i] & hasAsc[i] & hasDesc[i];
-        }
-    }
-
-    /**
-     * CASE 3: Physical Infeasibility.
-     * Called when a hard constraint is violated or a branch is dead.
-     * Kills the value as a potential base AND as a backup for others.
-     */
-    public void clearShadowBit(int val, int level) {
-        // 1. Ensure we have a backup
-        saveBeforeModification(level);
-
-        // 2. Modify: Clear the bit in the shadow
-        aliveValues[val >> 6] &= ~(1L << (val & 63));
-    }
-
-    /**
      * CASE 2: Consistent but not Robust (or Search-based Refutation).
      * Removes 'v' from the solver's domain (cannot be a solution),
      * but KEEPS it in the shadow (aliveWords) so it can still support neighbors.
      */
+    @Override
     public void removeAsBaseOnly(int v, int currentLevel) {
         // 1. Ensure we have a backup of the state prior to this level's changes
         saveBeforeModification(currentLevel);
@@ -105,7 +70,8 @@ public class TimeRobustDomain {
         baseValues[v >> 6] &= ~(1L << (v & 63));
     }
 
-    public boolean checkVariableForRGC(int currentLevel) {
+    @Override
+    public boolean checkVariableForRC(int currentLevel) {
 
         // --- 1. PRE-PROCESSING: Ensure Robustness is Fresh ---
         // We run the Shadow Sync first for EVERYONE.
@@ -166,6 +132,119 @@ public class TimeRobustDomain {
     }
 
     /**
+     * Restoration logic for backtracking.
+     */
+    @Override
+    public void backtrackTo(int targetLevel) {
+        int oldestAbandoned = -1;
+        int maxRemaining = -1; // Use your default initial level here (e.g., 0 or -1)
+
+        // A single pass to find BOTH metrics without stream overhead!
+        for (int lvl : history.keySet()) {
+            if (lvl >= targetLevel) {
+                if (oldestAbandoned == -1 || lvl < oldestAbandoned) {
+                    oldestAbandoned = lvl;
+                }
+            } else {
+                if (lvl > maxRemaining) {
+                    maxRemaining = lvl;
+                }
+            }
+        }
+
+        // 1. Restore BOTH bitsets from that snapshot (if it exists)
+        if (oldestAbandoned != -1) {
+            DomainState state = history.get(oldestAbandoned);
+            this.aliveValues = state.savedAlive.clone();
+            this.baseValues = state.savedBase.clone();
+            // Restored baseValues are already correct!
+        }
+
+        // 2. Cleanup the abandoned history
+        history.keySet().removeIf(lvl -> lvl >= targetLevel);
+
+        // 3. Reset the modification pointer to the actual last recorded level
+        this.lastModifiedLevel = maxRemaining;
+    }
+
+    /**
+     * A variable is robust if there is at least one value that satisfies
+     * the physical constraints (Shadow) AND the robustness requirements (Bases).
+     */
+    @Override
+    public boolean isRobust() {
+        for (long word : baseValues) {
+            if (word != 0) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns the smallest value currently in the Shadow Domain (aliveValues).
+     * Returns -1 if the shadow domain is empty.
+     */
+    @Override
+    public int firstValue() {
+        for (int i = 0; i < aliveValues.length; i++) {
+            if (aliveValues[i] != 0) {
+                return (i << 6) + Long.numberOfTrailingZeros(aliveValues[i]);
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the largest value currently in the Shadow Domain (aliveValues).
+     * Returns -1 if the shadow domain is empty.
+     */
+    @Override
+    public int lastValue() {
+        for (int i = aliveValues.length - 1; i >= 0; i--) {
+            if (aliveValues[i] != 0) {
+                // 63 - LeadingZeros gives the index of the highest set bit in the long
+                return (i << 6) + (63 - Long.numberOfLeadingZeros(aliveValues[i]));
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Calculates Robust Bases (Case 1) using bit-shifts on the Shadow Domain.
+     * Logic: Base = Alive AND (has K successors) AND (has H predecessors).
+     */
+    private void updateRobustness() {
+        // Forward reachability (K steps)
+        long[] hasAsc = aliveValues.clone();
+        for (int i = 0; i < K; i++) {
+            hasAsc = shiftAndIntersect(hasAsc, offset, true);
+        }
+
+        // Backward reachability (H steps)
+        long[] hasDesc = aliveValues.clone();
+        for (int i = 0; i < H; i++) {
+            hasDesc = shiftAndIntersect(hasDesc, offset, false);
+        }
+
+        // Combine: Update the current baseValues based on current physical aliveValues
+        for (int i = 0; i < baseValues.length; i++) {
+            baseValues[i] = aliveValues[i] & hasAsc[i] & hasDesc[i];
+        }
+    }
+
+    /**
+     * CASE 3: Physical Infeasibility.
+     * Called when a hard constraint is violated or a branch is dead.
+     * Kills the value as a potential base AND as a backup for others.
+     */
+    private void clearShadowBit(int val, int level) {
+        // 1. Ensure we have a backup
+        saveBeforeModification(level);
+
+        // 2. Modify: Clear the bit in the shadow
+        aliveValues[val >> 6] &= ~(1L << (val & 63));
+    }
+
+    /**
      * Core bit-shifter for O(N/64) neighbor checking.
      */
     private long[] shiftAndIntersect(long[] source, int delta, boolean forward) {
@@ -208,62 +287,10 @@ public class TimeRobustDomain {
         }
     }
 
-    /**
-     * Restoration logic for backtracking.
-     */
-    public void backtrackTo(int targetLevel) {
-        int oldestAbandoned = -1;
-        int maxRemaining = -1; // Use your default initial level here (e.g., 0 or -1)
-
-        // A single pass to find BOTH metrics without stream overhead!
-        for (int lvl : history.keySet()) {
-            if (lvl >= targetLevel) {
-                if (oldestAbandoned == -1 || lvl < oldestAbandoned) {
-                    oldestAbandoned = lvl;
-                }
-            } else {
-                if (lvl > maxRemaining) {
-                    maxRemaining = lvl;
-                }
-            }
-        }
-
-        // 1. Restore BOTH bitsets from that snapshot (if it exists)
-        if (oldestAbandoned != -1) {
-            DomainState state = history.get(oldestAbandoned);
-            this.aliveValues = state.savedAlive.clone();
-            this.baseValues = state.savedBase.clone();
-            // Restored baseValues are already correct!
-        }
-
-        // 2. Cleanup the abandoned history
-        history.keySet().removeIf(lvl -> lvl >= targetLevel);
-
-        // 3. Reset the modification pointer to the actual last recorded level
-        this.lastModifiedLevel = maxRemaining;
-    }
-
     // --- Bit Utilities ---
-    public boolean isBitSet(long[] words, int i) {
+    private boolean isBitSet(long[] words, int i) {
         if (i < 0 || i >= n) return false;
         return (words[i >> 6] & (1L << (i & 63))) != 0;
-    }
-
-    public void setBit(long[] words, int i) {
-        if (i >= 0 && i < n) words[i >> 6] |= (1L << (i & 63));
-    }
-
-    public long[] getBaseValues() { return baseValues; }
-
-    /**
-     * A variable is robust if there is at least one value that satisfies
-     * the physical constraints (Shadow) AND the robustness requirements (Bases).
-     */
-    public boolean isRobust() {
-        for (long word : baseValues) {
-            if (word != 0) return true;
-        }
-        return false;
     }
 
     private int nextSetBit(long[] words, int from) {
@@ -275,33 +302,6 @@ public class TimeRobustDomain {
             if (++u == words.length) return -1;
             word = words[u];
         }
-    }
-
-    /**
-     * Returns the smallest value currently in the Shadow Domain (aliveValues).
-     * Returns -1 if the shadow domain is empty.
-     */
-    public int firstValue() {
-        for (int i = 0; i < aliveValues.length; i++) {
-            if (aliveValues[i] != 0) {
-                return (i << 6) + Long.numberOfTrailingZeros(aliveValues[i]);
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Returns the largest value currently in the Shadow Domain (aliveValues).
-     * Returns -1 if the shadow domain is empty.
-     */
-    public int lastValue() {
-        for (int i = aliveValues.length - 1; i >= 0; i--) {
-            if (aliveValues[i] != 0) {
-                // 63 - LeadingZeros gives the index of the highest set bit in the long
-                return (i << 6) + (63 - Long.numberOfLeadingZeros(aliveValues[i]));
-            }
-        }
-        return -1;
     }
 
 }

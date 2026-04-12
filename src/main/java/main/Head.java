@@ -53,7 +53,9 @@ import solver.Solver;
 import utility.Kit;
 import utility.Kit.Color;
 import utility.Reflector;
+import utility.RobustUtils;
 import utility.Stopwatch;
+import variables.GraphRobustDomain;
 import variables.TimeRobustDomain;
 import variables.Variable;
 
@@ -432,14 +434,26 @@ public class Head extends Thread {
 			}
 		}
 
-		int offset = control.robust.offset;
-		int k = control.robust.k;
-		int h = control.robust.h;
-		Arrays.stream(problem.variables).forEach(v->{
-			if(v.robustnessInvolved) {
-				v.robustDomain = new TimeRobustDomain(v, v.dom.size(), k, h, offset);
-			}
-		});
+		if(!control.robust.scheme.equals("")){
+			RobustUtils.initializeSchema(control.robust.scheme);
+			RobustUtils.setPolicy(control.robust.rpolicy);
+
+			Arrays.stream(problem.variables).forEach(v->{
+				if(v.robustnessInvolved) {
+					v.robustDomain = new GraphRobustDomain(v, v.dom.size(), RobustUtils.h, RobustUtils.k);
+				}
+			});
+		}else{
+			int offset = control.robust.offset;
+			int k = control.robust.k;
+			int h = control.robust.h;
+			Arrays.stream(problem.variables).forEach(v->{
+				if(v.robustnessInvolved) {
+					v.robustDomain = new TimeRobustDomain(v, v.dom.size(), k, h, offset);
+				}
+			});
+		}
+
 		/***************************************************************************************************************/
 
 		for (ObserverOnConstruction obs : observersConstruction) {
