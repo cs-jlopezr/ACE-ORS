@@ -70,7 +70,7 @@ public class TimeRobustDomain implements RobustDomain{
         baseValues[v >> 6] &= ~(1L << (v & 63));
     }
 
-    @Override
+    /*@Override
     public boolean checkVariableForRC(int currentLevel) {
 
         // --- 1. PRE-PROCESSING: Ensure Robustness is Fresh ---
@@ -128,6 +128,78 @@ public class TimeRobustDomain implements RobustDomain{
             v = nextV;
         }
 
+        return true;
+    }*/
+
+    @Override
+    public boolean checkVariableForRC(int currentLevel) {
+        // --- 1. OPTIMIZED SHADOW SYNC (Bounds Only) ---
+        boolean shadowChanged = false;
+
+        // Push the Shadow Minimum inward
+        int sFirst = nextSetBit(aliveValues, 0);
+        // While we are in the 'Shadow' (not in physical domain)
+        while (sFirst != -1 && !var.dom.contains(sFirst)) {
+            if (!isGacSupported(sFirst)) {
+                clearShadowBit(sFirst, currentLevel);
+                shadowChanged = true;
+                sFirst = nextSetBit(aliveValues, sFirst + 1);
+            } else {
+                break; // Found the first supported shadow value
+            }
+        }
+
+        // Push the Shadow Maximum inward
+        int sLast = lastValue();
+        while (sLast != -1 && sLast > sFirst && !var.dom.contains(sLast)) {
+            if (!isGacSupported(sLast)) {
+                clearShadowBit(sLast, currentLevel);
+                shadowChanged = true;
+                sLast = lastValue();
+            } else {
+                break; // Found the last supported shadow value
+            }
+        }
+
+        // Only update robustness if boundaries moved
+        if (shadowChanged) {
+            updateRobustness();
+        }
+
+        // --- 1.5 & 2. WIPEOUT & ASSIGNMENT CHECK ---
+        if (var.dom.size() == 0) return false;
+
+        if (var.dom.size() == 1) {
+            // Still consistent: Assignment must be in refreshed baseValues
+            return isBitSet(baseValues, var.dom.single());
+        }
+
+        // --- 3. OPTIMIZED DOMAIN PRUNING (Bounds Only) ---
+        // Instead of while(v != -1) looping through thousands of values:
+
+        // Prune Min
+        int dFirst = var.dom.first();
+        while (dFirst != -1 && !isBitSet(baseValues, dFirst)) {
+            var.dom.removeElementary(dFirst);
+            dFirst = var.dom.first();
+        }
+        if (dFirst == -1) return false;
+
+        // Prune Max
+        int dLast = var.dom.last();
+        while (dLast != -1 && dLast > dFirst && !isBitSet(baseValues, dLast)) {
+            var.dom.removeElementary(dLast);
+            dLast = var.dom.last();
+        }
+
+        return var.dom.size() > 0;
+    }
+
+    // Helper to keep the logic clean
+    private boolean isGacSupported(int v) {
+        for (Constraint c : var.ctrs) {
+            if (!c.seekFirstSupportWith(c.positionOf(var), v)) return false;
+        }
         return true;
     }
 
@@ -302,6 +374,18 @@ public class TimeRobustDomain implements RobustDomain{
             if (++u == words.length) return -1;
             word = words[u];
         }
+    }
+
+    @Override
+    public int getRobustDomainSize() {
+        int count = 0;
+        // Iterate through your robust base bitset
+        for (long word : baseValues) {
+            if (word != 0) {
+                count += Long.bitCount(word);
+            }
+        }
+        return count;
     }
 
 }

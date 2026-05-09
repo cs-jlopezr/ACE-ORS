@@ -52,6 +52,8 @@ import propagation.AC;
 import propagation.AC.TypeFilteringResult;
 import utility.Kit;
 import variables.Domain;
+import variables.GraphRobustDomain;
+import variables.RobustDomain;
 import variables.Variable;
 
 /**
@@ -406,6 +408,7 @@ public abstract class Primitive2 extends ConstraintSpecific implements TagAC, Ta
 		protected abstract int nSupportsForWhenIteratingOver(Domain d1, Domain d2);
 
 		private boolean runPropagator(Variable evt, Domain d1, Domain d2) {
+			int depth = d2.var().problem.solver.depth();
 			int sizeBefore = d2.size();
 			int nSupports = nSupportsForWhenIteratingOver(d1, d2);
 			if (nSupports == 0)
@@ -415,13 +418,24 @@ public abstract class Primitive2 extends ConstraintSpecific implements TagAC, Ta
 			if (toremove == 0)
 				return true;
 			sizeBefore = d1.size();
-			for (int a = d1.first(); a != -1 && toremove > 0; a = d1.next(a))
-				if (times[a] != time) {
-					d1.removeElementary(a);
-					toremove--;
-				}
-			d1.afterElementaryCalls(sizeBefore);
-			return true;
+			RobustDomain rb = d1.var().robustDomain;
+			if(d1.var().robustnessInvolved){
+				for (int a = d1.first(); a != -1 && toremove > 0; a = d1.next(a))
+					if (times[a] != time) {
+						rb.removeAsBaseOnly(a, depth);
+						toremove--;
+					}
+				d1.afterElementaryCalls(sizeBefore);
+				return true;
+			}else{
+				for (int a = d1.first(); a != -1 && toremove > 0; a = d1.next(a))
+					if (times[a] != time) {
+						d1.removeElementary(a);
+						toremove--;
+					}
+				d1.afterElementaryCalls(sizeBefore);
+				return true;
+			}
 		}
 
 		public final boolean runPropagator(Variable evt) {

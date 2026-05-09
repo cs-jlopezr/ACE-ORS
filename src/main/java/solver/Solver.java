@@ -1129,7 +1129,7 @@ public class Solver implements ObserverOnBacktracksSystematic {
 				Variable x = heuristic.bestVariable();
 				if(x == Variable.TAG && Objects.nonNull(problem.scpRobustness) &&
 						!(Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation())  &&
-								Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()))) )
+								!Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()))) )
 							x = futVars.first();
 
 

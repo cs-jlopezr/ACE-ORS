@@ -715,14 +715,14 @@ public final class Control {
 
 	/*** Jheisson Lopez -> Definition of Robust Options***/
 	public class OptionsRobust extends OptionGroup {
-		public final int ors = addI("ors", "ors", 0, "The desired ORS (0 for SORS or 1 for LORS)");
 		public final String robustVars = addS("robustVars", "robvars", "", "string with the list of vars requiring robustness");
-		public final int k = addI("k", "k", 1, "The desired number of backup values greater than");
 		public final int h = addI("h", "h", 0, "The desired number of backup values lower than");
-		public final int offset = addI("offset", "offset", 1, "The distance between the neighbours");
-
+		public final int k = addI("k", "k", 0, "The desired number of backup values greater than");
+		public final int h_offset = addI("h_offset", "h_offset", 0, "The distance between the neighbours");
+		public final int k_offset = addI("k_offset", "k_offset", 0, "The distance between the neighbours");
 		public final String scheme = addS("scheme", "sSch", "", "string with the functions and predicates");
 		public final String rpolicy = addS("rpolicy", "rpolicy", "stride", "string with the functions and predicates");
+		public final boolean tdom = addB("tdom", "tdom", false, "Must we use TimeRobustDomain? (GraphRobustDomain if false)");
 	}
 
 	public class OptionsLNS extends OptionGroup {

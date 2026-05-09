@@ -194,4 +194,10 @@ public class GraphRobustDomain implements RobustDomain {
     @Override public boolean isRobust() { return !isBase.isEmpty(); }
     @Override public int firstValue() { return alive.nextSetBit(0); }
     @Override public int lastValue() { return alive.previousSetBit(n - 1); }
+
+    @Override
+    public int getRobustDomainSize() {
+        // isBase represents Case 1: Robust & In var.dom
+        return isBase.cardinality();
+    }
 }

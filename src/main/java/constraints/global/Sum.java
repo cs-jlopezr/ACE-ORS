@@ -1110,7 +1110,7 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 
 			int h = this.problem.head.control.robust.h;
 			int k = this.problem.head.control.robust.k;
-			int offset = this.problem.head.control.robust.offset;
+			int offset = this.problem.head.control.robust.k_offset;
 
 			@Override
 			public boolean runPropagator(Variable x) {

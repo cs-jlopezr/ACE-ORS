@@ -36,6 +36,7 @@ import solver.Solver.Branching;
 import utility.Kit.ScoredVariable;
 import variables.Domain;
 import variables.DomainInfinite;
+import variables.RobustDomain;
 import variables.Variable;
 
 /**
@@ -254,7 +255,7 @@ public abstract class HeuristicVariablesDynamic extends HeuristicVariables {
 		// this.nonSingletonVariables = solver.head.control.varh.discardSingletons ? new SetDenseReversible(n, n) : null;
 		this.singletonManager = solver.head.control.varh.discardSingletonsDuringSearchLimit <= solver.problem.variables.length ? new SingletonManager(n) : null;
 		this.safeSelector = solver.head.control.varh.safeSelectionCapacity > 1
-				&& (this instanceof WdegOnDom || this instanceof FrbaOnDom || this instanceof PickOnDom || this instanceof RunRobin) ? new SafeSelector()
+				&& (this instanceof WdegOnDom || this instanceof WdegOnRobDom || this instanceof FrbaOnDom || this instanceof PickOnDom || this instanceof RunRobin) ? new SafeSelector()
 						: null;
 	}
 
@@ -1571,6 +1572,125 @@ public abstract class HeuristicVariablesDynamic extends HeuristicVariables {
 			return impacts[x.num]; // note that 0 as value is the strongest impact value (we minimize)
 		}
 
+	}
+
+	public static class WdegOnRobDom extends WdegVariant {
+
+		private final boolean chs;
+
+		public WdegOnRobDom(Solver solver, boolean anti) {
+			super(solver, anti);
+			this.chs = options.weighting == CHS;
+		}
+
+		@Override
+		public double scoreOf(Variable x) {
+			// 1. Get the count of Case 1 (Robust) values
+			int size = 0;
+			if(x.robustnessInvolved) {
+				size = x.robustDomain.getRobustDomainSize();
+			}else{
+				size = x.dom.size();
+			}
+
+			// 2. Safety check: If robustSize is 0, this variable is a failure point.
+			// We return a very high score (or low if anti-heuristic) to trigger immediate attention.
+			if (size == 0) {
+				return Double.MAX_VALUE;
+			}
+
+			// 3. Integrate with the existing Wdeg scoring logic
+			if (chs) {
+				double d = 0;
+				for (Constraint c : x.ctrs)
+					if (c.futvars.size() > 1)
+						d += cscores[c.num];
+				// Divide weight by robust domain size instead of physical domain size
+				return d / size;
+			}
+
+			// Standard weighted degree / robust size
+			return x.specificWeight * vscores[x.num] / size;
+		}
+
+		@Override
+		public double scoreIfBinaryDomainOf(Variable x) {
+			// In binary domains, check if both values are actually robust
+			int size = 0;
+			if(x.robustnessInvolved) {
+				size = x.robustDomain.getRobustDomainSize();
+			}else{
+				size = x.dom.size();
+			}
+			return x.specificWeight * vscores[x.num] / Math.max(1, size);
+		}
+
+		@Override
+		public void newImpactlessAssignment(Variable x, int a) {
+			vscores[x.num]--;
+		}
+	}
+
+	public static class WdegOnSqRobDom extends WdegVariant {
+
+		public WdegOnSqRobDom(Solver solver, boolean anti) {
+			super(solver, anti);
+		}
+
+		@Override
+		public double scoreOf(Variable x) {
+			int size = 0;
+			if(x.robustnessInvolved) {
+				size = x.robustDomain.getRobustDomainSize();
+			}else{
+				size = x.dom.size();
+			}
+
+			// 1. Handle the 'Wipeout' or 'Fragile' states
+			// If no robust values exist, this branch is technically dead.
+			// We return a massive score to force the solver to fail/process it.
+			if (size <= 0) {
+				return Double.MAX_VALUE;
+			}
+
+			// 2. The Squared Logic
+			// Squaring the denominator makes the heuristic extremely sensitive
+			// to variables with very few robust options left.
+			double denominator = size * size;
+
+			// 3. Integrate with ACE Weighting
+			if (options.weighting == CHS) {
+				double d = 0;
+				for (Constraint c : x.ctrs) {
+					if (c.futvars.size() > 1) {
+						d += cscores[c.num];
+					}
+				}
+				return d / denominator;
+			}
+
+			// Standard Weight / RobustSize^2
+			// We use x.specificWeight and vscores to maintain the "Failure History"
+			return (x.specificWeight * vscores[x.num]) / denominator;
+		}
+
+		@Override
+		public double scoreIfBinaryDomainOf(Variable x) {
+			int size = 0;
+			if(x.robustnessInvolved) {
+				size = x.robustDomain.getRobustDomainSize();
+			}else{
+				size = x.dom.size();
+			}
+			// Even in binary domains, we prefer the squared penalty
+			// to distinguish between 1 robust value vs 2.
+			return (x.specificWeight * vscores[x.num]) / Math.max(1, size * size);
+		}
+
+		@Override
+		public void newImpactlessAssignment(Variable x, int a) {
+			vscores[x.num]--;
+		}
 	}
 
 }

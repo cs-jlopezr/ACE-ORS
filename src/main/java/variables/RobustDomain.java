@@ -14,4 +14,6 @@ public interface RobustDomain {
 
     public int lastValue();
 
+    int getRobustDomainSize();
+
 }

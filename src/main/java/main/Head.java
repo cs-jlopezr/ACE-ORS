@@ -434,22 +434,17 @@ public class Head extends Thread {
 			}
 		}
 
-		if(!control.robust.scheme.equals("")){
-			RobustUtils.initializeSchema(control.robust.scheme);
-			RobustUtils.setPolicy(control.robust.rpolicy);
-
+		RobustUtils.initializeSchema(control.robust.scheme, control.robust.tdom, control.robust.h, control.robust.k, control.robust.h_offset, control.robust.k_offset);
+		if(!control.robust.tdom){
 			Arrays.stream(problem.variables).forEach(v->{
 				if(v.robustnessInvolved) {
 					v.robustDomain = new GraphRobustDomain(v, v.dom.size(), RobustUtils.h, RobustUtils.k);
 				}
 			});
 		}else{
-			int offset = control.robust.offset;
-			int k = control.robust.k;
-			int h = control.robust.h;
 			Arrays.stream(problem.variables).forEach(v->{
 				if(v.robustnessInvolved) {
-					v.robustDomain = new TimeRobustDomain(v, v.dom.size(), k, h, offset);
+					v.robustDomain = new TimeRobustDomain(v, v.dom.size(), control.robust.k, control.robust.h, control.robust.k_offset);
 				}
 			});
 		}

@@ -271,7 +271,7 @@ public abstract class Propagation {
 		if ((consistent)){// && (solver.problem.nValueRemovals > nValuesBefore)) {
 			for (Variable ngh : x.nghs) {
 				// Only check if it's assigned and not the current variable
-				if (ngh.robustnessInvolved && ngh.assigned()) {
+				if (ngh.robustnessInvolved){// && ngh.assigned()) {
 					// If the assigned value is no longer a robust base, we FAIL
 					if (!ngh.robustDomain.checkVariableForRC(solver.depth())) {
 						return false;
