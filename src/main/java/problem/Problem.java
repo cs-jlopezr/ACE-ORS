@@ -1945,7 +1945,7 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 		}
 
 		// last chance : replace subtrees whose reification is cheap (ne, le, ge, ...)
-		boolean lastChance = true;
+		boolean lastChance = false;
 		if (lastChance) {
 			if (scp.length == tree.listOfVars().size()) {
 				if (replaceInternNodeByCheapReificationpropagator(tree))

@@ -25,6 +25,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.function.BiPredicate;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,9 +56,11 @@ import utility.Kit.Color;
 import utility.Reflector;
 import utility.RobustUtils;
 import utility.Stopwatch;
+import utility.RobustProfileManager;
 import variables.GraphRobustDomain;
 import variables.TimeRobustDomain;
 import variables.Variable;
+import variables.DomainFinite.DomainSymbols;
 
 /**
  * This is the class of the main object (head) in charge of solving a problem instance.
@@ -409,7 +412,28 @@ public class Head extends Thread {
 		 * Jheisson Lopez
 		 * We are setting the problem to be able to provide the ORS in the indicated variables
 		 * *************************************************************************************************************/
-		if (!control.robust.robustVars.equals("")){
+		RobustProfileManager profileManager = null;
+		if (!control.robust.profile.isEmpty()) {
+		    Map<String, Integer> shiftMapping = new HashMap<>();
+		    if (problem.variables.length > 0 && problem.variables[0].dom instanceof DomainSymbols) {
+		        DomainSymbols ds = (DomainSymbols) problem.variables[0].dom;
+		        for (int vidx = 0; vidx < ds.initSize(); vidx++) {
+		            shiftMapping.put(ds.symbols[vidx], vidx);
+		        }
+		    }
+		    profileManager = new RobustProfileManager(control.robust.profile, shiftMapping);
+		}
+
+		if (profileManager != null) {
+			ArrayList<Variable> robVars = new ArrayList<>();
+		    for (Variable v : problem.variables) {
+		        if (profileManager.requiresRobustness(v.id())) {
+		            v.robustnessInvolved = true;
+					robVars.add(v);
+		        }
+		    }
+			this.problem.scpRobustness = robVars.toArray(new Variable[robVars.size()]);
+		} else if (!control.robust.robustVars.equals("")){
 			ArrayList<Variable> robVars = new ArrayList<>();
 			if(control.robust.robustVars.startsWith("match")){
 				String match = control.robust.robustVars.split("-")[1];
@@ -435,16 +459,37 @@ public class Head extends Thread {
 		}
 
 		RobustUtils.initializeSchema(control.robust.scheme, control.robust.tdom, control.robust.h, control.robust.k, control.robust.h_offset, control.robust.k_offset);
+		
+		final RobustProfileManager finalManager = profileManager;
 		if(!control.robust.tdom){
 			Arrays.stream(problem.variables).forEach(v->{
 				if(v.robustnessInvolved) {
-					v.robustDomain = new GraphRobustDomain(v, v.dom.size(), RobustUtils.h, RobustUtils.k);
+				    if (finalManager != null) {
+				        int day = finalManager.getDay(v.id());
+				        int offIdx = v.dom.initSize() - 1; // Assuming OFF is the last index
+				        BiPredicate<Integer, Integer> predicate = (s1, s2) -> {
+				            // If s1 is a critical shift AND s1 is not OFF
+				            if (finalManager.isCritical(day, s1) && s1 != offIdx) {
+				                // Force the neighbor to be OFF
+				                return s2 == offIdx;
+				            }
+				            // Non-critical shifts do not require an alternative shift, so they can transition to themselves
+				            if (s1.equals(s2)) return true;
+				            
+				            // For other cases, use standard predicates
+				            return s2 < s1 ? (RobustUtils.leftPredicate == null || RobustUtils.leftPredicate.test(s1, s2))
+				                           : (RobustUtils.rightPredicate == null || RobustUtils.rightPredicate.test(s1, s2));
+				        };
+				        v.robustDomain = new GraphRobustDomain(v, v.dom.initSize(), RobustUtils.h, RobustUtils.k, predicate);
+				    } else {
+					    v.robustDomain = new GraphRobustDomain(v, v.dom.initSize(), RobustUtils.h, RobustUtils.k);
+				    }
 				}
 			});
 		}else{
 			Arrays.stream(problem.variables).forEach(v->{
 				if(v.robustnessInvolved) {
-					v.robustDomain = new TimeRobustDomain(v, v.dom.size(), control.robust.k, control.robust.h, control.robust.k_offset);
+					v.robustDomain = new TimeRobustDomain(v, v.dom.initSize(), control.robust.k, control.robust.h, control.robust.k_offset);
 				}
 			});
 		}

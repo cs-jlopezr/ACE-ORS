@@ -1127,10 +1127,14 @@ public class Solver implements ObserverOnBacktracksSystematic {
 			while (!foundSolution && !finished() && !restarter.currRunFinished()) {
 				maxDepth = Math.max(maxDepth, depth());
 				Variable x = heuristic.bestVariable();
-				if(x == Variable.TAG && Objects.nonNull(problem.scpRobustness) &&
-						!(Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation())  &&
-								!Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()))) )
-							x = futVars.first();
+				if(x == Variable.TAG && Objects.nonNull(problem.scpRobustness)) {
+					boolean constraintsSat = Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation());
+					boolean isRobust = Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()));
+					if (!constraintsSat || !isRobust) {
+						manageContradiction(null);
+						continue;
+					}
+				}
 
 
 				if (x == Variable.TAG) { // meaning all variables are fixed

@@ -2,6 +2,7 @@ package variables;
 
 import java.util.*;
 import constraints.Constraint;
+import constraints.global.Count;
 import utility.RobustUtils;
 import java.util.function.BiPredicate;
 
@@ -29,6 +30,10 @@ public class GraphRobustDomain implements RobustDomain {
     private int lastModifiedLevel = -1;
 
     public GraphRobustDomain(Variable var, int n, int H, int K) {
+        this(var, n, H, K, null);
+    }
+
+    public GraphRobustDomain(Variable var, int n, int H, int K, BiPredicate<Integer, Integer> customPredicate) {
         this.var = var;
         this.n = n;
         this.H = H;
@@ -45,7 +50,11 @@ public class GraphRobustDomain implements RobustDomain {
             succDesc[i] = new BitSet(n);
         }
 
-        buildInitialGraph();
+        if (customPredicate != null) {
+            buildInitialGraph(customPredicate);
+        } else {
+            buildInitialGraph();
+        }
         updateRobustness(); // Initial calculation
     }
 
@@ -67,6 +76,8 @@ public class GraphRobustDomain implements RobustDomain {
             // Check if this shadow value is still supported by other constraints
             boolean supported = true;
             for (Constraint c : var.ctrs) {
+                if(c instanceof Count || c instanceof constraints.ConstraintExtension || Arrays.stream(c.scp).anyMatch(var->var.id().contains("aux")))
+                    continue;
                 if (!c.seekFirstSupportWith(c.positionOf(var), v)) {
                     supported = false;
                     break;
@@ -176,11 +187,17 @@ public class GraphRobustDomain implements RobustDomain {
         }
     }
 
+    private void buildInitialGraph(BiPredicate<Integer, Integer> pr) {
+        for (int i = 0; i < n; i++) {
+            explore(i, i, 0, K, pr, true);
+            explore(i, i, 0, H, pr, false);
+        }
+    }
+
     private boolean explore(int start, int curr, int d, int L, BiPredicate<Integer, Integer> pr, boolean asc) {
         if (d == L) return true;
         boolean can = false;
-        int startJ = asc ? curr + 1 : curr - 1;
-        for (int j = startJ; (asc ? j < n : j >= 0); j += (asc ? 1 : -1)) {
+        for (int j = 0; j < n; j++) {
             if (pr.test(start, j)) { // Using base-index comparison (Anchor policy)
                 if (explore(start, j, d + 1, L, pr, asc)) {
                     (asc ? succAsc : succDesc)[curr].set(j);

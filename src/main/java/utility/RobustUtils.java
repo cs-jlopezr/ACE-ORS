@@ -89,6 +89,7 @@ public class RobustUtils {
     }
 
     private static Integer evaluate(List<String> rpn, int xVal, int yVal) {
+        if (rpn.isEmpty()) return 1; // Default to true if no predicate
         Deque<Integer> stack = new ArrayDeque<>();
         for (String t : rpn) {
             switch (t) {

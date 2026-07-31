@@ -269,12 +269,14 @@ public abstract class Propagation {
 		// 3. THE "ASSIGNED NEIGHBORS" CHECK
 		// If 'x' was pruned, we must ensure its assigned neighbors are still robust.
 		if ((consistent)){// && (solver.problem.nValueRemovals > nValuesBefore)) {
-			for (Variable ngh : x.nghs) {
-				// Only check if it's assigned and not the current variable
-				if (ngh.robustnessInvolved){// && ngh.assigned()) {
-					// If the assigned value is no longer a robust base, we FAIL
-					if (!ngh.robustDomain.checkVariableForRC(solver.depth())) {
-						return false;
+			if (x.nghs != null) {
+				for (Variable ngh : x.nghs) {
+					// Only check if it's assigned and not the current variable
+					if (ngh.robustnessInvolved){// && ngh.assigned()) {
+						// If the assigned value is no longer a robust base, we FAIL
+						if (!ngh.robustDomain.checkVariableForRC(solver.depth())) {
+							return false;
+						}
 					}
 				}
 			}
