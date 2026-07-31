@@ -133,40 +133,33 @@ public class TimeRobustDomain implements RobustDomain{
 
     @Override
     public boolean checkVariableForRC(int currentLevel) {
-        // --- 1. OPTIMIZED SHADOW SYNC (Bounds Only) ---
+        // --- 1. FULL SHADOW SYNC (Checks ALL shadow values, not just bounds) ---
         boolean shadowChanged = false;
 
-        // Push the Shadow Minimum inward
-        int sFirst = nextSetBit(aliveValues, 0);
-        // While we are in the 'Shadow' (not in physical domain)
-        while (sFirst != -1 && !var.dom.contains(sFirst)) {
-            if (!isGacSupported(sFirst)) {
-                clearShadowBit(sFirst, currentLevel);
-                shadowChanged = true;
-                sFirst = nextSetBit(aliveValues, sFirst + 1);
-            } else {
-                break; // Found the first supported shadow value
+        for (int i = 0; i < aliveValues.length; i++) {
+            long word = aliveValues[i];
+            while (word != 0) {
+                int bitIndex = Long.numberOfTrailingZeros(word);
+                int v = (i << 6) + bitIndex;
+
+                if (!var.dom.contains(v)) {
+                    if (!isGacSupported(v)) {
+                        clearShadowBit(v, currentLevel);
+                        shadowChanged = true;
+                    }
+                }
+                
+                // Clear the least significant set bit
+                word &= (word - 1);
             }
         }
 
-        // Push the Shadow Maximum inward
-        int sLast = lastValue();
-        while (sLast != -1 && sLast > sFirst && !var.dom.contains(sLast)) {
-            if (!isGacSupported(sLast)) {
-                clearShadowBit(sLast, currentLevel);
-                shadowChanged = true;
-                sLast = lastValue();
-            } else {
-                break; // Found the last supported shadow value
-            }
-        }
-
-        // Only update robustness if boundaries moved
+        // Only update robustness if shadow changed
         if (shadowChanged) {
             updateRobustness();
         }
 
-        // --- 1.5 & 2. WIPEOUT & ASSIGNMENT CHECK ---
+        // --- 2. WIPEOUT & ASSIGNMENT CHECK ---
         if (var.dom.size() == 0) return false;
 
         if (var.dom.size() == 1) {
@@ -174,25 +167,18 @@ public class TimeRobustDomain implements RobustDomain{
             return isBitSet(baseValues, var.dom.single());
         }
 
-        // --- 3. OPTIMIZED DOMAIN PRUNING (Bounds Only) ---
-        // Instead of while(v != -1) looping through thousands of values:
-
-        // Prune Min
-        int dFirst = var.dom.first();
-        while (dFirst != -1 && !isBitSet(baseValues, dFirst)) {
-            var.dom.removeElementary(dFirst);
-            dFirst = var.dom.first();
-        }
-        if (dFirst == -1) return false;
-
-        // Prune Max
-        int dLast = var.dom.last();
-        while (dLast != -1 && dLast > dFirst && !isBitSet(baseValues, dLast)) {
-            var.dom.removeElementary(dLast);
-            dLast = var.dom.last();
+        // --- 3. FULL DOMAIN PRUNING (Checks ALL physical values, not just bounds) ---
+        int v = var.dom.first();
+        while (v != -1) {
+            int nextV = var.dom.next(v);
+            if (!isBitSet(baseValues, v)) {
+                var.dom.removeElementary(v);
+                if (var.dom.size() < 1) return false;
+            }
+            v = nextV;
         }
 
-        return var.dom.size() > 0;
+        return true;
     }
 
     // Helper to keep the logic clean
