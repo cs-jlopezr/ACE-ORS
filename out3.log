@@ -1,0 +1,699 @@
+
+[93mACE v2.6 [0m
+
+  [94minstance[0m
+    name:Instance3_standard
+    args:/Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/compiled_xmls/standard/Instance3_standard.xml -robprofile=/Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/robust_profiles/baseline/mon/Instance3_baseline_mon.json -h=0
+
+ [33m...Parsing[0m /Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/compiled_xmls/standard/Instance3_standard.xml
+
+ [33m...Loading[0m variables
+
+ [33m...Loading[0m constraints
+[RobustProfileManager] Loaded 2 critical entries.
+
+  [94mdomains[0m
+    types:12  values:4,922  sizes:[1:510,2:164,4:280,15:80,21:84]
+  [94mvariables[0m
+    count:1,118  omitted:14  fixed:510  auxiliary:30  arrays:[x:280,nd:80,wk:40,cn:280,cf:280,np_ds:42,cc:56,aux_gb:30,_ax_:30]  degrees:[2:672,3:75,4:91,12:5...28:8,29:3,30:6,31:4]
+  [94mconstraints[0m
+    count:1,981  converted:475  nNogoods:274  specific:1,466  generic:515  backtrackable:15  postponable:2  arities:[1:327,2:800,3:535,4:20...7:40,15:80,21:42,616:2]
+    unary:[Extension1:327]  objective:[SumSimpleGE,SumSimpleLE]
+    non_unary:[AtLeast1:175,CT-Table:15,ExactlyVarK:122,ExtensionV-Matrix3D:475,Intension:40,LogicTree:404,Nogood:274,Reif2EQ:30,Reif2NE:30,STR0a-Table:47,SumSimpleEQ:20,SumSimpleLE:20]
+    tables:[21:42,25:5,136:15]  tuples:3,047
+    extStructures:(64,shared:473)  intStructures:(1,shared:39)
+    wck:1.09  cpu:1.523  mem:58M429
+  [94mobjective[0m
+    way:min  type:SumSimpleLE  arity:616  bounds:0..15,535
+
+ [33m...Building[0m solver
+
+  [94msolver[0m
+    nNotAC:20  reviser:Reviser3  decoder:Decoder1
+    wck:1.13  cpu:1.56  mem:75M207
+
+  [94mpreprocessing[0m
+    effs:292  revisions:(1791,useless=1790)  entailed:595  values:3,547  removedByAC:1,375  singletons:554  unsat:false
+    wck:0.017  cpu:1.578  mem:76M782
+
+  [94msearch[0m
+[33m ...Discarding 554 singleton variables[0m
+[92mo 8772[0m   1.19  ham=0 (0 0 0 0 0 0 0 0 0 0)  opth=0
+[92mo 8771[0m   1.19  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8671[0m   1.20  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8670[0m   1.20  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8570[0m   1.20  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8569[0m   1.20  ham=11 (3 6 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8469[0m   1.21  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8468[0m   1.21  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8368[0m   1.21  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 8366[0m   1.21  ham=13 (4 8 0 0 1 0 0 0 0 0)  opth=1
+    run1  dpts:99..151  robin:PickOnDom-First  effs:4,774  asgs:(297,noefs=0,fails=50)  fails:50  wrgs:121  wck:0.07  ngds:5  sols:10  bound:8,366
+    run2  dpts:63..100  robin:WdegOnDom-Last  effs:7,031  asgs:(176,noefs=0,fails=50)  fails:100  wrgs:218  wck:0.09  ngds:7  sols:10  bound:8,366
+    run3  dpts:4..198  robin:FrbaOnDom-Rand  effs:9,388  asgs:(264,noefs=4,fails=52)  fails:152  wrgs:282  wck:0.11  ngds:33  sols:10  bound:8,366
+[92mo 8265[0m   1.29  ham=12 (3 5 0 0 0 2 2 0 0 0)  opth=2
+    run4  dpts:135..147  robin:Wdeg-First  effs:13,828  asgs:(251,noefs=0,fails=55)  fails:207  wrgs:382  wck:0.14  ngds:37  sols:11  bound:8,265
+    run5  dpts:19..51  robin:PickOnDom-Last  effs:16,733  asgs:(128,noefs=0,fails=50)  fails:257  wrgs:440  wck:0.17  ngds:57  sols:11  bound:8,265
+[92mo 4698[0m   1.34  ham=319 (143 60 14 5 13 34 34 8 0 8)  opth=52
+[92mo 4598[0m   1.34  ham=6 (1 2 1 0 0 1 1 0 0 0)  opth=1
+[92mo 4498[0m   1.34  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 4398[0m   1.35  ham=15 (2 4 1 0 0 3 3 1 0 1)  opth=3
+[92mo 4298[0m   1.35  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+    run6  dpts:1..161  robin:WdegOnDom-Rand  effs:20,156  asgs:(258,noefs=0,fails=52)  fails:309  wrgs:518  wck:0.20  ngds:75  sols:16  bound:4,298
+    run7  dpts:20..75  robin:FrbaOnDom-First  effs:22,847  asgs:(153,noefs=1,fails=50)  fails:359  wrgs:617  wck:0.23  ngds:79  sols:16  bound:4,298
+    run8  dpts:11..89  robin:Wdeg-Last  effs:24,981  asgs:(182,noefs=0,fails=52)  fails:411  wrgs:700  wck:0.25  ngds:94  sols:16  bound:4,298
+    run9  dpts:26..79  robin:PickOnDom-Rand  effs:27,499  asgs:(174,noefs=0,fails=55)  fails:466  wrgs:799  wck:0.27  ngds:108  sols:16  bound:4,298
+    run10  dpts:91..157  robin:WdegOnDom-First  effs:31,189  asgs:(247,noefs=2,fails=57)  fails:523  wrgs:904  wck:0.28  ngds:118  sols:16  bound:4,298
+    run11  dpts:29..95  robin:FrbaOnDom-Last  effs:32,862  asgs:(180,noefs=3,fails=60)  fails:583  wrgs:998  wck:0.29  ngds:132  sols:16  bound:4,298
+    run12  dpts:28..130  robin:Wdeg-Rand  effs:35,036  asgs:(229,noefs=0,fails=63)  fails:646  wrgs:1,104  wck:0.31  ngds:144  sols:16  bound:4,298
+    run13  dpts:38..51  robin:PickOnDom-First  effs:37,264  asgs:(176,noefs=11,fails=67)  fails:713  wrgs:1,231  wck:0.32  ngds:149  sols:16  bound:4,298
+[33m ...Starting SOS[0m
+    run14  dpts:206..223  robin:WdegOnDom-Last  effs:41,190  asgs:(402,noefs=20,fails=70)  fails:783  wrgs:1,395  wck:0.34  ngds:152  sols:16  bound:4,298
+[92mo 4197[0m   1.51  ham=15 (7 0 0 0 0 4 4 0 0 0)  opth=4
+[92mo 4096[0m   1.51  ham=6 (2 0 0 0 0 2 2 0 0 0)  opth=2
+    run15  dpts:224..238  robin:FrbaOnDom-Rand  effs:45,513  asgs:(401,noefs=12,fails=73)  fails:856  wrgs:1,549  wck:0.37  ngds:157  sols:18  bound:4,096
+[92mo 4095[0m   1.54  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+    run16  dpts:141..178  robin:Wdeg-First  effs:48,632  asgs:(322,noefs=12,fails=50)  fails:906  wrgs:1,650  wck:0.40  ngds:161  sols:19  bound:4,095
+[92mo 4093[0m   1.56  ham=12 (4 6 1 0 1 0 0 0 0 0)  opth=1
+[92mo 3993[0m   1.57  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run17  dpts:162..175  robin:PickOnDom-Last  effs:51,897  asgs:(298,noefs=2,fails=50)  fails:956  wrgs:1,760  wck:0.42  ngds:167  sols:21  bound:3,993
+    run18  dpts:202..214  robin:WdegOnDom-Rand  effs:55,142  asgs:(324,noefs=8,fails=50)  fails:1,006  wrgs:1,856  wck:0.44  ngds:170  sols:21  bound:3,993
+[92mo 3892[0m   1.61  ham=13 (5 2 0 0 0 3 3 0 0 0)  opth=3
+[92mo 3791[0m   1.63  ham=16 (4 4 0 0 0 4 4 0 0 0)  opth=4
+[92mo 3790[0m   1.63  ham=9 (4 4 0 1 0 0 0 0 0 0)  opth=1
+    run19  dpts:234..244  robin:FrbaOnDom-First  effs:59,211  asgs:(384,noefs=12,fails=52)  fails:1,058  wrgs:1,964  wck:0.48  ngds:174  sols:24  bound:3,790
+    run20  dpts:155..170  robin:Wdeg-Last  effs:61,850  asgs:(269,noefs=3,fails=50)  fails:1,108  wrgs:2,062  wck:0.49  ngds:177  sols:24  bound:3,790
+[92mo 3789[0m   1.66  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3692[0m   1.67  ham=6 (1 2 0 0 1 1 1 0 0 0)  opth=2
+    run21  dpts:170..186  robin:PickOnDom-Rand  effs:66,094  asgs:(323,noefs=4,fails=52)  fails:1,160  wrgs:2,191  wck:0.52  ngds:181  sols:26  bound:3,692
+[92mo 3691[0m   1.68  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3690[0m   1.68  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3689[0m   1.69  ham=13 (3 6 0 0 0 1 1 1 0 1)  opth=1
+[92mo 3688[0m   1.69  ham=12 (4 6 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3588[0m   1.69  ham=9 (3 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3587[0m   1.70  ham=11 (3 6 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3487[0m   1.70  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3486[0m   1.70  ham=13 (3 6 0 0 0 1 1 1 0 1)  opth=1
+    run22  dpts:184..214  robin:WdegOnDom-First  effs:71,677  asgs:(426,noefs=3,fails=50)  fails:1,210  wrgs:2,356  wck:0.55  ngds:182  sols:34  bound:3,486
+[92mo 3485[0m   1.72  ham=19 (6 5 0 1 1 3 3 0 0 0)  opth=5
+[92mo 3484[0m   1.72  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3383[0m   1.73  ham=7 (1 2 0 0 0 2 2 0 0 0)  opth=2
+    run23  dpts:219..233  robin:FrbaOnDom-Last  effs:75,112  asgs:(367,noefs=11,fails=50)  fails:1,260  wrgs:2,470  wck:0.58  ngds:185  sols:37  bound:3,383
+[92mo 3382[0m   1.74  ham=11 (7 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3282[0m   1.75  ham=7 (3 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3280[0m   1.75  ham=18 (6 8 0 0 0 1 1 1 0 1)  opth=1
+[92mo 3183[0m   1.76  ham=16 (5 8 0 0 1 1 1 0 0 0)  opth=2
+    run24  dpts:153..208  robin:Wdeg-Rand  effs:78,832  asgs:(417,noefs=1,fails=50)  fails:1,310  wrgs:2,606  wck:0.61  ngds:188  sols:41  bound:3,183
+[92mo 3181[0m   1.77  ham=8 (1 2 0 1 0 2 2 0 0 0)  opth=3
+[92mo 3180[0m   1.78  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+[92mo 3179[0m   1.78  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 3178[0m   1.79  ham=8 (1 2 0 1 0 1 1 1 0 1)  opth=2
+    run25  dpts:172..192  robin:PickOnDom-First  effs:84,482  asgs:(346,noefs=4,fails=50)  fails:1,360  wrgs:2,751  wck:0.65  ngds:191  sols:45  bound:3,178
+[92mo 3078[0m   1.81  ham=14 (3 5 0 0 0 3 3 0 0 0)  opth=3
+[92mo 2978[0m   1.81  ham=10 (3 5 0 0 0 1 1 0 0 0)  opth=1
+[92mo 2977[0m   1.82  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run26  dpts:208..222  robin:WdegOnDom-Last  effs:88,809  asgs:(357,noefs=0,fails=50)  fails:1,410  wrgs:2,856  wck:0.67  ngds:197  sols:48  bound:2,977
+[92mo 2876[0m   1.84  ham=8 (4 0 0 0 0 2 2 0 0 0)  opth=2
+[92mo 2874[0m   1.85  ham=9 (4 4 0 0 1 0 0 0 0 0)  opth=1
+    run27  dpts:215..242  robin:FrbaOnDom-Rand  effs:92,716  asgs:(387,noefs=12,fails=50)  fails:1,460  wrgs:2,992  wck:0.70  ngds:205  sols:50  bound:2,874
+[92mo 2774[0m   1.87  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 2674[0m   1.87  ham=23 (8 10 1 0 0 2 2 0 0 0)  opth=2
+[92mo 2574[0m   1.87  ham=9 (5 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 2573[0m   1.88  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+    run28  dpts:188..207  robin:Wdeg-First  effs:97,413  asgs:(332,noefs=0,fails=50)  fails:1,510  wrgs:3,111  wck:0.72  ngds:208  sols:54  bound:2,573
+[92mo 2572[0m   1.89  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+[92mo 2571[0m   1.89  ham=27 (13 6 5 1 0 0 0 1 0 1)  opth=1
+[92mo 2472[0m   1.89  ham=20 (8 2 5 1 0 1 1 1 0 1)  opth=2
+    run29  dpts:192..211  robin:PickOnDom-Last  effs:101,022  asgs:(334,noefs=13,fails=50)  fails:1,560  wrgs:3,223  wck:0.75  ngds:213  sols:57  bound:2,472
+[92mo 2372[0m   1.92  ham=10 (4 4 0 0 0 1 1 0 0 0)  opth=1
+    run30  dpts:219..237  robin:WdegOnDom-Rand  effs:105,375  asgs:(358,noefs=1,fails=50)  fails:1,610  wrgs:3,328  wck:0.77  ngds:215  sols:58  bound:2,372
+[92mo 2268[0m   1.93  ham=8 (1 2 0 1 0 2 2 0 0 0)  opth=3
+[92mo 2265[0m   1.93  ham=7 (2 4 0 0 1 0 0 0 0 0)  opth=1
+    run31  dpts:195..231  robin:FrbaOnDom-First  effs:110,221  asgs:(356,noefs=12,fails=50)  fails:1,660  wrgs:3,458  wck:0.80  ngds:222  sols:60  bound:2,265
+    run32  dpts:178..197  robin:Wdeg-Last  effs:115,860  asgs:(300,noefs=0,fails=50)  fails:1,710  wrgs:3,566  wck:0.83  ngds:226  sols:60  bound:2,265
+[92mo 2263[0m   2.00  ham=13 (4 8 0 1 0 0 0 0 0 0)  opth=1
+    run33  dpts:160..197  robin:PickOnDom-Rand  effs:120,721  asgs:(322,noefs=0,fails=52)  fails:1,762  wrgs:3,699  wck:0.85  ngds:229  sols:61  bound:2,263
+    run34  dpts:219..239  robin:WdegOnDom-First  effs:124,523  asgs:(351,noefs=0,fails=50)  fails:1,812  wrgs:3,821  wck:0.87  ngds:232  sols:61  bound:2,263
+[92mo 2261[0m   2.04  ham=8 (3 2 0 1 0 1 1 0 0 0)  opth=2
+[92mo 2260[0m   2.04  ham=7 (3 2 0 0 0 1 1 0 0 0)  opth=1
+    run35  dpts:200..228  robin:FrbaOnDom-Last  effs:128,800  asgs:(358,noefs=11,fails=52)  fails:1,864  wrgs:3,942  wck:0.90  ngds:238  sols:63  bound:2,260
+[92mo 2257[0m   2.07  ham=5 (4 0 0 1 0 0 0 0 0 0)  opth=1
+    run36  dpts:156..174  robin:Wdeg-Rand  effs:135,765  asgs:(302,noefs=3,fails=50)  fails:1,914  wrgs:4,072  wck:0.94  ngds:240  sols:64  bound:2,257
+    run37  dpts:181..199  robin:PickOnDom-First  effs:139,142  asgs:(319,noefs=4,fails=50)  fails:1,964  wrgs:4,201  wck:0.95  ngds:241  sols:64  bound:2,257
+[92mo 2157[0m   2.11  ham=6 (1 2 1 0 0 1 1 0 0 0)  opth=1
+[92mo 2156[0m   2.12  ham=9 (3 4 0 0 0 1 1 0 0 0)  opth=1
+[92mo 2155[0m   2.12  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run38  dpts:142..246  robin:WdegOnDom-Last  effs:143,393  asgs:(334,noefs=0,fails=52)  fails:2,016  wrgs:4,365  wck:0.97  ngds:242  sols:67  bound:2,155
+    run39  dpts:185..208  robin:FrbaOnDom-Rand  effs:146,666  asgs:(292,noefs=7,fails=50)  fails:2,066  wrgs:4,453  wck:0.99  ngds:245  sols:67  bound:2,155
+[92mo 2054[0m   2.15  ham=11 (3 4 0 0 0 2 2 0 0 0)  opth=2
+[92mo 1954[0m   2.16  ham=6 (1 2 1 0 0 1 1 0 0 0)  opth=1
+[92mo 1953[0m   2.16  ham=15 (7 6 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1855[0m   2.17  ham=17 (8 6 0 1 0 1 1 0 0 0)  opth=2
+    run40  dpts:150..198  robin:Wdeg-First  effs:155,462  asgs:(345,noefs=1,fails=52)  fails:2,118  wrgs:4,624  wck:1.03  ngds:247  sols:71  bound:1,855
+    run41  dpts:166..186  robin:PickOnDom-Last  effs:159,388  asgs:(309,noefs=1,fails=50)  fails:2,168  wrgs:4,746  wck:1.05  ngds:251  sols:71  bound:1,855
+    run42  dpts:208..238  robin:WdegOnDom-Rand  effs:165,060  asgs:(347,noefs=0,fails=52)  fails:2,220  wrgs:4,867  wck:1.07  ngds:255  sols:71  bound:1,855
+[92mo 1852[0m   2.23  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+    run43  dpts:159..185  robin:FrbaOnDom-First  effs:170,372  asgs:(313,noefs=4,fails=55)  fails:2,275  wrgs:5,014  wck:1.10  ngds:256  sols:72  bound:1,852
+    run44  dpts:144..163  robin:Wdeg-Last  effs:176,192  asgs:(306,noefs=11,fails=50)  fails:2,325  wrgs:5,154  wck:1.12  ngds:260  sols:72  bound:1,852
+    run45  dpts:147..179  robin:PickOnDom-Rand  effs:180,588  asgs:(293,noefs=0,fails=52)  fails:2,377  wrgs:5,259  wck:1.14  ngds:267  sols:72  bound:1,852
+    run46  dpts:188..209  robin:WdegOnDom-First  effs:185,412  asgs:(310,noefs=0,fails=55)  fails:2,432  wrgs:5,367  wck:1.16  ngds:273  sols:72  bound:1,852
+[92mo 1851[0m   2.32  ham=14 (5 8 0 1 0 0 0 0 0 0)  opth=1
+[92mo 1850[0m   2.33  ham=16 (6 6 0 1 1 1 1 0 0 0)  opth=3
+[92mo 1849[0m   2.34  ham=7 (3 2 0 0 0 1 1 0 0 0)  opth=1
+    run47  dpts:140..172  robin:FrbaOnDom-Last  effs:191,612  asgs:(325,noefs=8,fails=57)  fails:2,489  wrgs:5,524  wck:1.19  ngds:274  sols:75  bound:1,849
+    run48  dpts:146..172  robin:Wdeg-Rand  effs:197,320  asgs:(281,noefs=0,fails=50)  fails:2,539  wrgs:5,646  wck:1.21  ngds:276  sols:75  bound:1,849
+[92mo 1848[0m   2.38  ham=25 (10 13 0 2 0 0 0 0 0 0)  opth=2
+[92mo 1846[0m   2.38  ham=10 (5 4 0 1 0 0 0 0 0 0)  opth=1
+    run49  dpts:143..185  robin:PickOnDom-First  effs:202,150  asgs:(340,noefs=11,fails=52)  fails:2,591  wrgs:5,780  wck:1.24  ngds:279  sols:77  bound:1,846
+    run50  dpts:211..220  robin:WdegOnDom-Last  effs:205,293  asgs:(312,noefs=0,fails=50)  fails:2,641  wrgs:5,863  wck:1.25  ngds:281  sols:77  bound:1,846
+    run51  dpts:152..170  robin:FrbaOnDom-Rand  effs:211,592  asgs:(244,noefs=3,fails=52)  fails:2,693  wrgs:5,952  wck:1.28  ngds:283  sols:77  bound:1,846
+[92mo 1845[0m   2.44  ham=9 (4 4 0 1 0 0 0 0 0 0)  opth=1
+    run52  dpts:148..161  robin:Wdeg-First  effs:218,415  asgs:(286,noefs=5,fails=55)  fails:2,748  wrgs:6,065  wck:1.31  ngds:287  sols:78  bound:1,845
+    run53  dpts:162..192  robin:PickOnDom-Last  effs:223,380  asgs:(329,noefs=4,fails=50)  fails:2,798  wrgs:6,202  wck:1.33  ngds:292  sols:78  bound:1,845
+[92mo 1843[0m   2.49  ham=25 (10 10 0 1 0 0 0 2 0 2)  opth=1
+    run54  dpts:142..218  robin:WdegOnDom-Rand  effs:228,604  asgs:(337,noefs=3,fails=52)  fails:2,850  wrgs:6,336  wck:1.35  ngds:295  sols:79  bound:1,843
+    run55  dpts:148..179  robin:FrbaOnDom-First  effs:232,725  asgs:(282,noefs=9,fails=50)  fails:2,900  wrgs:6,452  wck:1.37  ngds:299  sols:79  bound:1,843
+[92mo 1745[0m   2.54  ham=13 (4 6 0 1 0 1 1 0 0 0)  opth=2
+[92mo 1744[0m   2.54  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+    run56  dpts:140..170  robin:Wdeg-Last  effs:241,067  asgs:(299,noefs=0,fails=52)  fails:2,952  wrgs:6,583  wck:1.41  ngds:303  sols:81  bound:1,744
+    run57  dpts:169..198  robin:PickOnDom-Rand  effs:244,906  asgs:(316,noefs=3,fails=50)  fails:3,002  wrgs:6,698  wck:1.42  ngds:306  sols:81  bound:1,744
+    run58  dpts:142..205  robin:WdegOnDom-First  effs:249,055  asgs:(296,noefs=1,fails=52)  fails:3,054  wrgs:6,800  wck:1.44  ngds:310  sols:81  bound:1,744
+[92mo 1743[0m   2.62  ham=14 (5 2 0 0 1 3 3 0 0 0)  opth=4
+[92mo 1742[0m   2.62  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run59  dpts:162..195  robin:FrbaOnDom-Last  effs:255,532  asgs:(300,noefs=5,fails=55)  fails:3,109  wrgs:6,912  wck:1.47  ngds:314  sols:83  bound:1,742
+[92mo 1741[0m   2.64  ham=13 (3 4 0 0 0 3 3 0 0 0)  opth=3
+    run60  dpts:147..159  robin:Wdeg-Rand  effs:264,948  asgs:(270,noefs=2,fails=50)  fails:3,159  wrgs:7,018  wck:1.51  ngds:315  sols:84  bound:1,741
+    run61  dpts:179..199  robin:PickOnDom-First  effs:269,335  asgs:(341,noefs=3,fails=50)  fails:3,209  wrgs:7,151  wck:1.52  ngds:318  sols:84  bound:1,741
+    run62  dpts:152..219  robin:WdegOnDom-Last  effs:272,525  asgs:(308,noefs=2,fails=52)  fails:3,261  wrgs:7,244  wck:1.54  ngds:321  sols:84  bound:1,741
+    run63  dpts:152..171  robin:FrbaOnDom-Rand  effs:276,905  asgs:(283,noefs=4,fails=55)  fails:3,316  wrgs:7,361  wck:1.56  ngds:322  sols:84  bound:1,741
+    run64  dpts:142..167  robin:Wdeg-First  effs:285,696  asgs:(320,noefs=1,fails=57)  fails:3,373  wrgs:7,508  wck:1.59  ngds:324  sols:84  bound:1,741
+    run65  dpts:150..182  robin:PickOnDom-Last  effs:292,774  asgs:(322,noefs=4,fails=60)  fails:3,433  wrgs:7,655  wck:1.62  ngds:326  sols:84  bound:1,741
+    run66  dpts:185..210  robin:WdegOnDom-Rand  effs:296,797  asgs:(307,noefs=0,fails=63)  fails:3,496  wrgs:7,765  wck:1.63  ngds:330  sols:84  bound:1,741
+[92mo 1643[0m   2.80  ham=18 (6 8 0 2 0 1 1 0 0 0)  opth=3
+    run67  dpts:142..170  robin:FrbaOnDom-First  effs:305,794  asgs:(343,noefs=1,fails=67)  fails:3,563  wrgs:7,926  wck:1.67  ngds:333  sols:85  bound:1,643
+[92mo 1642[0m   2.83  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+    run68  dpts:145..168  robin:Wdeg-Last  effs:313,496  asgs:(282,noefs=1,fails=50)  fails:3,613  wrgs:8,043  wck:1.70  ngds:337  sols:86  bound:1,642
+[92mo 1541[0m   2.87  ham=10 (3 4 0 1 0 1 1 0 0 0)  opth=2
+    run69  dpts:136..174  robin:PickOnDom-Rand  effs:318,273  asgs:(280,noefs=2,fails=50)  fails:3,663  wrgs:8,170  wck:1.73  ngds:344  sols:87  bound:1,541
+    run70  dpts:177..216  robin:WdegOnDom-First  effs:320,886  asgs:(269,noefs=0,fails=50)  fails:3,713  wrgs:8,246  wck:1.74  ngds:347  sols:87  bound:1,541
+    run71  dpts:150..176  robin:FrbaOnDom-Last  effs:326,208  asgs:(298,noefs=3,fails=52)  fails:3,765  wrgs:8,374  wck:1.76  ngds:353  sols:87  bound:1,541
+    run72  dpts:135..155  robin:Wdeg-Rand  effs:333,635  asgs:(296,noefs=1,fails=55)  fails:3,820  wrgs:8,514  wck:1.79  ngds:358  sols:87  bound:1,541
+    run73  dpts:137..166  robin:PickOnDom-First  effs:340,793  asgs:(306,noefs=2,fails=57)  fails:3,877  wrgs:8,664  wck:1.81  ngds:360  sols:87  bound:1,541
+    run74  dpts:174..222  robin:WdegOnDom-Last  effs:343,987  asgs:(338,noefs=3,fails=60)  fails:3,937  wrgs:8,772  wck:1.82  ngds:369  sols:87  bound:1,541
+    run75  dpts:141..167  robin:FrbaOnDom-Rand  effs:352,447  asgs:(380,noefs=5,fails=63)  fails:4,000  wrgs:8,967  wck:1.86  ngds:372  sols:87  bound:1,541
+    run76  dpts:136..158  robin:Wdeg-First  effs:358,778  asgs:(282,noefs=1,fails=67)  fails:4,067  wrgs:9,102  wck:1.88  ngds:375  sols:87  bound:1,541
+    run77  dpts:156..170  robin:PickOnDom-Last  effs:363,287  asgs:(340,noefs=4,fails=70)  fails:4,137  wrgs:9,253  wck:1.90  ngds:381  sols:87  bound:1,541
+    run78  dpts:168..218  robin:WdegOnDom-Rand  effs:368,707  asgs:(413,noefs=0,fails=73)  fails:4,210  wrgs:9,449  wck:1.91  ngds:387  sols:87  bound:1,541
+[92mo 1540[0m   3.10  ham=15 (5 9 0 1 0 0 0 0 0 0)  opth=1
+    run79  dpts:140..163  robin:FrbaOnDom-First  effs:377,661  asgs:(316,noefs=0,fails=77)  fails:4,287  wrgs:9,608  wck:1.95  ngds:390  sols:88  bound:1,540
+[92mo 1539[0m   3.11  ham=7 (2 4 0 1 0 0 0 0 0 0)  opth=1
+[92mo 1442[0m   3.11  ham=19 (12 4 0 0 1 1 1 0 0 0)  opth=2
+    run80  dpts:133..166  robin:Wdeg-Last  effs:383,285  asgs:(318,noefs=5,fails=50)  fails:4,337  wrgs:9,739  wck:1.97  ngds:397  sols:90  bound:1,442
+    run81  dpts:146..184  robin:PickOnDom-Rand  effs:390,313  asgs:(329,noefs=5,fails=50)  fails:4,387  wrgs:9,897  wck:2.00  ngds:399  sols:90  bound:1,442
+    run82  dpts:200..224  robin:WdegOnDom-First  effs:395,063  asgs:(317,noefs=0,fails=52)  fails:4,439  wrgs:10,005  wck:2.02  ngds:401  sols:90  bound:1,442
+[92mo 1441[0m   3.19  ham=20 (5 5 0 0 2 2 2 2 0 2)  opth=4
+    run83  dpts:134..160  robin:FrbaOnDom-Last  effs:401,588  asgs:(254,noefs=0,fails=55)  fails:4,494  wrgs:10,114  wck:2.05  ngds:403  sols:91  bound:1,441
+    run84  dpts:125..144  robin:Wdeg-Rand  effs:407,591  asgs:(237,noefs=1,fails=50)  fails:4,544  wrgs:10,216  wck:2.07  ngds:406  sols:91  bound:1,441
+[92mo 1439[0m   3.23  ham=7 (2 4 0 0 1 0 0 0 0 0)  opth=1
+    run85  dpts:186..197  robin:PickOnDom-First  effs:411,497  asgs:(329,noefs=0,fails=52)  fails:4,596  wrgs:10,333  wck:2.08  ngds:409  sols:92  bound:1,439
+    run86  dpts:222..229  robin:WdegOnDom-Last  effs:415,672  asgs:(330,noefs=0,fails=50)  fails:4,646  wrgs:10,419  wck:2.10  ngds:414  sols:92  bound:1,439
+    run87  dpts:141..174  robin:FrbaOnDom-Rand  effs:419,291  asgs:(233,noefs=5,fails=52)  fails:4,698  wrgs:10,502  wck:2.11  ngds:418  sols:92  bound:1,439
+    run88  dpts:129..152  robin:Wdeg-First  effs:424,000  asgs:(265,noefs=6,fails=55)  fails:4,753  wrgs:10,629  wck:2.13  ngds:422  sols:92  bound:1,439
+    run89  dpts:183..197  robin:PickOnDom-Last  effs:427,809  asgs:(305,noefs=0,fails=57)  fails:4,810  wrgs:10,735  wck:2.15  ngds:423  sols:92  bound:1,439
+    run90  dpts:190..240  robin:WdegOnDom-Rand  effs:433,950  asgs:(337,noefs=0,fails=60)  fails:4,870  wrgs:10,876  wck:2.17  ngds:426  sols:92  bound:1,439
+[33m ...resetting[0m restart cutoff to 55
+    run91  dpts:130..150  robin:FrbaOnDom-First  effs:443,684  asgs:(267,noefs=0,fails=55)  fails:4,925  wrgs:11,005  wck:2.20  ngds:430  sols:92  bound:1,439
+    run92  dpts:112..136  robin:Wdeg-Last  effs:450,344  asgs:(284,noefs=2,fails=57)  fails:4,982  wrgs:11,168  wck:2.23  ngds:432  sols:92  bound:1,439
+    run93  dpts:156..182  robin:PickOnDom-Rand  effs:455,334  asgs:(315,noefs=3,fails=60)  fails:5,042  wrgs:11,306  wck:2.25  ngds:435  sols:92  bound:1,439
+[92mo 1438[0m   3.43  ham=38 (17 18 0 1 0 1 1 0 0 0)  opth=2
+    run94  dpts:172..209  robin:WdegOnDom-First  effs:461,898  asgs:(412,noefs=6,fails=63)  fails:5,105  wrgs:11,491  wck:2.28  ngds:439  sols:93  bound:1,438
+    run95  dpts:134..171  robin:FrbaOnDom-Last  effs:466,710  asgs:(264,noefs=1,fails=55)  fails:5,160  wrgs:11,599  wck:2.30  ngds:445  sols:93  bound:1,438
+[92mo 1437[0m   3.47  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run96  dpts:111..130  robin:Wdeg-Rand  effs:473,768  asgs:(235,noefs=0,fails=57)  fails:5,217  wrgs:11,708  wck:2.33  ngds:447  sols:94  bound:1,437
+    run97  dpts:154..188  robin:PickOnDom-First  effs:480,024  asgs:(319,noefs=2,fails=55)  fails:5,272  wrgs:11,856  wck:2.35  ngds:451  sols:94  bound:1,437
+    run98  dpts:157..197  robin:WdegOnDom-Last  effs:482,404  asgs:(254,noefs=0,fails=57)  fails:5,329  wrgs:11,937  wck:2.37  ngds:453  sols:94  bound:1,437
+    run99  dpts:110..144  robin:FrbaOnDom-Rand  effs:489,338  asgs:(248,noefs=2,fails=60)  fails:5,389  wrgs:12,060  wck:2.39  ngds:454  sols:94  bound:1,437
+    run100  dpts:109..128  robin:Wdeg-First  effs:499,893  asgs:(299,noefs=2,fails=63)  fails:5,452  wrgs:12,237  wck:2.43  ngds:456  sols:94  bound:1,437
+    run101  dpts:144..158  robin:PickOnDom-Last  effs:502,931  asgs:(270,noefs=0,fails=66)  fails:5,518  wrgs:12,353  wck:2.44  ngds:461  sols:94  bound:1,437
+    run102  dpts:161..183  robin:WdegOnDom-Rand  effs:508,830  asgs:(349,noefs=0,fails=70)  fails:5,588  wrgs:12,512  wck:2.47  ngds:463  sols:94  bound:1,437
+    run103  dpts:107..143  robin:FrbaOnDom-First  effs:516,542  asgs:(294,noefs=1,fails=73)  fails:5,661  wrgs:12,666  wck:2.50  ngds:468  sols:94  bound:1,437
+    run104  dpts:123..133  robin:Wdeg-Last  effs:525,304  asgs:(274,noefs=0,fails=77)  fails:5,738  wrgs:12,797  wck:2.53  ngds:472  sols:94  bound:1,437
+    run105  dpts:118..148  robin:PickOnDom-Rand  effs:531,777  asgs:(307,noefs=1,fails=81)  fails:5,819  wrgs:12,970  wck:2.55  ngds:474  sols:94  bound:1,437
+    run106  dpts:184..216  robin:WdegOnDom-First  effs:536,805  asgs:(390,noefs=0,fails=85)  fails:5,904  wrgs:13,141  wck:2.57  ngds:477  sols:94  bound:1,437
+    run107  dpts:108..155  robin:FrbaOnDom-Last  effs:543,062  asgs:(341,noefs=1,fails=89)  fails:5,993  wrgs:13,322  wck:2.59  ngds:483  sols:94  bound:1,437
+[92mo 1436[0m   3.75  ham=26 (10 12 0 2 0 1 1 0 0 0)  opth=3
+[92mo 1435[0m   3.76  ham=15 (5 8 0 0 0 1 1 0 0 0)  opth=1
+    run108  dpts:104..130  robin:Wdeg-Rand  effs:549,915  asgs:(347,noefs=0,fails=94)  fails:6,087  wrgs:13,510  wck:2.62  ngds:485  sols:96  bound:1,435
+    run109  dpts:114..127  robin:PickOnDom-First  effs:552,955  asgs:(230,noefs=13,fails=55)  fails:6,142  wrgs:13,615  wck:2.64  ngds:488  sols:96  bound:1,435
+    run110  dpts:190..202  robin:WdegOnDom-Last  effs:558,670  asgs:(344,noefs=0,fails=57)  fails:6,199  wrgs:13,744  wck:2.66  ngds:496  sols:96  bound:1,435
+    run111  dpts:96..160  robin:FrbaOnDom-Rand  effs:563,892  asgs:(269,noefs=0,fails=60)  fails:6,259  wrgs:13,845  wck:2.68  ngds:503  sols:96  bound:1,435
+    run112  dpts:116..128  robin:Wdeg-First  effs:568,117  asgs:(247,noefs=0,fails=63)  fails:6,322  wrgs:13,960  wck:2.70  ngds:514  sols:96  bound:1,435
+    run113  dpts:113..174  robin:PickOnDom-Last  effs:573,058  asgs:(301,noefs=1,fails=66)  fails:6,388  wrgs:14,093  wck:2.72  ngds:522  sols:96  bound:1,435
+    run114  dpts:162..230  robin:WdegOnDom-Rand  effs:577,080  asgs:(372,noefs=2,fails=70)  fails:6,458  wrgs:14,233  wck:2.74  ngds:529  sols:96  bound:1,435
+    run115  dpts:106..151  robin:FrbaOnDom-First  effs:584,101  asgs:(323,noefs=2,fails=73)  fails:6,531  wrgs:14,402  wck:2.77  ngds:533  sols:96  bound:1,435
+    run116  dpts:111..126  robin:Wdeg-Last  effs:593,228  asgs:(316,noefs=0,fails=77)  fails:6,608  wrgs:14,587  wck:2.80  ngds:537  sols:96  bound:1,435
+    run117  dpts:124..146  robin:PickOnDom-Rand  effs:598,715  asgs:(300,noefs=1,fails=81)  fails:6,689  wrgs:14,753  wck:2.82  ngds:541  sols:96  bound:1,435
+    run118  dpts:176..213  robin:WdegOnDom-First  effs:604,928  asgs:(380,noefs=2,fails=85)  fails:6,774  wrgs:14,931  wck:2.84  ngds:551  sols:96  bound:1,435
+    run119  dpts:130..148  robin:FrbaOnDom-Last  effs:611,272  asgs:(369,noefs=1,fails=89)  fails:6,863  wrgs:15,139  wck:2.87  ngds:559  sols:96  bound:1,435
+[92mo 1434[0m   4.03  ham=9 (2 2 0 1 0 2 2 0 0 0)  opth=3
+[92mo 1336[0m   4.04  ham=13 (4 6 0 1 0 1 1 0 0 0)  opth=2
+    run120  dpts:101..160  robin:Wdeg-Rand  effs:626,567  asgs:(396,noefs=0,fails=94)  fails:6,957  wrgs:15,405  wck:2.94  ngds:560  sols:98  bound:1,336
+    run121  dpts:137..173  robin:PickOnDom-First  effs:630,280  asgs:(296,noefs=1,fails=55)  fails:7,012  wrgs:15,523  wck:2.96  ngds:567  sols:98  bound:1,336
+    run122  dpts:162..181  robin:WdegOnDom-Last  effs:634,277  asgs:(281,noefs=0,fails=57)  fails:7,069  wrgs:15,631  wck:2.97  ngds:571  sols:98  bound:1,336
+    run123  dpts:138..156  robin:FrbaOnDom-Rand  effs:638,235  asgs:(269,noefs=4,fails=60)  fails:7,129  wrgs:15,736  wck:2.99  ngds:578  sols:98  bound:1,336
+    run124  dpts:116..131  robin:Wdeg-First  effs:649,600  asgs:(257,noefs=1,fails=63)  fails:7,192  wrgs:15,867  wck:3.03  ngds:584  sols:98  bound:1,336
+    run125  dpts:140..154  robin:PickOnDom-Last  effs:654,001  asgs:(279,noefs=1,fails=66)  fails:7,258  wrgs:15,986  wck:3.05  ngds:589  sols:98  bound:1,336
+    run126  dpts:155..169  robin:WdegOnDom-Rand  effs:659,324  asgs:(318,noefs=0,fails=70)  fails:7,328  wrgs:16,128  wck:3.07  ngds:593  sols:98  bound:1,336
+    run127  dpts:107..148  robin:FrbaOnDom-First  effs:666,144  asgs:(346,noefs=1,fails=73)  fails:7,401  wrgs:16,324  wck:3.10  ngds:598  sols:98  bound:1,336
+    run128  dpts:121..134  robin:Wdeg-Last  effs:676,082  asgs:(318,noefs=0,fails=77)  fails:7,478  wrgs:16,495  wck:3.14  ngds:599  sols:98  bound:1,336
+    run129  dpts:102..167  robin:PickOnDom-Rand  effs:681,197  asgs:(300,noefs=1,fails=81)  fails:7,559  wrgs:16,625  wck:3.16  ngds:610  sols:98  bound:1,336
+    run130  dpts:146..203  robin:WdegOnDom-First  effs:686,676  asgs:(383,noefs=7,fails=85)  fails:7,644  wrgs:16,804  wck:3.18  ngds:616  sols:98  bound:1,336
+    run131  dpts:131..148  robin:FrbaOnDom-Last  effs:692,844  asgs:(342,noefs=0,fails=89)  fails:7,733  wrgs:16,984  wck:3.21  ngds:621  sols:98  bound:1,336
+    run132  dpts:114..135  robin:Wdeg-Rand  effs:705,782  asgs:(375,noefs=13,fails=94)  fails:7,827  wrgs:17,214  wck:3.26  ngds:625  sols:98  bound:1,336
+[92mo 1334[0m   4.43  ham=15 (7 7 0 1 0 0 0 0 0 0)  opth=1
+    run133  dpts:100..168  robin:PickOnDom-First  effs:715,863  asgs:(412,noefs=5,fails=98)  fails:7,925  wrgs:17,447  wck:3.30  ngds:629  sols:99  bound:1,334
+    run134  dpts:153..170  robin:WdegOnDom-Last  effs:718,804  asgs:(260,noefs=0,fails=55)  fails:7,980  wrgs:17,545  wck:3.31  ngds:632  sols:99  bound:1,334
+    run135  dpts:107..146  robin:FrbaOnDom-Rand  effs:725,806  asgs:(291,noefs=3,fails=57)  fails:8,037  wrgs:17,718  wck:3.34  ngds:633  sols:99  bound:1,334
+    run136  dpts:131..145  robin:Wdeg-First  effs:731,262  asgs:(249,noefs=0,fails=60)  fails:8,097  wrgs:17,827  wck:3.36  ngds:636  sols:99  bound:1,334
+    run137  dpts:122..150  robin:PickOnDom-Last  effs:735,039  asgs:(269,noefs=1,fails=63)  fails:8,160  wrgs:17,955  wck:3.38  ngds:643  sols:99  bound:1,334
+    run138  dpts:125..200  robin:WdegOnDom-Rand  effs:738,504  asgs:(316,noefs=6,fails=66)  fails:8,226  wrgs:18,080  wck:3.39  ngds:647  sols:99  bound:1,334
+    run139  dpts:109..147  robin:FrbaOnDom-First  effs:746,346  asgs:(306,noefs=3,fails=70)  fails:8,296  wrgs:18,231  wck:3.43  ngds:654  sols:99  bound:1,334
+    run140  dpts:94..130  robin:Wdeg-Last  effs:753,152  asgs:(278,noefs=1,fails=73)  fails:8,369  wrgs:18,369  wck:3.45  ngds:656  sols:99  bound:1,334
+    run141  dpts:114..156  robin:PickOnDom-Rand  effs:758,278  asgs:(283,noefs=3,fails=77)  fails:8,446  wrgs:18,532  wck:3.47  ngds:660  sols:99  bound:1,334
+    run142  dpts:140..208  robin:WdegOnDom-First  effs:763,807  asgs:(402,noefs=10,fails=81)  fails:8,527  wrgs:18,728  wck:3.49  ngds:663  sols:99  bound:1,334
+    run143  dpts:119..151  robin:FrbaOnDom-Last  effs:772,420  asgs:(363,noefs=0,fails=85)  fails:8,612  wrgs:18,929  wck:3.53  ngds:668  sols:99  bound:1,334
+    run144  dpts:104..136  robin:Wdeg-Rand  effs:777,082  asgs:(310,noefs=9,fails=89)  fails:8,701  wrgs:19,095  wck:3.55  ngds:674  sols:99  bound:1,334
+    run145  dpts:148..161  robin:PickOnDom-First  effs:782,819  asgs:(376,noefs=16,fails=94)  fails:8,795  wrgs:19,301  wck:3.58  ngds:676  sols:99  bound:1,334
+    run146  dpts:180..211  robin:WdegOnDom-Last  effs:786,412  asgs:(371,noefs=14,fails=98)  fails:8,893  wrgs:19,474  wck:3.59  ngds:681  sols:99  bound:1,334
+    run147  dpts:96..122  robin:FrbaOnDom-Rand  effs:794,511  asgs:(308,noefs=2,fails=103)  fails:8,996  wrgs:19,647  wck:3.62  ngds:688  sols:99  bound:1,334
+[92mo 1333[0m   4.80  ham=37 (13 16 0 2 0 1 1 2 0 2)  opth=3
+[92mo 1332[0m   4.80  ham=13 (4 7 0 0 0 1 1 0 0 0)  opth=1
+    run148  dpts:109..144  robin:Wdeg-First  effs:801,866  asgs:(417,noefs=23,fails=108)  fails:9,104  wrgs:19,893  wck:3.66  ngds:691  sols:101  bound:1,332
+    run149  dpts:92..127  robin:PickOnDom-Last  effs:808,177  asgs:(280,noefs=2,fails=55)  fails:9,159  wrgs:20,051  wck:3.68  ngds:695  sols:101  bound:1,332
+    run150  dpts:176..194  robin:WdegOnDom-Rand  effs:810,906  asgs:(323,noefs=0,fails=57)  fails:9,216  wrgs:20,177  wck:3.70  ngds:701  sols:101  bound:1,332
+    run151  dpts:117..153  robin:FrbaOnDom-First  effs:815,620  asgs:(232,noefs=6,fails=60)  fails:9,276  wrgs:20,286  wck:3.72  ngds:703  sols:101  bound:1,332
+    run152  dpts:119..140  robin:Wdeg-Last  effs:822,110  asgs:(308,noefs=0,fails=63)  fails:9,339  wrgs:20,430  wck:3.74  ngds:707  sols:101  bound:1,332
+    run153  dpts:121..134  robin:PickOnDom-Rand  effs:827,097  asgs:(261,noefs=0,fails=66)  fails:9,405  wrgs:20,548  wck:3.76  ngds:716  sols:101  bound:1,332
+    run154  dpts:164..190  robin:WdegOnDom-First  effs:831,540  asgs:(296,noefs=0,fails=70)  fails:9,475  wrgs:20,665  wck:3.77  ngds:718  sols:101  bound:1,332
+    run155  dpts:112..133  robin:FrbaOnDom-Last  effs:838,934  asgs:(317,noefs=7,fails=73)  fails:9,548  wrgs:20,845  wck:3.81  ngds:724  sols:101  bound:1,332
+    run156  dpts:122..133  robin:Wdeg-Rand  effs:846,084  asgs:(312,noefs=0,fails=77)  fails:9,625  wrgs:20,998  wck:3.84  ngds:727  sols:101  bound:1,332
+    run157  dpts:150..165  robin:PickOnDom-First  effs:852,172  asgs:(312,noefs=2,fails=81)  fails:9,706  wrgs:21,145  wck:3.86  ngds:732  sols:101  bound:1,332
+    run158  dpts:187..202  robin:WdegOnDom-Last  effs:856,434  asgs:(396,noefs=10,fails=85)  fails:9,791  wrgs:21,326  wck:3.88  ngds:734  sols:101  bound:1,332
+    run159  dpts:106..136  robin:FrbaOnDom-Rand  effs:867,617  asgs:(325,noefs=1,fails=89)  fails:9,880  wrgs:21,518  wck:3.92  ngds:741  sols:101  bound:1,332
+    run160  dpts:100..119  robin:Wdeg-First  effs:877,089  asgs:(350,noefs=0,fails=94)  fails:9,974  wrgs:21,740  wck:3.95  ngds:743  sols:101  bound:1,332
+[92mo 1331[0m   5.12  ham=11 (4 0 4 1 0 0 0 1 0 1)  opth=1
+    run161  dpts:135..158  robin:PickOnDom-Last  effs:888,593  asgs:(412,noefs=5,fails=98)  fails:10,072  wrgs:21,956  wck:4.00  ngds:750  sols:102  bound:1,331
+    run162  dpts:138..160  robin:WdegOnDom-Rand  effs:892,792  asgs:(276,noefs=0,fails=55)  fails:10,127  wrgs:22,079  wck:4.02  ngds:752  sols:102  bound:1,331
+[92mo 1329[0m   5.18  ham=5 (4 0 0 1 0 0 0 0 0 0)  opth=1
+    run163  dpts:105..131  robin:FrbaOnDom-First  effs:898,619  asgs:(289,noefs=5,fails=57)  fails:10,184  wrgs:22,221  wck:4.05  ngds:756  sols:103  bound:1,329
+    run164  dpts:90..104  robin:Wdeg-Last  effs:901,657  asgs:(219,noefs=2,fails=55)  fails:10,239  wrgs:22,328  wck:4.07  ngds:761  sols:103  bound:1,329
+    run165  dpts:122..159  robin:PickOnDom-Rand  effs:909,242  asgs:(381,noefs=2,fails=57)  fails:10,296  wrgs:22,569  wck:4.10  ngds:764  sols:103  bound:1,329
+    run166  dpts:151..167  robin:WdegOnDom-First  effs:914,977  asgs:(292,noefs=0,fails=60)  fails:10,356  wrgs:22,694  wck:4.12  ngds:770  sols:103  bound:1,329
+    run167  dpts:113..136  robin:FrbaOnDom-Last  effs:920,496  asgs:(238,noefs=4,fails=63)  fails:10,419  wrgs:22,801  wck:4.14  ngds:779  sols:103  bound:1,329
+    run168  dpts:98..134  robin:Wdeg-Rand  effs:926,829  asgs:(291,noefs=0,fails=66)  fails:10,485  wrgs:22,944  wck:4.16  ngds:790  sols:103  bound:1,329
+    run169  dpts:125..142  robin:PickOnDom-First  effs:932,496  asgs:(271,noefs=1,fails=70)  fails:10,555  wrgs:23,077  wck:4.18  ngds:794  sols:103  bound:1,329
+    run170  dpts:162..182  robin:WdegOnDom-Last  effs:937,185  asgs:(378,noefs=17,fails=73)  fails:10,628  wrgs:23,264  wck:4.20  ngds:800  sols:103  bound:1,329
+    run171  dpts:105..144  robin:FrbaOnDom-Rand  effs:945,515  asgs:(300,noefs=2,fails=77)  fails:10,705  wrgs:23,421  wck:4.24  ngds:809  sols:103  bound:1,329
+    run172  dpts:104..128  robin:Wdeg-First  effs:951,592  asgs:(289,noefs=0,fails=81)  fails:10,786  wrgs:23,575  wck:4.25  ngds:812  sols:103  bound:1,329
+    run173  dpts:129..161  robin:PickOnDom-Last  effs:957,670  asgs:(400,noefs=6,fails=85)  fails:10,871  wrgs:23,801  wck:4.28  ngds:818  sols:103  bound:1,329
+    run174  dpts:130..160  robin:WdegOnDom-Rand  effs:965,212  asgs:(319,noefs=0,fails=89)  fails:10,960  wrgs:23,964  wck:4.31  ngds:823  sols:103  bound:1,329
+    run175  dpts:77..157  robin:FrbaOnDom-First  effs:976,967  asgs:(366,noefs=8,fails=94)  fails:11,054  wrgs:24,194  wck:4.35  ngds:830  sols:103  bound:1,329
+    run176  dpts:104..127  robin:Wdeg-Last  effs:987,320  asgs:(303,noefs=0,fails=98)  fails:11,152  wrgs:24,360  wck:4.39  ngds:838  sols:103  bound:1,329
+    run177  dpts:107..136  robin:PickOnDom-Rand  effs:993,641  asgs:(334,noefs=1,fails=103)  fails:11,255  wrgs:24,566  wck:4.41  ngds:841  sols:103  bound:1,329
+    run178  dpts:154..173  robin:WdegOnDom-First  effs:1,001,841  asgs:(392,noefs=1,fails=108)  fails:11,363  wrgs:24,781  wck:4.45  ngds:848  sols:103  bound:1,329
+    run179  dpts:74..141  robin:FrbaOnDom-Last  effs:1,010,282  asgs:(377,noefs=2,fails=114)  fails:11,477  wrgs:25,018  wck:4.48  ngds:852  sols:103  bound:1,329
+    run180  dpts:98..117  robin:Wdeg-Rand  effs:1,025,839  asgs:(385,noefs=2,fails=120)  fails:11,597  wrgs:25,279  wck:4.53  ngds:858  sols:103  bound:1,329
+[33m ...resetting[0m restart cutoff to 60
+    run181  dpts:112..139  robin:PickOnDom-First  effs:1,028,506  asgs:(255,noefs=9,fails=60)  fails:11,657  wrgs:25,396  wck:4.54  ngds:864  sols:103  bound:1,329
+    run182  dpts:127..150  robin:WdegOnDom-Last  effs:1,033,247  asgs:(273,noefs=0,fails=63)  fails:11,720  wrgs:25,526  wck:4.56  ngds:867  sols:103  bound:1,329
+    run183  dpts:68..142  robin:FrbaOnDom-Rand  effs:1,038,692  asgs:(224,noefs=3,fails=66)  fails:11,786  wrgs:25,663  wck:4.58  ngds:872  sols:103  bound:1,329
+    run184  dpts:101..134  robin:Wdeg-First  effs:1,048,354  asgs:(265,noefs=1,fails=69)  fails:11,855  wrgs:25,798  wck:4.61  ngds:877  sols:103  bound:1,329
+    run185  dpts:112..149  robin:PickOnDom-Last  effs:1,053,992  asgs:(312,noefs=3,fails=72)  fails:11,927  wrgs:25,944  wck:4.63  ngds:882  sols:103  bound:1,329
+    run186  dpts:143..160  robin:WdegOnDom-Rand  effs:1,057,117  asgs:(284,noefs=9,fails=76)  fails:12,003  wrgs:26,068  wck:4.64  ngds:886  sols:103  bound:1,329
+    run187  dpts:81..153  robin:FrbaOnDom-First  effs:1,062,885  asgs:(275,noefs=5,fails=80)  fails:12,083  wrgs:26,251  wck:4.67  ngds:893  sols:103  bound:1,329
+    run188  dpts:108..135  robin:Wdeg-Last  effs:1,075,752  asgs:(282,noefs=0,fails=84)  fails:12,167  wrgs:26,419  wck:4.71  ngds:894  sols:103  bound:1,329
+    run189  dpts:152..183  robin:PickOnDom-Rand  effs:1,082,961  asgs:(397,noefs=4,fails=88)  fails:12,255  wrgs:26,646  wck:4.74  ngds:895  sols:103  bound:1,329
+    run190  dpts:136..152  robin:WdegOnDom-First  effs:1,086,178  asgs:(343,noefs=14,fails=93)  fails:12,348  wrgs:26,830  wck:4.76  ngds:901  sols:103  bound:1,329
+    run191  dpts:66..153  robin:FrbaOnDom-Last  effs:1,091,794  asgs:(316,noefs=4,fails=97)  fails:12,445  wrgs:27,015  wck:4.78  ngds:908  sols:103  bound:1,329
+    run192  dpts:100..125  robin:Wdeg-Rand  effs:1,104,391  asgs:(367,noefs=3,fails=102)  fails:12,547  wrgs:27,242  wck:4.83  ngds:912  sols:103  bound:1,329
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run193  dpts:165..179  robin:PickOnDom-First  effs:1,111,792  asgs:(424,noefs=0,fails=107)  fails:12,654  wrgs:27,470  wck:4.86  ngds:915  sols:103  bound:1,329
+    run194  dpts:166..174  robin:WdegOnDom-Last  effs:1,118,211  asgs:(389,noefs=0,fails=113)  fails:12,767  wrgs:27,674  wck:4.88  ngds:917  sols:103  bound:1,329
+    run195  dpts:195..265  robin:FrbaOnDom-Rand  effs:1,122,024  asgs:(469,noefs=17,fails=118)  fails:12,885  wrgs:27,928  wck:4.89  ngds:920  sols:103  bound:1,329
+    run196  dpts:166..177  robin:Wdeg-First  effs:1,129,061  asgs:(454,noefs=0,fails=124)  fails:13,009  wrgs:28,193  wck:4.92  ngds:923  sols:103  bound:1,329
+    run197  dpts:114..141  robin:PickOnDom-Last  effs:1,139,555  asgs:(413,noefs=1,fails=130)  fails:13,139  wrgs:28,452  wck:4.96  ngds:930  sols:103  bound:1,329
+    run198  dpts:98..144  robin:WdegOnDom-Rand  effs:1,143,143  asgs:(433,noefs=5,fails=137)  fails:13,276  wrgs:28,708  wck:4.97  ngds:936  sols:103  bound:1,329
+    run199  dpts:134..236  robin:FrbaOnDom-First  effs:1,147,989  asgs:(567,noefs=31,fails=144)  fails:13,420  wrgs:29,016  wck:4.99  ngds:943  sols:103  bound:1,329
+    run200  dpts:145..174  robin:Wdeg-Last  effs:1,152,668  asgs:(494,noefs=3,fails=151)  fails:13,571  wrgs:29,310  wck:5.01  ngds:949  sols:103  bound:1,329
+    run201  dpts:150..178  robin:PickOnDom-Rand  effs:1,161,377  asgs:(543,noefs=7,fails=159)  fails:13,730  wrgs:29,641  wck:5.04  ngds:953  sols:103  bound:1,329
+    run202  dpts:153..163  robin:WdegOnDom-First  effs:1,166,561  asgs:(584,noefs=4,fails=167)  fails:13,897  wrgs:30,028  wck:5.08  ngds:959  sols:103  bound:1,329
+    run203  dpts:166..201  robin:FrbaOnDom-Last  effs:1,177,266  asgs:(711,noefs=17,fails=175)  fails:14,072  wrgs:30,495  wck:5.12  ngds:964  sols:103  bound:1,329
+    run204  dpts:103..143  robin:Wdeg-Rand  effs:1,181,455  asgs:(619,noefs=66,fails=184)  fails:14,256  wrgs:30,918  wck:5.14  ngds:968  sols:103  bound:1,329
+    run205  dpts:129..148  robin:PickOnDom-First  effs:1,190,929  asgs:(762,noefs=38,fails=193)  fails:14,449  wrgs:31,502  wck:5.19  ngds:972  sols:103  bound:1,329
+    run206  dpts:87..100  robin:WdegOnDom-Last  effs:1,207,091  asgs:(568,noefs=0,fails=203)  fails:14,652  wrgs:31,918  wck:5.24  ngds:979  sols:103  bound:1,329
+    run207  dpts:124..168  robin:FrbaOnDom-Rand  effs:1,216,761  asgs:(718,noefs=36,fails=213)  fails:14,865  wrgs:32,426  wck:5.29  ngds:988  sols:103  bound:1,329
+    run208  dpts:127..158  robin:Wdeg-First  effs:1,226,110  asgs:(691,noefs=6,fails=224)  fails:15,089  wrgs:32,928  wck:5.34  ngds:992  sols:103  bound:1,329
+    run209  dpts:140..174  robin:PickOnDom-Last  effs:1,239,133  asgs:(971,noefs=8,fails=235)  fails:15,324  wrgs:33,653  wck:5.40  ngds:996  sols:103  bound:1,329
+    run210  dpts:166..186  robin:WdegOnDom-Rand  effs:1,250,353  asgs:(787,noefs=49,fails=246)  fails:15,570  wrgs:34,212  wck:5.45  ngds:1,000  sols:103  bound:1,329
+    run211  dpts:90..139  robin:FrbaOnDom-First  effs:1,270,065  asgs:(676,noefs=6,fails=259)  fails:15,829  wrgs:34,689  wck:5.53  ngds:1,006  sols:103  bound:1,329
+    run212  dpts:121..161  robin:Wdeg-Last  effs:1,294,348  asgs:(913,noefs=13,fails=272)  fails:16,101  wrgs:35,390  wck:5.61  ngds:1,007  sols:103  bound:1,329
+    run213  dpts:119..154  robin:PickOnDom-Rand  effs:1,312,071  asgs:(1180,noefs=18,fails=285)  fails:16,386  wrgs:36,319  wck:5.67  ngds:1,012  sols:103  bound:1,329
+    run214  dpts:145..176  robin:WdegOnDom-First  effs:1,324,383  asgs:(877,noefs=24,fails=300)  fails:16,686  wrgs:36,955  wck:5.71  ngds:1,019  sols:103  bound:1,329
+    run215  dpts:98..128  robin:FrbaOnDom-Last  effs:1,355,133  asgs:(946,noefs=34,fails=315)  fails:17,001  wrgs:37,711  wck:5.86  ngds:1,029  sols:103  bound:1,329
+    run216  dpts:118..149  robin:Wdeg-Rand  effs:1,383,792  asgs:(875,noefs=0,fails=330)  fails:17,331  wrgs:38,362  wck:5.96  ngds:1,033  sols:103  bound:1,329
+    run217  dpts:136..167  robin:PickOnDom-First  effs:1,403,190  asgs:(1174,noefs=17,fails=347)  fails:17,678  wrgs:39,284  wck:6.04  ngds:1,038  sols:103  bound:1,329
+    run218  dpts:148..189  robin:WdegOnDom-Last  effs:1,419,311  asgs:(1089,noefs=30,fails=364)  fails:18,042  wrgs:40,078  wck:6.10  ngds:1,048  sols:103  bound:1,329
+    run219  dpts:102..159  robin:FrbaOnDom-Rand  effs:1,441,722  asgs:(1003,noefs=19,fails=383)  fails:18,425  wrgs:40,846  wck:6.19  ngds:1,060  sols:103  bound:1,329
+    run220  dpts:95..136  robin:Wdeg-First  effs:1,490,369  asgs:(1218,noefs=41,fails=402)  fails:18,827  wrgs:41,870  wck:6.37  ngds:1,062  sols:103  bound:1,329
+    run221  dpts:118..143  robin:PickOnDom-Last  effs:1,519,770  asgs:(1202,noefs=1,fails=422)  fails:19,249  wrgs:42,798  wck:6.47  ngds:1,069  sols:103  bound:1,329
+    run222  dpts:182..206  robin:WdegOnDom-Rand  effs:1,541,489  asgs:(1169,noefs=1,fails=443)  fails:19,692  wrgs:43,628  wck:6.53  ngds:1,082  sols:103  bound:1,329
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run223  dpts:212..259  robin:FrbaOnDom-First  effs:1,561,240  asgs:(1364,noefs=15,fails=465)  fails:20,157  wrgs:44,588  wck:6.61  ngds:1,087  sols:103  bound:1,329
+    run224  dpts:165..178  robin:Wdeg-Last  effs:1,582,525  asgs:(1192,noefs=0,fails=488)  fails:20,645  wrgs:45,441  wck:6.68  ngds:1,097  sols:103  bound:1,329
+    run225  dpts:164..182  robin:PickOnDom-Rand  effs:1,604,291  asgs:(1378,noefs=0,fails=513)  fails:21,158  wrgs:46,442  wck:6.73  ngds:1,104  sols:103  bound:1,329
+    run226  dpts:165..178  robin:WdegOnDom-First  effs:1,630,648  asgs:(1389,noefs=0,fails=539)  fails:21,697  wrgs:47,429  wck:6.80  ngds:1,109  sols:103  bound:1,329
+    run227  dpts:189..264  robin:FrbaOnDom-Last  effs:1,652,575  asgs:(1520,noefs=36,fails=566)  fails:22,263  wrgs:48,595  wck:6.89  ngds:1,118  sols:103  bound:1,329
+    run228  dpts:114..185  robin:Wdeg-Rand  effs:1,683,271  asgs:(1450,noefs=35,fails=594)  fails:22,857  wrgs:49,763  wck:7.02  ngds:1,127  sols:103  bound:1,329
+    run229  dpts:118..142  robin:PickOnDom-First  effs:1,720,379  asgs:(1757,noefs=4,fails=624)  fails:23,481  wrgs:51,177  wck:7.18  ngds:1,132  sols:103  bound:1,329
+    run230  dpts:153..179  robin:WdegOnDom-Last  effs:1,734,174  asgs:(1663,noefs=24,fails=655)  fails:24,136  wrgs:52,381  wck:7.22  ngds:1,139  sols:103  bound:1,329
+    run231  dpts:133..179  robin:FrbaOnDom-Rand  effs:1,798,637  asgs:(2015,noefs=40,fails=688)  fails:24,824  wrgs:54,066  wck:7.53  ngds:1,151  sols:103  bound:1,329
+    run232  dpts:112..152  robin:Wdeg-First  effs:1,857,957  asgs:(2035,noefs=36,fails=722)  fails:25,546  wrgs:55,824  wck:7.75  ngds:1,157  sols:103  bound:1,329
+    run233  dpts:136..171  robin:PickOnDom-Last  effs:1,885,742  asgs:(2239,noefs=29,fails=758)  fails:26,304  wrgs:57,583  wck:7.88  ngds:1,160  sols:103  bound:1,329
+    run234  dpts:81..176  robin:WdegOnDom-Rand  effs:1,918,773  asgs:(2447,noefs=203,fails=796)  fails:27,100  wrgs:59,500  wck:8.03  ngds:1,167  sols:103  bound:1,329
+    run235  dpts:117..160  robin:FrbaOnDom-First  effs:1,978,268  asgs:(2218,noefs=63,fails=836)  fails:27,936  wrgs:61,355  wck:8.27  ngds:1,184  sols:103  bound:1,329
+    run236  dpts:129..162  robin:Wdeg-Last  effs:2,091,368  asgs:(2256,noefs=13,fails=878)  fails:28,814  wrgs:63,353  wck:8.69  ngds:1,186  sols:103  bound:1,329
+    run237  dpts:99..159  robin:PickOnDom-Rand  effs:2,150,927  asgs:(3110,noefs=57,fails=922)  fails:29,736  wrgs:65,964  wck:8.96  ngds:1,198  sols:103  bound:1,329
+    run238  dpts:102..153  robin:WdegOnDom-First  effs:2,218,915  asgs:(2048,noefs=6,fails=968)  fails:30,704  wrgs:67,781  wck:9.13  ngds:1,207  sols:103  bound:1,329
+    run239  dpts:105..190  robin:FrbaOnDom-Last  effs:2,333,235  asgs:(2765,noefs=2,fails=1016)  fails:31,720  wrgs:70,129  wck:9.64  ngds:1,213  sols:103  bound:1,329
+    run240  dpts:87..139  robin:Wdeg-Rand  effs:2,405,887  asgs:(2288,noefs=7,fails=1067)  fails:32,787  wrgs:72,074  wck:9.89  ngds:1,218  sols:103  bound:1,329
+    run241  dpts:98..143  robin:PickOnDom-First  effs:2,462,620  asgs:(2996,noefs=29,fails=1120)  fails:33,907  wrgs:74,647  wck:10.1  ngds:1,228  sols:103  bound:1,329
+    run242  dpts:107..151  robin:WdegOnDom-Last  effs:2,503,728  asgs:(3330,noefs=4,fails=1176)  fails:35,083  wrgs:77,478  wck:10.3  ngds:1,234  sols:103  bound:1,329
+    run243  dpts:96..135  robin:FrbaOnDom-Rand  effs:2,611,442  asgs:(3004,noefs=85,fails=1235)  fails:36,318  wrgs:79,925  wck:10.7  ngds:1,237  sols:103  bound:1,329
+    run244  dpts:85..131  robin:Wdeg-First  effs:2,716,401  asgs:(3287,noefs=92,fails=1297)  fails:37,615  wrgs:82,858  wck:11.2  ngds:1,250  sols:103  bound:1,329
+    run245  dpts:136..165  robin:PickOnDom-Last  effs:2,779,991  asgs:(2911,noefs=1,fails=1362)  fails:38,977  wrgs:85,240  wck:11.4  ngds:1,259  sols:103  bound:1,329
+    run246  dpts:106..172  robin:WdegOnDom-Rand  effs:2,846,717  asgs:(3723,noefs=26,fails=1430)  fails:40,407  wrgs:88,373  wck:11.6  ngds:1,265  sols:103  bound:1,329
+    run247  dpts:72..127  robin:FrbaOnDom-First  effs:2,979,907  asgs:(3439,noefs=49,fails=1501)  fails:41,908  wrgs:91,213  wck:12.0  ngds:1,273  sols:103  bound:1,329
+    run248  dpts:109..153  robin:Wdeg-Last  effs:3,089,098  asgs:(3825,noefs=15,fails=1577)  fails:43,485  wrgs:94,421  wck:12.4  ngds:1,282  sols:103  bound:1,329
+    run249  dpts:87..143  robin:PickOnDom-Rand  effs:3,254,538  asgs:(5100,noefs=47,fails=1655)  fails:45,140  wrgs:98,769  wck:13.1  ngds:1,290  sols:103  bound:1,329
+    run250  dpts:143..184  robin:WdegOnDom-First  effs:3,340,313  asgs:(3976,noefs=32,fails=1738)  fails:46,878  wrgs:102,292  wck:13.4  ngds:1,301  sols:103  bound:1,329
+    run251  dpts:79..116  robin:FrbaOnDom-Last  effs:3,516,368  asgs:(4102,noefs=13,fails=1825)  fails:48,703  wrgs:105,702  wck:14.0  ngds:1,313  sols:103  bound:1,329
+    run252  dpts:124..160  robin:Wdeg-Rand  effs:3,630,989  asgs:(4502,noefs=193,fails=1916)  fails:50,619  wrgs:109,643  wck:14.2  ngds:1,325  sols:103  bound:1,329
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run253  dpts:160..180  robin:PickOnDom-First  effs:3,760,968  asgs:(5777,noefs=0,fails=2012)  fails:52,631  wrgs:114,835  wck:14.5  ngds:1,336  sols:103  bound:1,329
+    run254  dpts:163..178  robin:WdegOnDom-Last  effs:3,861,177  asgs:(5036,noefs=0,fails=2113)  fails:54,744  wrgs:118,997  wck:14.7  ngds:1,343  sols:103  bound:1,329
+    run255  dpts:162..258  robin:FrbaOnDom-Rand  effs:3,967,762  asgs:(4925,noefs=31,fails=2219)  fails:56,963  wrgs:123,257  wck:15.2  ngds:1,350  sols:103  bound:1,329
+    run256  dpts:161..178  robin:Wdeg-First  effs:4,106,263  asgs:(5525,noefs=22,fails=2329)  fails:59,292  wrgs:128,167  wck:15.5  ngds:1,358  sols:103  bound:1,329
+    run257  dpts:121..155  robin:PickOnDom-Last  effs:4,231,154  asgs:(5803,noefs=39,fails=2446)  fails:61,738  wrgs:132,944  wck:16.0  ngds:1,367  sols:103  bound:1,329
+    run258  dpts:98..214  robin:WdegOnDom-Rand  effs:4,285,129  asgs:(6245,noefs=87,fails=2568)  fails:64,306  wrgs:138,174  wck:16.2  ngds:1,372  sols:103  bound:1,329
+    run259  dpts:119..208  robin:FrbaOnDom-First  effs:4,450,266  asgs:(6815,noefs=386,fails=2697)  fails:67,003  wrgs:144,097  wck:17.0  ngds:1,382  sols:103  bound:1,329
+    run260  dpts:111..178  robin:Wdeg-Last  effs:4,560,173  asgs:(7039,noefs=364,fails=2832)  fails:69,835  wrgs:150,001  wck:17.6  ngds:1,391  sols:103  bound:1,329
+    run261  dpts:135..184  robin:PickOnDom-Rand  effs:4,718,195  asgs:(8918,noefs=79,fails=2973)  fails:72,808  wrgs:157,744  wck:18.4  ngds:1,401  sols:103  bound:1,329
+    run262  dpts:86..173  robin:WdegOnDom-First  effs:4,849,536  asgs:(8521,noefs=713,fails=3122)  fails:75,930  wrgs:165,390  wck:18.8  ngds:1,407  sols:103  bound:1,329
+    run263  dpts:91..177  robin:FrbaOnDom-Last  effs:5,061,699  asgs:(7559,noefs=13,fails=3278)  fails:79,208  wrgs:171,613  wck:19.5  ngds:1,421  sols:103  bound:1,329
+    run264  dpts:109..155  robin:Wdeg-Rand  effs:5,394,425  asgs:(8364,noefs=153,fails=3442)  fails:82,650  wrgs:178,771  wck:20.7  ngds:1,431  sols:103  bound:1,329
+    run265  dpts:101..148  robin:PickOnDom-First  effs:5,551,782  asgs:(8953,noefs=160,fails=3614)  fails:86,264  wrgs:186,149  wck:21.4  ngds:1,441  sols:103  bound:1,329
+    run266  dpts:103..183  robin:WdegOnDom-Last  effs:5,720,946  asgs:(9640,noefs=286,fails=3795)  fails:90,059  wrgs:194,337  wck:22.1  ngds:1,451  sols:103  bound:1,329
+    run267  dpts:107..154  robin:FrbaOnDom-Rand  effs:6,016,787  asgs:(10647,noefs=326,fails=3985)  fails:94,044  wrgs:203,489  wck:23.3  ngds:1,463  sols:103  bound:1,329
+    run268  dpts:106..148  robin:Wdeg-First  effs:6,501,586  asgs:(10221,noefs=42,fails=4184)  fails:98,228  wrgs:212,716  wck:24.8  ngds:1,478  sols:103  bound:1,329
+    run269  dpts:103..179  robin:PickOnDom-Last  effs:6,947,342  asgs:(14135,noefs=46,fails=4393)  fails:102,621  wrgs:225,245  wck:26.5  ngds:1,486  sols:103  bound:1,329
+    run270  dpts:130..163  robin:WdegOnDom-Rand  effs:7,201,791  asgs:(10360,noefs=50,fails=4613)  fails:107,234  wrgs:233,919  wck:27.3  ngds:1,495  sols:103  bound:1,329
+[33m ...resetting[0m restart cutoff to 65
+    run271  dpts:129..153  robin:FrbaOnDom-First  effs:7,208,144  asgs:(289,noefs=3,fails=65)  fails:107,299  wrgs:234,055  wck:27.3  ngds:1,501  sols:103  bound:1,329
+    run272  dpts:143..160  robin:Wdeg-Last  effs:7,216,969  asgs:(329,noefs=8,fails=68)  fails:107,367  wrgs:234,212  wck:27.3  ngds:1,503  sols:103  bound:1,329
+    run273  dpts:138..165  robin:PickOnDom-Rand  effs:7,222,211  asgs:(282,noefs=0,fails=71)  fails:107,438  wrgs:234,335  wck:27.4  ngds:1,509  sols:103  bound:1,329
+    run274  dpts:159..181  robin:WdegOnDom-First  effs:7,227,480  asgs:(417,noefs=16,fails=75)  fails:107,513  wrgs:234,554  wck:27.4  ngds:1,517  sols:103  bound:1,329
+    run275  dpts:119..129  robin:FrbaOnDom-Last  effs:7,239,167  asgs:(293,noefs=1,fails=79)  fails:107,592  wrgs:234,704  wck:27.4  ngds:1,523  sols:103  bound:1,329
+    run276  dpts:145..156  robin:Wdeg-Rand  effs:7,248,907  asgs:(357,noefs=4,fails=82)  fails:107,674  wrgs:234,886  wck:27.5  ngds:1,527  sols:103  bound:1,329
+    run277  dpts:147..162  robin:PickOnDom-First  effs:7,254,633  asgs:(344,noefs=0,fails=87)  fails:107,761  wrgs:235,067  wck:27.5  ngds:1,530  sols:103  bound:1,329
+    run278  dpts:155..182  robin:WdegOnDom-Last  effs:7,262,734  asgs:(493,noefs=17,fails=91)  fails:107,852  wrgs:235,356  wck:27.5  ngds:1,532  sols:103  bound:1,329
+    run279  dpts:122..140  robin:FrbaOnDom-Rand  effs:7,270,289  asgs:(351,noefs=10,fails=96)  fails:107,948  wrgs:235,552  wck:27.6  ngds:1,536  sols:103  bound:1,329
+    run280  dpts:140..154  robin:Wdeg-First  effs:7,282,412  asgs:(367,noefs=4,fails=100)  fails:108,048  wrgs:235,756  wck:27.6  ngds:1,540  sols:103  bound:1,329
+    run281  dpts:131..161  robin:PickOnDom-Last  effs:7,290,010  asgs:(470,noefs=0,fails=105)  fails:108,153  wrgs:236,065  wck:27.7  ngds:1,542  sols:103  bound:1,329
+    run282  dpts:153..168  robin:WdegOnDom-Rand  effs:7,294,175  asgs:(415,noefs=22,fails=111)  fails:108,264  wrgs:236,296  wck:27.7  ngds:1,547  sols:103  bound:1,329
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run283  dpts:212..252  robin:FrbaOnDom-First  effs:7,300,743  asgs:(470,noefs=12,fails=116)  fails:108,380  wrgs:236,505  wck:27.7  ngds:1,555  sols:103  bound:1,329
+    run284  dpts:162..175  robin:Wdeg-Last  effs:7,308,156  asgs:(420,noefs=0,fails=122)  fails:108,502  wrgs:236,720  wck:27.7  ngds:1,560  sols:103  bound:1,329
+    run285  dpts:162..176  robin:PickOnDom-Rand  effs:7,315,631  asgs:(452,noefs=0,fails=128)  fails:108,630  wrgs:236,959  wck:27.7  ngds:1,564  sols:103  bound:1,329
+    run286  dpts:163..176  robin:WdegOnDom-First  effs:7,325,437  asgs:(478,noefs=0,fails=135)  fails:108,765  wrgs:237,244  wck:27.8  ngds:1,568  sols:103  bound:1,329
+    run287  dpts:222..249  robin:FrbaOnDom-Last  effs:7,329,598  asgs:(489,noefs=25,fails=141)  fails:108,906  wrgs:237,471  wck:27.8  ngds:1,573  sols:103  bound:1,329
+    run288  dpts:122..167  robin:Wdeg-Rand  effs:7,332,575  asgs:(409,noefs=2,fails=148)  fails:109,054  wrgs:237,705  wck:27.8  ngds:1,578  sols:103  bound:1,329
+    run289  dpts:114..132  robin:PickOnDom-First  effs:7,343,872  asgs:(519,noefs=1,fails=156)  fails:109,210  wrgs:238,045  wck:27.9  ngds:1,584  sols:103  bound:1,329
+    run290  dpts:95..139  robin:WdegOnDom-Last  effs:7,347,049  asgs:(455,noefs=0,fails=164)  fails:109,374  wrgs:238,340  wck:27.9  ngds:1,587  sols:103  bound:1,329
+    run291  dpts:170..208  robin:FrbaOnDom-Rand  effs:7,358,273  asgs:(677,noefs=36,fails=172)  fails:109,546  wrgs:238,765  wck:27.9  ngds:1,590  sols:103  bound:1,329
+    run292  dpts:99..171  robin:Wdeg-First  effs:7,365,563  asgs:(620,noefs=20,fails=181)  fails:109,727  wrgs:239,180  wck:28.0  ngds:1,598  sols:103  bound:1,329
+    run293  dpts:121..173  robin:PickOnDom-Last  effs:7,376,986  asgs:(556,noefs=9,fails=190)  fails:109,917  wrgs:239,520  wck:28.0  ngds:1,605  sols:103  bound:1,329
+    run294  dpts:135..150  robin:WdegOnDom-Rand  effs:7,381,136  asgs:(535,noefs=16,fails=199)  fails:110,116  wrgs:239,877  wck:28.0  ngds:1,611  sols:103  bound:1,329
+    run295  dpts:120..173  robin:FrbaOnDom-First  effs:7,398,944  asgs:(661,noefs=46,fails=209)  fails:110,325  wrgs:240,352  wck:28.1  ngds:1,617  sols:103  bound:1,329
+    run296  dpts:110..147  robin:Wdeg-Last  effs:7,421,552  asgs:(720,noefs=7,fails=220)  fails:110,545  wrgs:240,907  wck:28.2  ngds:1,622  sols:103  bound:1,329
+    run297  dpts:143..175  robin:PickOnDom-Rand  effs:7,439,828  asgs:(917,noefs=20,fails=231)  fails:110,776  wrgs:241,609  wck:28.3  ngds:1,625  sols:103  bound:1,329
+    run298  dpts:76..175  robin:WdegOnDom-First  effs:7,452,185  asgs:(696,noefs=19,fails=242)  fails:111,018  wrgs:242,109  wck:28.4  ngds:1,632  sols:103  bound:1,329
+    run299  dpts:120..153  robin:FrbaOnDom-Last  effs:7,479,323  asgs:(776,noefs=15,fails=254)  fails:111,272  wrgs:242,657  wck:28.4  ngds:1,636  sols:103  bound:1,329
+    run300  dpts:110..133  robin:Wdeg-Rand  effs:7,515,646  asgs:(798,noefs=13,fails=267)  fails:111,539  wrgs:243,280  wck:28.6  ngds:1,640  sols:103  bound:1,329
+[92mo 1323[0m   29.7  ham=37 (15 8 4 2 0 0 0 4 0 4)  opth=2
+    run301  dpts:80..186  robin:PickOnDom-First  effs:7,534,352  asgs:(943,noefs=5,fails=280)  fails:111,819  wrgs:243,973  wck:28.6  ngds:1,644  sols:104  bound:1,323
+    run302  dpts:86..160  robin:WdegOnDom-Last  effs:7,539,203  asgs:(335,noefs=11,fails=65)  fails:111,884  wrgs:244,148  wck:28.7  ngds:1,648  sols:104  bound:1,323
+    run303  dpts:111..129  robin:FrbaOnDom-Rand  effs:7,543,705  asgs:(265,noefs=2,fails=68)  fails:111,952  wrgs:244,281  wck:28.7  ngds:1,651  sols:104  bound:1,323
+    run304  dpts:134..145  robin:Wdeg-First  effs:7,549,871  asgs:(277,noefs=0,fails=71)  fails:112,023  wrgs:244,409  wck:28.7  ngds:1,655  sols:104  bound:1,323
+    run305  dpts:61..155  robin:PickOnDom-Last  effs:7,555,539  asgs:(316,noefs=12,fails=75)  fails:112,098  wrgs:244,552  wck:28.7  ngds:1,664  sols:104  bound:1,323
+    run306  dpts:146..170  robin:WdegOnDom-Rand  effs:7,560,193  asgs:(341,noefs=5,fails=79)  fails:112,177  wrgs:244,725  wck:28.7  ngds:1,667  sols:104  bound:1,323
+    run307  dpts:116..144  robin:FrbaOnDom-First  effs:7,567,850  asgs:(331,noefs=8,fails=82)  fails:112,259  wrgs:244,899  wck:28.8  ngds:1,672  sols:104  bound:1,323
+    run308  dpts:105..145  robin:Wdeg-Last  effs:7,577,536  asgs:(348,noefs=10,fails=87)  fails:112,346  wrgs:245,087  wck:28.8  ngds:1,677  sols:104  bound:1,323
+    run309  dpts:94..167  robin:PickOnDom-Rand  effs:7,582,845  asgs:(377,noefs=8,fails=91)  fails:112,437  wrgs:245,255  wck:28.8  ngds:1,682  sols:104  bound:1,323
+    run310  dpts:92..166  robin:WdegOnDom-First  effs:7,591,094  asgs:(401,noefs=11,fails=96)  fails:112,533  wrgs:245,522  wck:28.9  ngds:1,687  sols:104  bound:1,323
+    run311  dpts:101..127  robin:FrbaOnDom-Last  effs:7,600,606  asgs:(320,noefs=1,fails=100)  fails:112,633  wrgs:245,728  wck:28.9  ngds:1,690  sols:104  bound:1,323
+    run312  dpts:126..148  robin:Wdeg-Rand  effs:7,608,982  asgs:(396,noefs=35,fails=105)  fails:112,738  wrgs:245,965  wck:28.9  ngds:1,692  sols:104  bound:1,323
+    run313  dpts:104..159  robin:PickOnDom-First  effs:7,613,246  asgs:(427,noefs=8,fails=111)  fails:112,849  wrgs:246,209  wck:29.0  ngds:1,702  sols:104  bound:1,323
+    run314  dpts:119..134  robin:WdegOnDom-Last  effs:7,623,333  asgs:(400,noefs=0,fails=116)  fails:112,965  wrgs:246,454  wck:29.0  ngds:1,711  sols:104  bound:1,323
+    run315  dpts:94..122  robin:FrbaOnDom-Rand  effs:7,634,151  asgs:(356,noefs=2,fails=122)  fails:113,087  wrgs:246,686  wck:29.0  ngds:1,715  sols:104  bound:1,323
+    run316  dpts:123..151  robin:Wdeg-First  effs:7,648,363  asgs:(502,noefs=20,fails=128)  fails:113,215  wrgs:247,004  wck:29.1  ngds:1,719  sols:104  bound:1,323
+    run317  dpts:116..152  robin:PickOnDom-Last  effs:7,654,988  asgs:(501,noefs=8,fails=135)  fails:113,350  wrgs:247,312  wck:29.1  ngds:1,728  sols:104  bound:1,323
+    run318  dpts:118..144  robin:WdegOnDom-Rand  effs:7,660,438  asgs:(431,noefs=24,fails=141)  fails:113,491  wrgs:247,592  wck:29.1  ngds:1,734  sols:104  bound:1,323
+    run319  dpts:98..128  robin:FrbaOnDom-First  effs:7,674,846  asgs:(441,noefs=3,fails=148)  fails:113,639  wrgs:247,897  wck:29.2  ngds:1,737  sols:104  bound:1,323
+    run320  dpts:127..154  robin:Wdeg-Last  effs:7,689,990  asgs:(465,noefs=1,fails=156)  fails:113,795  wrgs:248,178  wck:29.2  ngds:1,744  sols:104  bound:1,323
+[92mo 1322[0m   30.4  ham=24 (9 10 0 1 0 2 2 0 0 0)  opth=3
+    run321  dpts:114..153  robin:PickOnDom-Rand  effs:7,706,654  asgs:(573,noefs=9,fails=164)  fails:113,959  wrgs:248,568  wck:29.3  ngds:1,748  sols:105  bound:1,322
+    run322  dpts:124..163  robin:WdegOnDom-First  effs:7,710,184  asgs:(269,noefs=12,fails=65)  fails:114,024  wrgs:248,672  wck:29.3  ngds:1,754  sols:105  bound:1,322
+    run323  dpts:99..132  robin:FrbaOnDom-Last  effs:7,716,168  asgs:(249,noefs=0,fails=68)  fails:114,092  wrgs:248,809  wck:29.4  ngds:1,766  sols:105  bound:1,322
+    run324  dpts:109..161  robin:Wdeg-Rand  effs:7,727,609  asgs:(326,noefs=5,fails=71)  fails:114,163  wrgs:248,958  wck:29.4  ngds:1,771  sols:105  bound:1,322
+    run325  dpts:124..140  robin:PickOnDom-First  effs:7,730,049  asgs:(250,noefs=4,fails=75)  fails:114,238  wrgs:249,074  wck:29.4  ngds:1,775  sols:105  bound:1,322
+    run326  dpts:152..172  robin:WdegOnDom-Last  effs:7,735,236  asgs:(380,noefs=21,fails=79)  fails:114,317  wrgs:249,272  wck:29.4  ngds:1,782  sols:105  bound:1,322
+    run327  dpts:103..110  robin:FrbaOnDom-Rand  effs:7,742,156  asgs:(254,noefs=0,fails=82)  fails:114,399  wrgs:249,400  wck:29.5  ngds:1,787  sols:105  bound:1,322
+[92mo 1229[0m   30.6  ham=34 (14 9 0 3 0 3 3 1 0 1)  opth=6
+    run328  dpts:142..163  robin:Wdeg-First  effs:7,755,847  asgs:(407,noefs=1,fails=87)  fails:114,486  wrgs:249,627  wck:29.5  ngds:1,789  sols:106  bound:1,229
+    run329  dpts:159..184  robin:PickOnDom-Last  effs:7,759,405  asgs:(343,noefs=4,fails=65)  fails:114,551  wrgs:249,763  wck:29.5  ngds:1,793  sols:106  bound:1,229
+    run330  dpts:160..176  robin:WdegOnDom-Rand  effs:7,764,477  asgs:(294,noefs=0,fails=68)  fails:114,619  wrgs:249,884  wck:29.5  ngds:1,796  sols:106  bound:1,229
+    run331  dpts:113..132  robin:FrbaOnDom-First  effs:7,772,076  asgs:(290,noefs=1,fails=71)  fails:114,690  wrgs:250,030  wck:29.6  ngds:1,802  sols:106  bound:1,229
+[92mo 1228[0m   30.7  ham=24 (8 6 0 2 0 3 3 1 0 1)  opth=5
+[92mo 1226[0m   30.8  ham=16 (7 8 0 1 0 0 0 0 0 0)  opth=1
+    run332  dpts:146..167  robin:Wdeg-Last  effs:7,782,028  asgs:(321,noefs=6,fails=75)  fails:114,765  wrgs:250,181  wck:29.6  ngds:1,805  sols:108  bound:1,226
+[92mo 1225[0m   30.8  ham=8 (2 4 0 0 0 1 1 0 0 0)  opth=1
+    run333  dpts:94..159  robin:PickOnDom-Rand  effs:7,787,326  asgs:(359,noefs=12,fails=65)  fails:114,830  wrgs:250,330  wck:29.6  ngds:1,809  sols:109  bound:1,225
+    run334  dpts:133..161  robin:WdegOnDom-First  effs:7,793,861  asgs:(279,noefs=0,fails=65)  fails:114,895  wrgs:250,464  wck:29.7  ngds:1,813  sols:109  bound:1,225
+    run335  dpts:96..120  robin:FrbaOnDom-Last  effs:7,799,179  asgs:(254,noefs=2,fails=68)  fails:114,963  wrgs:250,588  wck:29.7  ngds:1,815  sols:109  bound:1,225
+    run336  dpts:140..160  robin:Wdeg-Rand  effs:7,812,400  asgs:(330,noefs=0,fails=71)  fails:115,034  wrgs:250,755  wck:29.7  ngds:1,816  sols:109  bound:1,225
+    run337  dpts:98..166  robin:PickOnDom-First  effs:7,817,948  asgs:(360,noefs=8,fails=75)  fails:115,109  wrgs:250,959  wck:29.8  ngds:1,820  sols:109  bound:1,225
+    run338  dpts:104..141  robin:WdegOnDom-Last  effs:7,827,471  asgs:(324,noefs=2,fails=79)  fails:115,188  wrgs:251,155  wck:29.8  ngds:1,827  sols:109  bound:1,225
+    run339  dpts:64..113  robin:FrbaOnDom-Rand  effs:7,835,008  asgs:(272,noefs=10,fails=82)  fails:115,270  wrgs:251,338  wck:29.8  ngds:1,831  sols:109  bound:1,225
+    run340  dpts:132..146  robin:Wdeg-First  effs:7,844,718  asgs:(316,noefs=0,fails=87)  fails:115,357  wrgs:251,502  wck:29.9  ngds:1,835  sols:109  bound:1,225
+    run341  dpts:128..145  robin:PickOnDom-Last  effs:7,850,269  asgs:(391,noefs=5,fails=91)  fails:115,448  wrgs:251,703  wck:29.9  ngds:1,839  sols:109  bound:1,225
+    run342  dpts:119..140  robin:WdegOnDom-Rand  effs:7,857,491  asgs:(336,noefs=0,fails=96)  fails:115,544  wrgs:251,890  wck:29.9  ngds:1,844  sols:109  bound:1,225
+[92mo 1223[0m   31.1  ham=17 (8 4 4 1 0 0 0 0 0 0)  opth=1
+    run343  dpts:55..125  robin:FrbaOnDom-First  effs:7,873,057  asgs:(368,noefs=4,fails=100)  fails:115,644  wrgs:252,150  wck:30.0  ngds:1,849  sols:110  bound:1,223
+[92mo 1222[0m   31.1  ham=14 (5 6 0 1 0 1 1 0 0 0)  opth=2
+    run344  dpts:124..155  robin:Wdeg-Last  effs:7,880,722  asgs:(283,noefs=1,fails=65)  fails:115,709  wrgs:252,274  wck:30.0  ngds:1,853  sols:111  bound:1,222
+    run345  dpts:132..173  robin:PickOnDom-Rand  effs:7,887,462  asgs:(307,noefs=3,fails=65)  fails:115,774  wrgs:252,426  wck:30.0  ngds:1,856  sols:111  bound:1,222
+    run346  dpts:144..157  robin:WdegOnDom-First  effs:7,890,619  asgs:(337,noefs=16,fails=68)  fails:115,842  wrgs:252,599  wck:30.0  ngds:1,860  sols:111  bound:1,222
+    run347  dpts:83..103  robin:FrbaOnDom-Last  effs:7,894,147  asgs:(286,noefs=10,fails=71)  fails:115,913  wrgs:252,775  wck:30.1  ngds:1,865  sols:111  bound:1,222
+    run348  dpts:130..163  robin:Wdeg-Rand  effs:7,904,890  asgs:(290,noefs=0,fails=75)  fails:115,988  wrgs:252,927  wck:30.1  ngds:1,872  sols:111  bound:1,222
+    run349  dpts:131..157  robin:PickOnDom-First  effs:7,911,633  asgs:(309,noefs=3,fails=79)  fails:116,067  wrgs:253,099  wck:30.1  ngds:1,875  sols:111  bound:1,222
+    run350  dpts:127..139  robin:WdegOnDom-Last  effs:7,917,504  asgs:(306,noefs=0,fails=82)  fails:116,149  wrgs:253,246  wck:30.2  ngds:1,882  sols:111  bound:1,222
+    run351  dpts:72..92  robin:FrbaOnDom-Rand  effs:7,920,024  asgs:(242,noefs=12,fails=87)  fails:116,236  wrgs:253,391  wck:30.2  ngds:1,885  sols:111  bound:1,222
+    run352  dpts:108..123  robin:Wdeg-First  effs:7,930,842  asgs:(352,noefs=2,fails=91)  fails:116,327  wrgs:253,609  wck:30.2  ngds:1,889  sols:111  bound:1,222
+    run353  dpts:112..171  robin:PickOnDom-Last  effs:7,939,485  asgs:(393,noefs=6,fails=96)  fails:116,423  wrgs:253,834  wck:30.3  ngds:1,892  sols:111  bound:1,222
+    run354  dpts:154..172  robin:WdegOnDom-Rand  effs:7,945,707  asgs:(459,noefs=21,fails=100)  fails:116,523  wrgs:254,095  wck:30.3  ngds:1,897  sols:111  bound:1,222
+    run355  dpts:79..142  robin:FrbaOnDom-First  effs:7,953,324  asgs:(309,noefs=1,fails=105)  fails:116,628  wrgs:254,312  wck:30.3  ngds:1,898  sols:111  bound:1,222
+    run356  dpts:109..128  robin:Wdeg-Last  effs:7,968,260  asgs:(353,noefs=0,fails=111)  fails:116,739  wrgs:254,534  wck:30.4  ngds:1,901  sols:111  bound:1,222
+    run357  dpts:154..192  robin:PickOnDom-Rand  effs:7,976,132  asgs:(472,noefs=4,fails=116)  fails:116,855  wrgs:254,812  wck:30.4  ngds:1,904  sols:111  bound:1,222
+    run358  dpts:126..171  robin:WdegOnDom-First  effs:7,984,898  asgs:(484,noefs=4,fails=122)  fails:116,977  wrgs:255,108  wck:30.4  ngds:1,913  sols:111  bound:1,222
+    run359  dpts:91..118  robin:FrbaOnDom-Last  effs:7,993,923  asgs:(423,noefs=22,fails=128)  fails:117,105  wrgs:255,412  wck:30.5  ngds:1,918  sols:111  bound:1,222
+    run360  dpts:98..135  robin:Wdeg-Rand  effs:8,006,330  asgs:(405,noefs=3,fails=135)  fails:117,240  wrgs:255,686  wck:30.5  ngds:1,923  sols:111  bound:1,222
+[33m ...resetting[0m restart cutoff to 70
+    run361  dpts:139..163  robin:PickOnDom-First  effs:8,014,242  asgs:(295,noefs=4,fails=70)  fails:117,310  wrgs:255,832  wck:30.5  ngds:1,927  sols:111  bound:1,222
+    run362  dpts:153..169  robin:WdegOnDom-Last  effs:8,018,773  asgs:(328,noefs=5,fails=73)  fails:117,383  wrgs:255,990  wck:30.6  ngds:1,930  sols:111  bound:1,222
+    run363  dpts:81..106  robin:FrbaOnDom-Rand  effs:8,024,744  asgs:(287,noefs=3,fails=77)  fails:117,460  wrgs:256,156  wck:30.6  ngds:1,935  sols:111  bound:1,222
+    run364  dpts:104..125  robin:Wdeg-First  effs:8,032,677  asgs:(326,noefs=6,fails=81)  fails:117,541  wrgs:256,344  wck:30.6  ngds:1,941  sols:111  bound:1,222
+    run365  dpts:139..188  robin:PickOnDom-Last  effs:8,036,986  asgs:(361,noefs=3,fails=85)  fails:117,626  wrgs:256,501  wck:30.6  ngds:1,947  sols:111  bound:1,222
+    run366  dpts:112..127  robin:WdegOnDom-Rand  effs:8,044,356  asgs:(380,noefs=38,fails=89)  fails:117,715  wrgs:256,737  wck:30.7  ngds:1,951  sols:111  bound:1,222
+    run367  dpts:79..103  robin:FrbaOnDom-First  effs:8,052,236  asgs:(303,noefs=15,fails=93)  fails:117,808  wrgs:256,927  wck:30.7  ngds:1,958  sols:111  bound:1,222
+    run368  dpts:88..99  robin:Wdeg-Last  effs:8,063,835  asgs:(277,noefs=1,fails=98)  fails:117,906  wrgs:257,089  wck:30.7  ngds:1,960  sols:111  bound:1,222
+    run369  dpts:99..198  robin:PickOnDom-Rand  effs:8,070,555  asgs:(389,noefs=4,fails=103)  fails:118,009  wrgs:257,276  wck:30.8  ngds:1,969  sols:111  bound:1,222
+    run370  dpts:132..160  robin:WdegOnDom-First  effs:8,086,627  asgs:(393,noefs=0,fails=108)  fails:118,117  wrgs:257,479  wck:30.8  ngds:1,973  sols:111  bound:1,222
+    run371  dpts:84..99  robin:FrbaOnDom-Last  effs:8,092,793  asgs:(383,noefs=25,fails=114)  fails:118,231  wrgs:257,745  wck:30.8  ngds:1,979  sols:111  bound:1,222
+    run372  dpts:77..110  robin:Wdeg-Rand  effs:8,103,270  asgs:(408,noefs=17,fails=119)  fails:118,350  wrgs:258,027  wck:30.9  ngds:1,983  sols:111  bound:1,222
+    run373  dpts:134..153  robin:PickOnDom-First  effs:8,109,146  asgs:(461,noefs=7,fails=125)  fails:118,475  wrgs:258,307  wck:30.9  ngds:1,988  sols:111  bound:1,222
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run374  dpts:163..175  robin:WdegOnDom-Last  effs:8,116,436  asgs:(446,noefs=0,fails=131)  fails:118,606  wrgs:258,548  wck:30.9  ngds:1,992  sols:111  bound:1,222
+    run375  dpts:253..271  robin:FrbaOnDom-Rand  effs:8,124,309  asgs:(586,noefs=13,fails=138)  fails:118,744  wrgs:258,822  wck:31.0  ngds:1,998  sols:111  bound:1,222
+    run376  dpts:162..175  robin:Wdeg-First  effs:8,134,161  asgs:(496,noefs=1,fails=145)  fails:118,889  wrgs:259,130  wck:31.0  ngds:2,001  sols:111  bound:1,222
+    run377  dpts:162..173  robin:PickOnDom-Last  effs:8,143,152  asgs:(478,noefs=0,fails=152)  fails:119,041  wrgs:259,397  wck:31.0  ngds:2,010  sols:111  bound:1,222
+    run378  dpts:143..163  robin:WdegOnDom-Rand  effs:8,148,857  asgs:(520,noefs=28,fails=160)  fails:119,201  wrgs:259,716  wck:31.0  ngds:2,018  sols:111  bound:1,222
+    run379  dpts:179..226  robin:FrbaOnDom-First  effs:8,157,660  asgs:(564,noefs=16,fails=168)  fails:119,369  wrgs:260,073  wck:31.1  ngds:2,019  sols:111  bound:1,222
+    run380  dpts:155..171  robin:Wdeg-Last  effs:8,164,171  asgs:(573,noefs=37,fails=176)  fails:119,545  wrgs:260,432  wck:31.1  ngds:2,027  sols:111  bound:1,222
+    run381  dpts:124..154  robin:PickOnDom-Rand  effs:8,178,884  asgs:(691,noefs=3,fails=185)  fails:119,730  wrgs:260,919  wck:31.2  ngds:2,030  sols:111  bound:1,222
+    run382  dpts:146..193  robin:WdegOnDom-First  effs:8,188,439  asgs:(665,noefs=54,fails=195)  fails:119,925  wrgs:261,407  wck:31.2  ngds:2,032  sols:111  bound:1,222
+    run383  dpts:150..219  robin:FrbaOnDom-Last  effs:8,200,170  asgs:(706,noefs=35,fails=204)  fails:120,129  wrgs:261,894  wck:31.3  ngds:2,036  sols:111  bound:1,222
+    run384  dpts:152..167  robin:Wdeg-Rand  effs:8,212,802  asgs:(599,noefs=1,fails=215)  fails:120,344  wrgs:262,312  wck:31.3  ngds:2,042  sols:111  bound:1,222
+    run385  dpts:160..176  robin:PickOnDom-First  effs:8,225,615  asgs:(685,noefs=2,fails=225)  fails:120,569  wrgs:262,801  wck:31.4  ngds:2,049  sols:111  bound:1,222
+    run386  dpts:105..156  robin:WdegOnDom-Last  effs:8,235,741  asgs:(715,noefs=45,fails=237)  fails:120,806  wrgs:263,293  wck:31.4  ngds:2,058  sols:111  bound:1,222
+    run387  dpts:112..160  robin:FrbaOnDom-Rand  effs:8,255,130  asgs:(719,noefs=18,fails=248)  fails:121,054  wrgs:263,825  wck:31.5  ngds:2,061  sols:111  bound:1,222
+    run388  dpts:117..161  robin:Wdeg-First  effs:8,278,311  asgs:(804,noefs=30,fails=261)  fails:121,315  wrgs:264,453  wck:31.6  ngds:2,066  sols:111  bound:1,222
+    run389  dpts:96..114  robin:PickOnDom-Last  effs:8,292,302  asgs:(743,noefs=10,fails=274)  fails:121,589  wrgs:264,991  wck:31.7  ngds:2,070  sols:111  bound:1,222
+    run390  dpts:130..159  robin:WdegOnDom-Rand  effs:8,313,112  asgs:(800,noefs=9,fails=288)  fails:121,877  wrgs:265,569  wck:31.7  ngds:2,072  sols:111  bound:1,222
+    run391  dpts:103..182  robin:FrbaOnDom-First  effs:8,346,418  asgs:(954,noefs=25,fails=302)  fails:122,179  wrgs:266,296  wck:31.9  ngds:2,081  sols:111  bound:1,222
+    run392  dpts:96..136  robin:Wdeg-Last  effs:8,388,488  asgs:(961,noefs=0,fails=317)  fails:122,496  wrgs:267,097  wck:32.0  ngds:2,086  sols:111  bound:1,222
+    run393  dpts:110..138  robin:PickOnDom-Rand  effs:8,401,160  asgs:(1064,noefs=27,fails=333)  fails:122,829  wrgs:267,948  wck:32.1  ngds:2,089  sols:111  bound:1,222
+    run394  dpts:145..164  robin:WdegOnDom-First  effs:8,417,842  asgs:(1127,noefs=32,fails=350)  fails:123,179  wrgs:268,764  wck:32.1  ngds:2,097  sols:111  bound:1,222
+    run395  dpts:109..148  robin:FrbaOnDom-Last  effs:8,447,164  asgs:(951,noefs=2,fails=367)  fails:123,546  wrgs:269,467  wck:32.3  ngds:2,103  sols:111  bound:1,222
+    run396  dpts:108..134  robin:Wdeg-Rand  effs:8,489,169  asgs:(968,noefs=13,fails=386)  fails:123,932  wrgs:270,255  wck:32.4  ngds:2,110  sols:111  bound:1,222
+    run397  dpts:98..144  robin:PickOnDom-First  effs:8,522,191  asgs:(1520,noefs=14,fails=405)  fails:124,337  wrgs:271,475  wck:32.6  ngds:2,115  sols:111  bound:1,222
+    run398  dpts:132..162  robin:WdegOnDom-Last  effs:8,540,152  asgs:(1032,noefs=20,fails=425)  fails:124,762  wrgs:272,257  wck:32.7  ngds:2,123  sols:111  bound:1,222
+    run399  dpts:105..145  robin:FrbaOnDom-Rand  effs:8,598,578  asgs:(1230,noefs=1,fails=446)  fails:125,208  wrgs:273,245  wck:32.9  ngds:2,129  sols:111  bound:1,222
+    run400  dpts:119..136  robin:Wdeg-First  effs:8,638,133  asgs:(1274,noefs=13,fails=469)  fails:125,677  wrgs:274,266  wck:33.1  ngds:2,131  sols:111  bound:1,222
+    run401  dpts:130..155  robin:PickOnDom-Last  effs:8,668,812  asgs:(1284,noefs=0,fails=492)  fails:126,169  wrgs:275,233  wck:33.2  ngds:2,136  sols:111  bound:1,222
+    run402  dpts:112..137  robin:WdegOnDom-Rand  effs:8,705,925  asgs:(1211,noefs=0,fails=517)  fails:126,686  wrgs:276,195  wck:33.3  ngds:2,142  sols:111  bound:1,222
+    run403  dpts:72..110  robin:FrbaOnDom-First  effs:8,729,278  asgs:(1465,noefs=58,fails=543)  fails:127,229  wrgs:277,378  wck:33.4  ngds:2,148  sols:111  bound:1,222
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run404  dpts:160..173  robin:Wdeg-Last  effs:8,762,230  asgs:(1287,noefs=0,fails=570)  fails:127,799  wrgs:278,359  wck:33.5  ngds:2,157  sols:111  bound:1,222
+    run405  dpts:159..174  robin:PickOnDom-Rand  effs:8,793,855  asgs:(1615,noefs=0,fails=599)  fails:128,398  wrgs:279,611  wck:33.6  ngds:2,162  sols:111  bound:1,222
+    run406  dpts:161..173  robin:WdegOnDom-First  effs:8,827,995  asgs:(1601,noefs=0,fails=628)  fails:129,026  wrgs:280,898  wck:33.7  ngds:2,169  sols:111  bound:1,222
+    run407  dpts:174..230  robin:FrbaOnDom-Last  effs:8,855,217  asgs:(1595,noefs=34,fails=660)  fails:129,686  wrgs:282,110  wck:33.8  ngds:2,172  sols:111  bound:1,222
+    run408  dpts:140..167  robin:Wdeg-Rand  effs:8,877,016  asgs:(1875,noefs=195,fails=693)  fails:130,379  wrgs:283,596  wck:33.9  ngds:2,181  sols:111  bound:1,222
+    run409  dpts:126..160  robin:PickOnDom-First  effs:8,911,275  asgs:(2170,noefs=22,fails=728)  fails:131,107  wrgs:285,381  wck:34.1  ngds:2,187  sols:111  bound:1,222
+    run410  dpts:136..168  robin:WdegOnDom-Last  effs:8,934,781  asgs:(2083,noefs=178,fails=764)  fails:131,871  wrgs:287,064  wck:34.2  ngds:2,194  sols:111  bound:1,222
+    run411  dpts:164..208  robin:FrbaOnDom-Rand  effs:8,987,113  asgs:(2264,noefs=39,fails=802)  fails:132,673  wrgs:288,851  wck:34.4  ngds:2,202  sols:111  bound:1,222
+    run412  dpts:126..163  robin:Wdeg-First  effs:9,104,988  asgs:(2626,noefs=16,fails=842)  fails:133,515  wrgs:291,116  wck:34.8  ngds:2,208  sols:111  bound:1,222
+    run413  dpts:148..188  robin:PickOnDom-Last  effs:9,155,183  asgs:(1896,noefs=4,fails=884)  fails:134,399  wrgs:292,616  wck:34.9  ngds:2,213  sols:111  bound:1,222
+    run414  dpts:104..171  robin:WdegOnDom-Rand  effs:9,198,767  asgs:(2886,noefs=224,fails=929)  fails:135,328  wrgs:295,060  wck:35.1  ngds:2,219  sols:111  bound:1,222
+    run415  dpts:130..167  robin:FrbaOnDom-First  effs:9,284,809  asgs:(2523,noefs=29,fails=975)  fails:136,303  wrgs:297,146  wck:35.4  ngds:2,228  sols:111  bound:1,222
+    run416  dpts:95..171  robin:Wdeg-Last  effs:9,398,468  asgs:(2479,noefs=35,fails=1024)  fails:137,327  wrgs:299,325  wck:35.8  ngds:2,232  sols:111  bound:1,222
+    run417  dpts:120..161  robin:PickOnDom-Rand  effs:9,479,693  asgs:(3952,noefs=84,fails=1075)  fails:138,402  wrgs:302,716  wck:36.1  ngds:2,236  sols:111  bound:1,222
+    run418  dpts:122..159  robin:WdegOnDom-First  effs:9,588,391  asgs:(3245,noefs=41,fails=1129)  fails:139,531  wrgs:305,513  wck:36.6  ngds:2,240  sols:111  bound:1,222
+    run419  dpts:107..144  robin:FrbaOnDom-Last  effs:9,676,776  asgs:(2790,noefs=2,fails=1185)  fails:140,716  wrgs:307,824  wck:36.9  ngds:2,257  sols:111  bound:1,222
+    run420  dpts:95..144  robin:Wdeg-Rand  effs:9,793,477  asgs:(3332,noefs=31,fails=1245)  fails:141,961  wrgs:310,692  wck:37.4  ngds:2,261  sols:111  bound:1,222
+    run421  dpts:120..160  robin:PickOnDom-First  effs:9,914,736  asgs:(3909,noefs=38,fails=1307)  fails:143,268  wrgs:314,067  wck:37.9  ngds:2,271  sols:111  bound:1,222
+[92mo 1221[0m   39.1  ham=25 (12 11 0 0 0 1 1 0 0 0)  opth=1
+    run422  dpts:124..183  robin:WdegOnDom-Last  effs:9,967,832  asgs:(2870,noefs=6,fails=1372)  fails:144,640  wrgs:316,403  wck:38.1  ngds:2,275  sols:112  bound:1,221
+    run423  dpts:84..106  robin:FrbaOnDom-Rand  effs:9,973,302  asgs:(274,noefs=18,fails=70)  fails:144,710  wrgs:316,567  wck:38.1  ngds:2,280  sols:112  bound:1,221
+    run424  dpts:120..142  robin:Wdeg-First  effs:9,981,006  asgs:(258,noefs=0,fails=73)  fails:144,783  wrgs:316,699  wck:38.2  ngds:2,282  sols:112  bound:1,221
+    run425  dpts:115..152  robin:PickOnDom-Last  effs:9,988,418  asgs:(276,noefs=0,fails=77)  fails:144,860  wrgs:316,843  wck:38.2  ngds:2,285  sols:112  bound:1,221
+    run426  dpts:181..195  robin:WdegOnDom-Rand  effs:9,991,894  asgs:(369,noefs=6,fails=81)  fails:144,941  wrgs:317,007  wck:38.2  ngds:2,290  sols:112  bound:1,221
+    run427  dpts:90..102  robin:FrbaOnDom-First  effs:9,999,950  asgs:(297,noefs=0,fails=85)  fails:145,026  wrgs:317,166  wck:38.2  ngds:2,298  sols:112  bound:1,221
+    run428  dpts:112..129  robin:Wdeg-Last  effs:10,010,503  asgs:(288,noefs=4,fails=89)  fails:145,115  wrgs:317,319  wck:38.3  ngds:2,303  sols:112  bound:1,221
+    run429  dpts:119..139  robin:PickOnDom-Rand  effs:10,013,964  asgs:(311,noefs=0,fails=93)  fails:145,208  wrgs:317,501  wck:38.3  ngds:2,306  sols:112  bound:1,221
+    run430  dpts:101..188  robin:WdegOnDom-First  effs:10,019,018  asgs:(411,noefs=11,fails=98)  fails:145,306  wrgs:317,714  wck:38.3  ngds:2,313  sols:112  bound:1,221
+    run431  dpts:79..104  robin:FrbaOnDom-Last  effs:10,023,739  asgs:(314,noefs=11,fails=103)  fails:145,409  wrgs:317,901  wck:38.3  ngds:2,321  sols:112  bound:1,221
+    run432  dpts:108..132  robin:Wdeg-Rand  effs:10,036,865  asgs:(339,noefs=1,fails=108)  fails:145,517  wrgs:318,118  wck:38.4  ngds:2,324  sols:112  bound:1,221
+    run433  dpts:113..159  robin:PickOnDom-First  effs:10,045,911  asgs:(460,noefs=1,fails=114)  fails:145,631  wrgs:318,425  wck:38.4  ngds:2,331  sols:112  bound:1,221
+    run434  dpts:181..192  robin:WdegOnDom-Last  effs:10,049,797  asgs:(451,noefs=7,fails=119)  fails:145,750  wrgs:318,653  wck:38.4  ngds:2,340  sols:112  bound:1,221
+    run435  dpts:84..124  robin:FrbaOnDom-Rand  effs:10,057,454  asgs:(396,noefs=2,fails=125)  fails:145,875  wrgs:318,936  wck:38.5  ngds:2,342  sols:112  bound:1,221
+    run436  dpts:104..154  robin:Wdeg-First  effs:10,066,637  asgs:(439,noefs=4,fails=131)  fails:146,006  wrgs:319,192  wck:38.5  ngds:2,348  sols:112  bound:1,221
+    run437  dpts:114..168  robin:PickOnDom-Last  effs:10,075,941  asgs:(507,noefs=8,fails=138)  fails:146,144  wrgs:319,512  wck:38.5  ngds:2,361  sols:112  bound:1,221
+    run438  dpts:92..126  robin:WdegOnDom-Rand  effs:10,084,179  asgs:(393,noefs=3,fails=145)  fails:146,289  wrgs:319,785  wck:38.6  ngds:2,365  sols:112  bound:1,221
+    run439  dpts:82..91  robin:FrbaOnDom-First  effs:10,102,478  asgs:(447,noefs=0,fails=152)  fails:146,441  wrgs:320,087  wck:38.6  ngds:2,368  sols:112  bound:1,221
+    run440  dpts:118..148  robin:Wdeg-Last  effs:10,126,894  asgs:(654,noefs=17,fails=160)  fails:146,601  wrgs:320,567  wck:38.7  ngds:2,372  sols:112  bound:1,221
+    run441  dpts:98..164  robin:PickOnDom-Rand  effs:10,137,279  asgs:(531,noefs=4,fails=168)  fails:146,769  wrgs:320,964  wck:38.8  ngds:2,378  sols:112  bound:1,221
+    run442  dpts:90..168  robin:WdegOnDom-First  effs:10,148,532  asgs:(540,noefs=2,fails=176)  fails:146,945  wrgs:321,321  wck:38.8  ngds:2,384  sols:112  bound:1,221
+    run443  dpts:83..98  robin:FrbaOnDom-Last  effs:10,164,746  asgs:(471,noefs=0,fails=185)  fails:147,130  wrgs:321,641  wck:38.9  ngds:2,388  sols:112  bound:1,221
+    run444  dpts:116..146  robin:Wdeg-Rand  effs:10,187,402  asgs:(635,noefs=8,fails=195)  fails:147,325  wrgs:322,095  wck:39.0  ngds:2,393  sols:112  bound:1,221
+    run445  dpts:113..171  robin:PickOnDom-First  effs:10,195,135  asgs:(534,noefs=4,fails=204)  fails:147,529  wrgs:322,475  wck:39.0  ngds:2,400  sols:112  bound:1,221
+    run446  dpts:166..181  robin:WdegOnDom-Last  effs:10,200,516  asgs:(625,noefs=15,fails=215)  fails:147,744  wrgs:322,882  wck:39.0  ngds:2,406  sols:112  bound:1,221
+    run447  dpts:77..139  robin:FrbaOnDom-Rand  effs:10,225,139  asgs:(647,noefs=0,fails=225)  fails:147,969  wrgs:323,312  wck:39.1  ngds:2,417  sols:112  bound:1,221
+    run448  dpts:99..131  robin:Wdeg-First  effs:10,249,420  asgs:(634,noefs=8,fails=237)  fails:148,206  wrgs:323,808  wck:39.2  ngds:2,422  sols:112  bound:1,221
+    run449  dpts:98..124  robin:PickOnDom-Last  effs:10,267,588  asgs:(579,noefs=0,fails=248)  fails:148,454  wrgs:324,228  wck:39.2  ngds:2,425  sols:112  bound:1,221
+    run450  dpts:92..179  robin:WdegOnDom-Rand  effs:10,275,719  asgs:(755,noefs=7,fails=261)  fails:148,715  wrgs:324,759  wck:39.3  ngds:2,429  sols:112  bound:1,221
+[33m ...resetting[0m restart cutoff to 75
+    run451  dpts:86..96  robin:FrbaOnDom-First  effs:10,286,597  asgs:(256,noefs=0,fails=75)  fails:148,790  wrgs:324,908  wck:39.3  ngds:2,436  sols:112  bound:1,221
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run452  dpts:165..178  robin:Wdeg-Last  effs:10,292,660  asgs:(337,noefs=0,fails=78)  fails:148,868  wrgs:325,059  wck:39.3  ngds:2,443  sols:112  bound:1,221
+    run453  dpts:164..181  robin:PickOnDom-Rand  effs:10,298,713  asgs:(348,noefs=0,fails=82)  fails:148,950  wrgs:325,210  wck:39.4  ngds:2,452  sols:112  bound:1,221
+    run454  dpts:165..178  robin:WdegOnDom-First  effs:10,304,191  asgs:(382,noefs=0,fails=86)  fails:149,036  wrgs:325,398  wck:39.4  ngds:2,454  sols:112  bound:1,221
+    run455  dpts:185..228  robin:FrbaOnDom-Last  effs:10,307,626  asgs:(377,noefs=14,fails=91)  fails:149,127  wrgs:325,569  wck:39.4  ngds:2,456  sols:112  bound:1,221
+    run456  dpts:120..126  robin:Wdeg-Rand  effs:10,315,269  asgs:(316,noefs=0,fails=95)  fails:149,222  wrgs:325,753  wck:39.4  ngds:2,462  sols:112  bound:1,221
+    run457  dpts:113..129  robin:PickOnDom-First  effs:10,322,811  asgs:(342,noefs=1,fails=100)  fails:149,322  wrgs:325,946  wck:39.5  ngds:2,466  sols:112  bound:1,221
+    run458  dpts:99..144  robin:WdegOnDom-Last  effs:10,325,778  asgs:(365,noefs=0,fails=105)  fails:149,427  wrgs:326,141  wck:39.5  ngds:2,477  sols:112  bound:1,221
+    run459  dpts:157..188  robin:FrbaOnDom-Rand  effs:10,330,680  asgs:(436,noefs=24,fails=110)  fails:149,537  wrgs:326,383  wck:39.5  ngds:2,482  sols:112  bound:1,221
+    run460  dpts:133..166  robin:Wdeg-First  effs:10,336,284  asgs:(430,noefs=18,fails=116)  fails:149,653  wrgs:326,628  wck:39.5  ngds:2,489  sols:112  bound:1,221
+    run461  dpts:138..159  robin:PickOnDom-Last  effs:10,342,991  asgs:(418,noefs=1,fails=122)  fails:149,775  wrgs:326,856  wck:39.6  ngds:2,494  sols:112  bound:1,221
+    run462  dpts:82..187  robin:WdegOnDom-Rand  effs:10,348,049  asgs:(537,noefs=36,fails=128)  fails:149,903  wrgs:327,181  wck:39.6  ngds:2,500  sols:112  bound:1,221
+    run463  dpts:149..217  robin:FrbaOnDom-First  effs:10,355,877  asgs:(499,noefs=32,fails=134)  fails:150,037  wrgs:327,491  wck:39.6  ngds:2,506  sols:112  bound:1,221
+    run464  dpts:99..134  robin:Wdeg-Last  effs:10,384,395  asgs:(526,noefs=0,fails=141)  fails:150,178  wrgs:327,881  wck:39.7  ngds:2,508  sols:112  bound:1,221
+    run465  dpts:148..170  robin:PickOnDom-Rand  effs:10,392,095  asgs:(593,noefs=16,fails=148)  fails:150,326  wrgs:328,260  wck:39.8  ngds:2,511  sols:112  bound:1,221
+    run466  dpts:88..102  robin:WdegOnDom-First  effs:10,404,574  asgs:(425,noefs=0,fails=155)  fails:150,481  wrgs:328,556  wck:39.8  ngds:2,515  sols:112  bound:1,221
+    run467  dpts:85..132  robin:FrbaOnDom-Last  effs:10,419,608  asgs:(540,noefs=12,fails=163)  fails:150,644  wrgs:328,955  wck:39.9  ngds:2,520  sols:112  bound:1,221
+    run468  dpts:100..119  robin:Wdeg-Rand  effs:10,432,108  asgs:(481,noefs=0,fails=171)  fails:150,815  wrgs:329,292  wck:39.9  ngds:2,525  sols:112  bound:1,221
+    run469  dpts:131..163  robin:PickOnDom-First  effs:10,446,958  asgs:(691,noefs=13,fails=180)  fails:150,995  wrgs:329,762  wck:40.0  ngds:2,530  sols:112  bound:1,221
+    run470  dpts:150..172  robin:WdegOnDom-Last  effs:10,453,582  asgs:(697,noefs=70,fails=189)  fails:151,184  wrgs:330,243  wck:40.0  ngds:2,534  sols:112  bound:1,221
+    run471  dpts:91..177  robin:FrbaOnDom-Rand  effs:10,474,432  asgs:(683,noefs=22,fails=198)  fails:151,382  wrgs:330,739  wck:40.1  ngds:2,539  sols:112  bound:1,221
+    run472  dpts:87..139  robin:Wdeg-First  effs:10,495,669  asgs:(641,noefs=39,fails=208)  fails:151,590  wrgs:331,222  wck:40.2  ngds:2,545  sols:112  bound:1,221
+    run473  dpts:93..129  robin:PickOnDom-Last  effs:10,506,557  asgs:(548,noefs=15,fails=219)  fails:151,809  wrgs:331,611  wck:40.3  ngds:2,550  sols:112  bound:1,221
+    run474  dpts:135..168  robin:WdegOnDom-Rand  effs:10,515,815  asgs:(731,noefs=60,fails=230)  fails:152,039  wrgs:332,138  wck:40.3  ngds:2,555  sols:112  bound:1,221
+    run475  dpts:89..123  robin:FrbaOnDom-First  effs:10,548,064  asgs:(696,noefs=14,fails=241)  fails:152,280  wrgs:332,662  wck:40.4  ngds:2,560  sols:112  bound:1,221
+    run476  dpts:98..133  robin:Wdeg-Last  effs:10,579,782  asgs:(737,noefs=3,fails=253)  fails:152,533  wrgs:333,265  wck:40.6  ngds:2,562  sols:112  bound:1,221
+    run477  dpts:92..133  robin:PickOnDom-Rand  effs:10,598,570  asgs:(754,noefs=2,fails=266)  fails:152,799  wrgs:333,841  wck:40.6  ngds:2,566  sols:112  bound:1,221
+    run478  dpts:138..177  robin:WdegOnDom-First  effs:10,620,262  asgs:(749,noefs=2,fails=280)  fails:153,079  wrgs:334,377  wck:40.7  ngds:2,572  sols:112  bound:1,221
+    run479  dpts:80..102  robin:FrbaOnDom-Last  effs:10,673,007  asgs:(728,noefs=6,fails=294)  fails:153,373  wrgs:334,939  wck:40.9  ngds:2,578  sols:112  bound:1,221
+    run480  dpts:109..136  robin:Wdeg-Rand  effs:10,700,055  asgs:(922,noefs=20,fails=308)  fails:153,681  wrgs:335,640  wck:41.0  ngds:2,588  sols:112  bound:1,221
+    run481  dpts:99..140  robin:PickOnDom-First  effs:10,720,469  asgs:(1103,noefs=6,fails=324)  fails:154,005  wrgs:336,512  wck:41.0  ngds:2,591  sols:112  bound:1,221
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run482  dpts:164..177  robin:WdegOnDom-Last  effs:10,737,934  asgs:(945,noefs=0,fails=340)  fails:154,345  wrgs:337,191  wck:41.1  ngds:2,601  sols:112  bound:1,221
+    run483  dpts:157..236  robin:FrbaOnDom-Rand  effs:10,751,689  asgs:(948,noefs=15,fails=357)  fails:154,702  wrgs:337,884  wck:41.1  ngds:2,604  sols:112  bound:1,221
+    run484  dpts:162..177  robin:Wdeg-First  effs:10,780,502  asgs:(1060,noefs=1,fails=375)  fails:155,077  wrgs:338,740  wck:41.2  ngds:2,608  sols:112  bound:1,221
+    run485  dpts:162..176  robin:PickOnDom-Last  effs:10,797,628  asgs:(1041,noefs=0,fails=394)  fails:155,471  wrgs:339,434  wck:41.3  ngds:2,612  sols:112  bound:1,221
+    run486  dpts:94..174  robin:WdegOnDom-Rand  effs:10,809,222  asgs:(1109,noefs=26,fails=413)  fails:155,884  wrgs:340,290  wck:41.3  ngds:2,617  sols:112  bound:1,221
+    run487  dpts:116..174  robin:FrbaOnDom-First  effs:10,830,169  asgs:(1264,noefs=32,fails=434)  fails:156,318  wrgs:341,278  wck:41.4  ngds:2,618  sols:112  bound:1,221
+    run488  dpts:121..145  robin:Wdeg-Last  effs:10,841,765  asgs:(967,noefs=52,fails=456)  fails:156,774  wrgs:342,061  wck:41.5  ngds:2,623  sols:112  bound:1,221
+    run489  dpts:106..129  robin:PickOnDom-Rand  effs:10,868,280  asgs:(1429,noefs=6,fails=478)  fails:157,252  wrgs:343,160  wck:41.6  ngds:2,630  sols:112  bound:1,221
+    run490  dpts:74..87  robin:WdegOnDom-First  effs:10,900,689  asgs:(1180,noefs=0,fails=502)  fails:157,754  wrgs:344,113  wck:41.7  ngds:2,638  sols:112  bound:1,221
+    run491  dpts:141..189  robin:FrbaOnDom-Last  effs:10,928,748  asgs:(1501,noefs=57,fails=527)  fails:158,281  wrgs:345,286  wck:41.8  ngds:2,646  sols:112  bound:1,221
+    run492  dpts:124..168  robin:Wdeg-Rand  effs:10,988,631  asgs:(1592,noefs=119,fails=554)  fails:158,835  wrgs:346,639  wck:42.0  ngds:2,650  sols:112  bound:1,221
+    run493  dpts:143..163  robin:PickOnDom-First  effs:11,014,753  asgs:(1628,noefs=28,fails=582)  fails:159,417  wrgs:347,967  wck:42.1  ngds:2,652  sols:112  bound:1,221
+    run494  dpts:136..173  robin:WdegOnDom-Last  effs:11,043,197  asgs:(1930,noefs=230,fails=611)  fails:160,028  wrgs:349,530  wck:42.2  ngds:2,656  sols:112  bound:1,221
+    run495  dpts:100..138  robin:FrbaOnDom-Rand  effs:11,112,479  asgs:(1668,noefs=23,fails=641)  fails:160,669  wrgs:350,904  wck:42.5  ngds:2,660  sols:112  bound:1,221
+    run496  dpts:119..151  robin:Wdeg-First  effs:11,198,067  asgs:(1982,noefs=1,fails=673)  fails:161,342  wrgs:352,568  wck:42.9  ngds:2,666  sols:112  bound:1,221
+    run497  dpts:84..142  robin:PickOnDom-Last  effs:11,262,494  asgs:(2716,noefs=23,fails=707)  fails:162,049  wrgs:354,894  wck:43.2  ngds:2,670  sols:112  bound:1,221
+    run498  dpts:126..160  robin:WdegOnDom-Rand  effs:11,288,564  asgs:(2298,noefs=100,fails=742)  fails:162,791  wrgs:356,734  wck:43.3  ngds:2,675  sols:112  bound:1,221
+    run499  dpts:80..123  robin:FrbaOnDom-First  effs:11,360,420  asgs:(1856,noefs=28,fails=780)  fails:163,571  wrgs:358,300  wck:43.6  ngds:2,683  sols:112  bound:1,221
+    run500  dpts:92..132  robin:Wdeg-Last  effs:11,459,958  asgs:(2202,noefs=31,fails=819)  fails:164,390  wrgs:360,204  wck:44.0  ngds:2,688  sols:112  bound:1,221
+    run501  dpts:118..146  robin:PickOnDom-Rand  effs:11,523,442  asgs:(2333,noefs=4,fails=860)  fails:165,250  wrgs:362,084  wck:44.2  ngds:2,694  sols:112  bound:1,221
+    run502  dpts:90..130  robin:WdegOnDom-First  effs:11,594,084  asgs:(2937,noefs=104,fails=903)  fails:166,153  wrgs:364,702  wck:44.5  ngds:2,701  sols:112  bound:1,221
+    run503  dpts:78..152  robin:FrbaOnDom-Last  effs:11,720,004  asgs:(2266,noefs=1,fails=948)  fails:167,101  wrgs:366,566  wck:44.9  ngds:2,706  sols:112  bound:1,221
+    run504  dpts:110..133  robin:Wdeg-Rand  effs:11,805,036  asgs:(2190,noefs=1,fails=995)  fails:168,096  wrgs:368,442  wck:45.2  ngds:2,711  sols:112  bound:1,221
+    run505  dpts:99..167  robin:PickOnDom-First  effs:11,878,965  asgs:(2827,noefs=55,fails=1045)  fails:169,141  wrgs:370,933  wck:45.5  ngds:2,716  sols:112  bound:1,221
+    run506  dpts:121..153  robin:WdegOnDom-Last  effs:11,951,618  asgs:(2567,noefs=0,fails=1097)  fails:170,238  wrgs:373,042  wck:45.7  ngds:2,723  sols:112  bound:1,221
+    run507  dpts:67..88  robin:FrbaOnDom-Rand  effs:11,992,105  asgs:(2662,noefs=23,fails=1152)  fails:171,390  wrgs:375,187  wck:45.9  ngds:2,731  sols:112  bound:1,221
+    run508  dpts:83..118  robin:Wdeg-First  effs:12,147,223  asgs:(3276,noefs=47,fails=1210)  fails:172,600  wrgs:378,133  wck:46.5  ngds:2,737  sols:112  bound:1,221
+    run509  dpts:64..133  robin:PickOnDom-Last  effs:12,205,939  asgs:(3553,noefs=82,fails=1270)  fails:173,870  wrgs:381,078  wck:46.8  ngds:2,747  sols:112  bound:1,221
+    run510  dpts:162..205  robin:WdegOnDom-Rand  effs:12,285,323  asgs:(3772,noefs=77,fails=1334)  fails:175,204  wrgs:384,249  wck:47.1  ngds:2,756  sols:112  bound:1,221
+    run511  dpts:69..94  robin:FrbaOnDom-First  effs:12,334,283  asgs:(3531,noefs=148,fails=1400)  fails:176,604  wrgs:387,182  wck:47.3  ngds:2,768  sols:112  bound:1,221
+[33m ...resetting [0mheuristics data (nValues:3,547 - nSingletons:554 - nEntailed:594)
+    run512  dpts:161..175  robin:Wdeg-Last  effs:12,415,014  asgs:(3104,noefs=0,fails=1470)  fails:178,074  wrgs:389,760  wck:47.6  ngds:2,776  sols:112  bound:1,221
+    run513  dpts:159..176  robin:PickOnDom-Rand  effs:12,499,016  asgs:(3681,noefs=0,fails=1544)  fails:179,618  wrgs:392,746  wck:47.8  ngds:2,788  sols:112  bound:1,221
+    run514  dpts:161..178  robin:WdegOnDom-First  effs:12,583,009  asgs:(3734,noefs=0,fails=1621)  fails:181,239  wrgs:396,030  wck:48.0  ngds:2,799  sols:112  bound:1,221
+    run515  dpts:145..226  robin:FrbaOnDom-Last  effs:12,659,484  asgs:(3672,noefs=14,fails=1702)  fails:182,941  wrgs:399,099  wck:48.3  ngds:2,808  sols:112  bound:1,221
+    run516  dpts:104..182  robin:Wdeg-Rand  effs:12,735,248  asgs:(4824,noefs=248,fails=1787)  fails:184,728  wrgs:403,207  wck:48.6  ngds:2,814  sols:112  bound:1,221
+    run517  dpts:116..148  robin:PickOnDom-First  effs:12,836,452  asgs:(4982,noefs=4,fails=1877)  fails:186,605  wrgs:407,520  wck:49.1  ngds:2,826  sols:112  bound:1,221
+    run518  dpts:87..189  robin:WdegOnDom-Last  effs:12,886,778  asgs:(5181,noefs=493,fails=1971)  fails:188,576  wrgs:411,756  wck:49.4  ngds:2,834  sols:112  bound:1,221
+    run519  dpts:138..207  robin:FrbaOnDom-Rand  effs:13,070,252  asgs:(5923,noefs=146,fails=2069)  fails:190,645  wrgs:416,792  wck:50.2  ngds:2,844  sols:112  bound:1,221
+    run520  dpts:85..135  robin:Wdeg-First  effs:13,291,603  asgs:(6122,noefs=214,fails=2173)  fails:192,818  wrgs:422,392  wck:51.1  ngds:2,854  sols:112  bound:1,221
+    run521  dpts:100..139  robin:PickOnDom-Last  effs:13,370,014  asgs:(5489,noefs=135,fails=2281)  fails:195,099  wrgs:426,780  wck:51.5  ngds:2,861  sols:112  bound:1,221
+    run522  dpts:99..195  robin:WdegOnDom-Rand  effs:13,476,907  asgs:(7261,noefs=404,fails=2396)  fails:197,495  wrgs:432,987  wck:51.9  ngds:2,871  sols:112  bound:1,221
+    run523  dpts:107..180  robin:FrbaOnDom-First  effs:13,735,035  asgs:(6426,noefs=32,fails=2515)  fails:200,010  wrgs:438,497  wck:52.9  ngds:2,883  sols:112  bound:1,221
+    run524  dpts:103..133  robin:Wdeg-Last  effs:13,948,698  asgs:(5725,noefs=76,fails=2641)  fails:202,651  wrgs:443,384  wck:53.7  ngds:2,892  sols:112  bound:1,221
+    run525  dpts:97..148  robin:PickOnDom-Rand  effs:14,099,495  asgs:(8224,noefs=137,fails=2773)  fails:205,424  wrgs:450,595  wck:54.3  ngds:2,904  sols:112  bound:1,221
+    run526  dpts:112..159  robin:WdegOnDom-First  effs:14,352,954  asgs:(7222,noefs=94,fails=2912)  fails:208,336  wrgs:456,995  wck:55.3  ngds:2,907  sols:112  bound:1,221
+    run527  dpts:91..128  robin:FrbaOnDom-Last  effs:14,571,771  asgs:(6531,noefs=6,fails=3058)  fails:211,394  wrgs:462,465  wck:56.0  ngds:2,921  sols:112  bound:1,221
+    run528  dpts:125..163  robin:Wdeg-Rand  effs:14,924,735  asgs:(8704,noefs=20,fails=3210)  fails:214,604  wrgs:470,098  wck:57.3  ngds:2,930  sols:112  bound:1,221
+    run529  dpts:92..156  robin:PickOnDom-First  effs:15,138,462  asgs:(10651,noefs=12,fails=3371)  fails:217,975  wrgs:479,697  wck:58.1  ngds:2,938  sols:112  bound:1,221
+    run530  dpts:152..189  robin:WdegOnDom-Last  effs:15,237,073  asgs:(7756,noefs=310,fails=3540)  fails:221,515  wrgs:486,349  wck:58.4  ngds:2,946  sols:112  bound:1,221
+    run531  dpts:102..176  robin:FrbaOnDom-Rand  effs:15,699,764  asgs:(9571,noefs=61,fails=3717)  fails:225,232  wrgs:494,866  wck:60.2  ngds:2,957  sols:112  bound:1,221
+    run532  dpts:100..152  robin:Wdeg-First  effs:16,084,315  asgs:(10769,noefs=388,fails=3902)  fails:229,134  wrgs:504,571  wck:62.1  ngds:2,964  sols:112  bound:1,221

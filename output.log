@@ -1,0 +1,181 @@
+
+[93mACE v2.6 [0m
+
+  [94minstance[0m
+    name:Instance1_standard
+    args:/Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/compiled_xmls/standard/Instance1_standard.xml -robprofile=/Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/robust_profiles/baseline/wed/Instance1_baseline_wed.json -h=0
+
+ [33m...Parsing[0m /Users/jlopez/PhD/RobustSolutions/Problems/nurse_rostering/experiments/RobustStandardStudy_29062026/tier1/compiled_xmls/standard/Instance1_standard.xml
+
+ [33m...Loading[0m variables
+
+ [33m...Loading[0m constraints
+[RobustProfileManager] Loaded 2 critical entries.
+
+  [94mdomains[0m
+    types:11  values:1,076  sizes:[1:212,2:186,9:28,15:16]
+  [94mvariables[0m
+    count:442  omitted:14  fixed:212  auxiliary:16  arrays:[x:112,nd:16,wk:16,cn:112,cf:112,np_ds:14,cc:28,aux_gb:16,_ax_:16]  degrees:[2:282,3:32,4:16,8:4...15:16,16:18,17:18,18:4]
+  [94mconstraints[0m
+    count:560  nNogoods:38  nGatheredNogoods:20  specific:352  generic:208  postponable:2  arities:[1:128,2:120,3:208,6:72,9:14,15:16,252:2]
+    unary:[Extension1:128]  objective:[SumSimpleGE,SumSimpleLE]
+    non_unary:[AtLeast1:72,ExactlyVarK:30,Intension:208,LogicTree:28,Nogood:18,Or2:2,Reif2EQ:16,Reif2NE:16,STR0a-Table:32,SumSimpleLE:8]
+    tables:[2:10,9:14,15:8]  tuples:266
+    extStructures:(32,shared:0)  intStructures:(3,shared:205)
+    wck:0.79  cpu:1.178  mem:11M701
+  [94mobjective[0m
+    way:min  type:SumSimpleLE  arity:252  bounds:0..7,148
+
+ [33m...Building[0m solver
+
+  [94msolver[0m
+    reviser:Reviser3  decoder:Decoder1
+    wck:0.83  cpu:1.219  mem:20M894
+
+  [94mpreprocessing[0m
+    effs:44  revisions:(726,useless=726)  entailed:136  values:855  removedByAC:221  singletons:223  unsat:false
+    wck:0.009  cpu:1.232  mem:21M211
+
+  [94msearch[0m
+[33m ...Discarding 223 singleton variables[0m
+[92mo 1628[0m   0.85  ham=0 (0 0 0 0 0 0 0 0 0 0)  opth=0
+[92mo 1626[0m   0.87  ham=24 (5 2 2 4 1 3 3 2 0 2)  opth=8
+[92mo 1527[0m   0.87  ham=9 (1 2 1 0 1 1 1 1 0 1)  opth=2
+[92mo 1526[0m   0.87  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1525[0m   0.88  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run1  dpts:42..52  robin:PickOnDom-First  effs:2,561  asgs:(184,noefs=0,fails=50)  fails:50  wrgs:110  wck:0.05  ngds:2  sols:5  bound:1,525
+    run2  dpts:14..26  robin:WdegOnDom-Last  effs:5,825  asgs:(153,noefs=0,fails=50)  fails:100  wrgs:207  wck:0.07  ngds:6  sols:5  bound:1,525
+    run3  dpts:28..52  robin:FrbaOnDom-Rand  effs:7,460  asgs:(169,noefs=1,fails=52)  fails:152  wrgs:298  wck:0.09  ngds:20  sols:5  bound:1,525
+[92mo 1524[0m   0.94  ham=11 (3 2 0 0 0 3 3 0 0 0)  opth=3
+[92mo 1426[0m   0.94  ham=31 (9 6 2 4 0 3 3 2 0 2)  opth=7
+[92mo 1425[0m   0.94  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1424[0m   0.94  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1423[0m   0.94  ham=26 (9 4 1 4 0 3 3 1 0 1)  opth=7
+[92mo 1325[0m   0.94  ham=13 (3 4 0 0 0 3 3 0 0 0)  opth=3
+[92mo 1324[0m   0.95  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1323[0m   0.95  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+    run4  dpts:39..53  robin:Wdeg-First  effs:9,906  asgs:(197,noefs=1,fails=55)  fails:207  wrgs:392  wck:0.11  ngds:28  sols:13  bound:1,323
+    run5  dpts:15..33  robin:PickOnDom-Last  effs:11,738  asgs:(142,noefs=0,fails=50)  fails:257  wrgs:490  wck:0.12  ngds:32  sols:13  bound:1,323
+    run6  dpts:18..33  robin:WdegOnDom-Rand  effs:14,456  asgs:(146,noefs=0,fails=52)  fails:309  wrgs:580  wck:0.13  ngds:39  sols:13  bound:1,323
+    run7  dpts:13..41  robin:FrbaOnDom-First  effs:16,582  asgs:(162,noefs=2,fails=55)  fails:364  wrgs:686  wck:0.14  ngds:43  sols:13  bound:1,323
+    run8  dpts:8..29  robin:Wdeg-Last  effs:19,357  asgs:(150,noefs=1,fails=57)  fails:421  wrgs:785  wck:0.15  ngds:46  sols:13  bound:1,323
+[92mo 1322[0m   0.99  ham=90 (37 10 9 1 1 11 11 5 0 5)  opth=13
+[92mo 1320[0m   1.00  ham=16 (7 6 0 1 0 1 1 0 0 0)  opth=2
+[92mo 1319[0m   1.00  ham=13 (5 6 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1317[0m   1.00  ham=16 (5 4 0 0 1 3 3 0 0 0)  opth=4
+[92mo 1316[0m   1.00  ham=5 (1 2 0 0 0 1 1 0 0 0)  opth=1
+[92mo 1315[0m   1.00  ham=10 (5 2 0 1 0 1 1 0 0 0)  opth=2
+    run9  dpts:0..31  robin:PickOnDom-Rand  effs:20,578  asgs:(106,noefs=2,fails=31)  fails:452  wrgs:862  wck:0.16  ngds:46  sols:19  bound:1,315
+
+  [94mglobal[0m
+    effs:20,578  revisions:(76471,useless=72198)  noefs:7  ngds:46
+    stop:FULL_EXPLORATION  wrgs:862  bound:1,315  boundWck:1.001  sols:19  sol1Cpu:1.244
+    wck:1.00  cpu:1.39  mem:34M39
+
+
+  Solution 19 in JSON-like format:
+   {
+    x: [
+     [1, 0, 0, 0, 0, 0, 1, 0],
+     [0, 0, 0, 0, 0, 0, 1, 0],
+     [0, 0, 0, 1, 1, 0, 0, 0],
+     [0, 0, 0, 1, 1, 1, 0, 1],
+     [0, 0, 0, 1, 0, 1, 0, 1],
+     [1, 1, 1, 1, 0, 1, 1, 1],
+     [1, 1, 1, 1, 0, 1, 1, 1],
+     [0, 1, 1, 0, 0, 0, 1, 1],
+     [0, 0, 1, 0, 1, 0, 1, 0],
+     [0, 0, 1, 0, 1, 1, 0, 0],
+     [1, 1, 1, 1, 0, 1, 0, 1],
+     [1, 1, 0, 1, 0, 0, 0, 1],
+     [0, 0, 0, 0, 1, 0, 0, 0],
+     [0, 0, 0, 0, 1, 0, 1, 0]
+    ],
+    nd: [
+     [ 9,  5],
+     [ 9,  5],
+     [ 8,  6],
+     [ 7,  7],
+     [ 8,  6],
+     [ 8,  6],
+     [ 7,  7],
+     [ 7,  7]
+    ],
+    wk: [
+     [0, 1],
+     [0, 1],
+     [0, 1],
+     [0, 1],
+     [1, 0],
+     [0, 1],
+     [0, 1],
+     [0, 1]
+    ],
+    cn: [
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0]
+    ],
+    cf: [
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    np_ds: [
+     [6, *],
+     [7, *],
+     [6, *],
+     [4, *],
+     [5, *],
+     [1, *],
+     [1, *],
+     [4, *],
+     [5, *],
+     [5, *],
+     [2, *],
+     [4, *],
+     [7, *],
+     [6, *]
+    ],
+    cc: [
+     [  1, 0],
+     [  0, 0],
+     [  0, 0],
+     [  0, 0],
+     [  0, 0],
+     [400, 0],
+     [400, 0],
+     [200, 0],
+     [200, 0],
+     [  1, 0],
+     [  0, 0],
+     [100, 0],
+     [  1, 0],
+     [  2, 0]
+    ],
+    aux_gb: [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1]
+   }
+
+[92ms OPTIMUM FOUND[0m
+[92m
+v[0m  <instantiation id='sol19' type='solution' cost='1315'> <list> x[][] nd[][] wk[][] cn[][] cf[][] np_ds[][] cc[][] aux_gb[] </list> <values> 1 0x5 1 0x7 1 0x4 1 1 0x6 1x3 0 1 0x3 1 0 1 0 1x5 0 1x7 0 1x3 0 1 1 0x3 1 1 0 0 1 0 1 0 1 0x3 1 0 1 1 0 0 1x4 0 1 0 1x3 0 1 0x3 1 0x4 1 0x7 1 0 1 0   9 5 9 5 8 6 7 7 8 6 8 6 7x4   0 1 0 1 0 1 0 1 1 0 0 1 0 1 0 1   0x108 1 1 0 0   0x40 1 1 0x36 3 0x21 3 0x11   6 * 7 * 6 * 4 * 5 * 1 * 1 * 4 * 5 * 5 * 2 * 4 * 7 * 6 *   1 0x9 400 0 400 0 200 0 200 0 1 0x3 100 0 1 0 2 0   1x9 0 1 1 0 1x3 </values> </instantiation>
+[92m
+d BOUND[0m  1,315  (19 sols)
+[92m
+d WRONG DECISIONS[0m  862  (4897.73 wrg/s)
+
+[92md WCK SOL 1[0m  0.85 (1,628)
+[92md WCK SOL-1[0m  1.00 (1,315)
+[92md CPU       [0m 1.406
+
+[92md COMPLETE EXPLORATION[0m

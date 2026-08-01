@@ -20,18 +20,10 @@ public class TimeRobustDomain implements RobustDomain{
     private long[] aliveValues;      // Shadow Domain (Cases 1 & 2)
     private long[] baseValues;       // Robust Bases (Case 1 Only)
 
-    private class DomainState {
-        final long[] savedAlive;
-        final long[] savedBase;
-
-        DomainState(long[] alive, long[] base) {
-            this.savedAlive = alive.clone();
-            this.savedBase = base.clone();
-        }
-    }
-
-    // Update your history map definition
-    private Map<Integer, DomainState> history = new HashMap<>();
+    private final long[][] savedAlive;
+    private final long[][] savedBase;
+    private final int[] savedLevels;
+    private int historySize = 0;
     private int lastModifiedLevel = -1;
 
     public TimeRobustDomain(Variable var, int n, int K, int H, int offset) {
@@ -44,6 +36,11 @@ public class TimeRobustDomain implements RobustDomain{
         int numLongs = (n + 63) / 64; //Adding 63 to round up to the next integer
         this.aliveValues = new long[numLongs];
         this.baseValues = new long[numLongs];
+        
+        int maxDepth = var.problem.variables.length + 2;
+        this.savedAlive = new long[maxDepth][numLongs];
+        this.savedBase = new long[maxDepth][numLongs];
+        this.savedLevels = new int[maxDepth];
 
         Arrays.fill(aliveValues, -1L);
         // Clean up bits beyond the horizon 'n'
@@ -194,35 +191,20 @@ public class TimeRobustDomain implements RobustDomain{
      */
     @Override
     public void backtrackTo(int targetLevel) {
-        int oldestAbandoned = -1;
-        int maxRemaining = -1; // Use your default initial level here (e.g., 0 or -1)
-
-        // A single pass to find BOTH metrics without stream overhead!
-        for (int lvl : history.keySet()) {
-            if (lvl >= targetLevel) {
-                if (oldestAbandoned == -1 || lvl < oldestAbandoned) {
-                    oldestAbandoned = lvl;
-                }
-            } else {
-                if (lvl > maxRemaining) {
-                    maxRemaining = lvl;
-                }
-            }
+        // Pop states from the LIFO stack until we reach a state saved at a level < targetLevel.
+        // We restore the first state we pop that is >= targetLevel (the oldest abandoned state).
+        boolean restored = false;
+        while (historySize > 0 && savedLevels[historySize - 1] >= targetLevel) {
+            historySize--;
+            restored = true;
         }
 
-        // 1. Restore BOTH bitsets from that snapshot (if it exists)
-        if (oldestAbandoned != -1) {
-            DomainState state = history.get(oldestAbandoned);
-            this.aliveValues = state.savedAlive.clone();
-            this.baseValues = state.savedBase.clone();
-            // Restored baseValues are already correct!
+        if (restored) {
+            System.arraycopy(savedAlive[historySize], 0, aliveValues, 0, aliveValues.length);
+            System.arraycopy(savedBase[historySize], 0, baseValues, 0, baseValues.length);
         }
 
-        // 2. Cleanup the abandoned history
-        history.keySet().removeIf(lvl -> lvl >= targetLevel);
-
-        // 3. Reset the modification pointer to the actual last recorded level
-        this.lastModifiedLevel = maxRemaining;
+        this.lastModifiedLevel = historySize > 0 ? savedLevels[historySize - 1] : -1;
     }
 
     /**
@@ -336,8 +318,12 @@ public class TimeRobustDomain implements RobustDomain{
         // Only save if this is the FIRST time we touch this variable
         // at this specific search depth.
         if (currentLevel > lastModifiedLevel) {
-            // Capture the state BEFORE any changes (Shadow or Base)
-            history.put(currentLevel, new DomainState(this.aliveValues, this.baseValues));
+            // Push current state to the stack
+            System.arraycopy(this.aliveValues, 0, savedAlive[historySize], 0, aliveValues.length);
+            System.arraycopy(this.baseValues, 0, savedBase[historySize], 0, baseValues.length);
+            savedLevels[historySize] = currentLevel;
+            historySize++;
+            
             lastModifiedLevel = currentLevel;
 
             // Register the variable once for this level

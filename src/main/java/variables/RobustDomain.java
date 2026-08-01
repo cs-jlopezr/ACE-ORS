@@ -16,4 +16,8 @@ public interface RobustDomain {
 
     int getRobustDomainSize();
 
+    default int getRobustWeight(int v) {
+        return 0; // Default implementation
+    }
+
 }

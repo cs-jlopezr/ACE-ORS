@@ -17,16 +17,10 @@ public class GraphRobustDomain implements RobustDomain {
     private BitSet alive;  // Case 2: Shadow (Consistent but not necessarily in var.dom)
     private BitSet isBase; // Case 1: Robust & In var.dom
 
-    private class DomainState {
-        final BitSet savedAlive;
-        final BitSet savedBase;
-        DomainState(BitSet alive, BitSet base) {
-            this.savedAlive = (BitSet) alive.clone();
-            this.savedBase = (BitSet) base.clone();
-        }
-    }
-
-    private Map<Integer, DomainState> history = new HashMap<>();
+    private final BitSet[] savedAlive;
+    private final BitSet[] savedBase;
+    private final int[] savedLevels;
+    private int historySize = 0;
     private int lastModifiedLevel = -1;
 
     public GraphRobustDomain(Variable var, int n, int H, int K) {
@@ -42,6 +36,15 @@ public class GraphRobustDomain implements RobustDomain {
         this.alive = new BitSet(n);
         this.isBase = new BitSet(n);
         this.alive.set(0, n);
+
+        int maxDepth = var.problem.variables.length + 2;
+        this.savedAlive = new BitSet[maxDepth];
+        this.savedBase = new BitSet[maxDepth];
+        this.savedLevels = new int[maxDepth];
+        for(int i = 0; i < maxDepth; i++) {
+            this.savedAlive[i] = new BitSet(n);
+            this.savedBase[i] = new BitSet(n);
+        }
 
         this.succAsc = new BitSet[n];
         this.succDesc = new BitSet[n];
@@ -146,30 +149,34 @@ public class GraphRobustDomain implements RobustDomain {
 
     @Override
     public void backtrackTo(int targetLevel) {
-        int oldestAbandoned = -1;
-        int maxRemaining = -1;
-
-        for (int lvl : history.keySet()) {
-            if (lvl >= targetLevel) {
-                if (oldestAbandoned == -1 || lvl < oldestAbandoned) oldestAbandoned = lvl;
-            } else {
-                if (lvl > maxRemaining) maxRemaining = lvl;
-            }
+        boolean restored = false;
+        while (historySize > 0 && savedLevels[historySize - 1] >= targetLevel) {
+            historySize--;
+            restored = true;
         }
 
-        if (oldestAbandoned != -1) {
-            DomainState state = history.get(oldestAbandoned);
-            this.alive = (BitSet) state.savedAlive.clone();
-            this.isBase = (BitSet) state.savedBase.clone();
+        if (restored) {
+            this.alive.clear();
+            this.alive.or(savedAlive[historySize]);
+            
+            this.isBase.clear();
+            this.isBase.or(savedBase[historySize]);
         }
 
-        history.keySet().removeIf(lvl -> lvl >= targetLevel);
-        this.lastModifiedLevel = maxRemaining;
+        this.lastModifiedLevel = historySize > 0 ? savedLevels[historySize - 1] : -1;
     }
 
     private void saveBeforeModification(int currentLevel) {
         if (currentLevel > lastModifiedLevel) {
-            history.put(currentLevel, new DomainState(this.alive, this.isBase));
+            savedAlive[historySize].clear();
+            savedAlive[historySize].or(this.alive);
+            
+            savedBase[historySize].clear();
+            savedBase[historySize].or(this.isBase);
+            
+            savedLevels[historySize] = currentLevel;
+            historySize++;
+            
             lastModifiedLevel = currentLevel;
             var.problem.solver.solverTracker.markAsModified(this.var, currentLevel);
         }
@@ -214,7 +221,12 @@ public class GraphRobustDomain implements RobustDomain {
 
     @Override
     public int getRobustDomainSize() {
-        // isBase represents Case 1: Robust & In var.dom
         return isBase.cardinality();
+    }
+
+    @Override
+    public int getRobustWeight(int v) {
+        if (v < 0 || v >= n) return 0;
+        return succAsc[v].cardinality() + succDesc[v].cardinality();
     }
 }

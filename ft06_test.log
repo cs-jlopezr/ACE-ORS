@@ -1,0 +1,202 @@
+
+[93mACE v2.6 [0m
+
+  [94minstance[0m
+    name:SchedulingJS-ft06
+    args:/Users/jlopez/PhD/RobustSolutions/jobshop/JSPLIB/xmls/SchedulingJS-ft06.xml -tdom=true -robvars=match-s[ -sSch=(x+k_offset==y,k) -k_offset=1 -k=1 -je=true -s=all -sos=0 -aaa=true -dsp=false -da=true -varh=WdegOnDom -t=20s
+
+ [33m...Parsing[0m /Users/jlopez/PhD/RobustSolutions/jobshop/JSPLIB/xmls/SchedulingJS-ft06.xml
+
+ [33m...Loading[0m variables
+
+ [33m...Loading[0m constraints
+
+  [94mdomains[0m
+    types:3  values:7,506  sizes:[2:90,198:37]
+  [94mvariables[0m
+    count:127  auxiliary:91  arrays:[s:36,_ax_:91]  degrees:[1:90,6:6,7:30,8:1]
+  [94mconstraints[0m
+    count:128  specific:128  groups:1  arities:[1:2,2:36,3:90]
+    objective:[ObjVarGE,ObjVarLE]
+    non_unary:[DisjonctiveReified:90,Sub2GE:6,Sub2LE:30]
+    wck:0.38  cpu:1.107  mem:18M850
+  [94mobjective[0m
+    way:min  type:ObjVarLE  arity:1  bounds:9..206
+
+ [33m...Building[0m solver
+[33m
+ ...Discarding 91 aux variables[0m
+
+  [94msolver[0m
+    decoder:Decoder1
+    wck:0.42  cpu:1.141  mem:25M668
+
+  [94mpreprocessing[0m
+    effs:58  entailed:2  values:6,329  removedByAC:1,177  unsat:false
+    wck:0.025  cpu:1.173  mem:26M190
+
+  [94msearch[0m
+[92mo 105[0m   0.67  ham=0 (0 0 0)  opth=0
+   {
+    s: [
+     [  0,   2,   6,  13,  21,  25],
+     [ 13,  22,  32,  43,  54,  65],
+     [  2,   8,  25,  34,  44,  46],
+     [  0,   6,  12,  21,  54,  63],
+     [ 28,  38,  63,  73,  78,  82],
+     [ 22,  26,  78,  88,  99, 104]
+    ]
+   }
+
+[92mo 100[0m   0.80  ham=10 (7 0 3)  opth=1
+   {
+    s: [
+     [  0,   2,   6,  13,  21,  25],
+     [ 13,  22,  32,  43,  54,  65],
+     [  2,   8,  25,  34,  44,  46],
+     [  0,   6,  12,  21,  54,  63],
+     [ 28,  38,  63,  83,  94,  98],
+     [ 22,  26,  73,  83,  94,  99]
+    ]
+   }
+
+    run1  dpts:1..35  effs:917  asgs:(158,noefs=14,fails=100)  fails:100  wrgs:123  wck:0.42  ngds:29  sols:2  bounds:9..99
+[92mo 84[0m   0.91  ham=10 (8 0 2)  opth=1
+   {
+    s: [
+     [  0,   2,   6,  13,  21,  25],
+     [ 13,  22,  32,  43,  54,  65],
+     [  2,   8,  25,  34,  44,  46],
+     [  0,   6,  12,  21,  54,  64],
+     [ 28,  38,  63,  74,  79,  83],
+     [ 22,  26,  54,  65,  76,  81]
+    ]
+   }
+
+[92mo 82[0m   0.91  ham=9 (6 0 3)  opth=1
+   {
+    s: [
+     [  0,   2,   6,  13,  21,  25],
+     [ 13,  22,  32,  43,  54,  65],
+     [  2,   8,  25,  34,  44,  46],
+     [  0,   6,  12,  21,  60,  69],
+     [ 28,  38,  54,  64,  76,  80],
+     [ 22,  26,  54,  65,  76,  81]
+    ]
+   }
+
+    run2  dpts:18..35  effs:1,925  asgs:(178,noefs=18,fails=100)  fails:200  wrgs:241  wck:0.48  ngds:55  sols:4  bounds:9..81
+[92mo 77[0m   0.95  ham=71 (33 0 38)  opth=1
+   {
+    s: [
+     [ 10,  12,  16,  23,  31,  51],
+     [ 23,  32,  40,  51,  62,  73],
+     [ 18,  31,  36,  45,  55,  58],
+     [  0,   6,  12,  18,  22,  62],
+     [  0,  10,  14,  24,  35,  39],
+     [  6,  10,  14,  24,  35,  40]
+    ]
+   }
+
+    run3  dpts:0..35  effs:3,316  asgs:(161,noefs=5,fails=100)  fails:300  wrgs:361  wck:0.53  ngds:68  sols:5  bounds:9..76
+[92mo 72[0m   1.01  ham=37 (30 0 7)  opth=1
+   {
+    s: [
+     [ 10,  16,  23,  33,  42,  51],
+     [ 14,  28,  35,  46,  57,  68],
+     [ 22,  28,  33,  42,  52,  58],
+     [  4,  10,  16,  22,  26,  57],
+     [  0,  10,  14,  20,  25,  41],
+     [  0,   4,   8,  29,  46,  51]
+    ]
+   }
+
+    run4  dpts:1..35  effs:4,710  asgs:(162,noefs=9,fails=100)  fails:400  wrgs:483  wck:0.57  ngds:89  sols:6  bounds:9..71
+    run5  dpts:1..21  effs:6,049  asgs:(139,noefs=2,fails=100)  fails:500  wrgs:609  wck:0.60  ngds:142  sols:6  bounds:9..71
+    run6  dpts:4..35  effs:6,535  asgs:(185,noefs=17,fails=110)  fails:610  wrgs:738  wck:0.62  ngds:156  sols:6  bounds:9..71
+    run7  dpts:9..34  effs:7,199  asgs:(215,noefs=18,fails=121)  fails:731  wrgs:894  wck:0.64  ngds:174  sols:6  bounds:9..71
+    run8  dpts:10..35  effs:7,674  asgs:(227,noefs=19,fails=133)  fails:864  wrgs:1,050  wck:0.66  ngds:188  sols:6  bounds:9..71
+    run9  dpts:11..35  effs:8,133  asgs:(256,noefs=27,fails=146)  fails:1,010  wrgs:1,218  wck:0.67  ngds:198  sols:6  bounds:9..71
+    run10  dpts:12..35  effs:8,734  asgs:(280,noefs=44,fails=161)  fails:1,171  wrgs:1,428  wck:0.69  ngds:200  sols:6  bounds:9..71
+    run11  dpts:4..35  effs:9,388  asgs:(305,noefs=31,fails=177)  fails:1,348  wrgs:1,628  wck:0.71  ngds:227  sols:6  bounds:9..71
+[92mo 69[0m   1.18  ham=53 (33 0 20)  opth=1
+   {
+    s: [
+     [  0,   2,  19,  35,  46,  55],
+     [  4,  18,  24,  35,  46,  57],
+     [ 12,  18,  23,  36,  46,  62],
+     [ 13,  19,  25,  31,  35,  55],
+     [  2,  26,  44,  50,  57,  62],
+     [  0,   4,   8,  25,  50,  55]
+    ]
+   }
+
+    run12  dpts:3..35  effs:10,414  asgs:(334,noefs=32,fails=194)  fails:1,542  wrgs:1,848  wck:0.74  ngds:243  sols:7  bounds:9..68
+    run13  dpts:2..10  effs:12,017  asgs:(124,noefs=1,fails=100)  fails:1,642  wrgs:1,966  wck:0.78  ngds:272  sols:7  bounds:9..68
+    run14  dpts:0..23  effs:13,173  asgs:(160,noefs=3,fails=110)  fails:1,752  wrgs:2,109  wck:0.81  ngds:301  sols:7  bounds:9..68
+    run15  dpts:5..25  effs:14,019  asgs:(193,noefs=8,fails=121)  fails:1,873  wrgs:2,271  wck:0.82  ngds:324  sols:7  bounds:9..68
+    run16  dpts:8..32  effs:14,532  asgs:(221,noefs=25,fails=133)  fails:2,006  wrgs:2,432  wck:0.84  ngds:331  sols:7  bounds:9..68
+[92mo 66[0m   1.29  ham=46 (31 0 15)  opth=1
+   {
+    s: [
+     [  6,   8,  19,  26,  41,  60],
+     [  4,  13,  19,  30,  47,  58],
+     [  0,   6,  11,  20,  30,  32],
+     [ 13,  30,  36,  42,  46,  55],
+     [ 19,  32,  40,  46,  58,  63],
+     [  0,  11,  20,  36,  55,  60]
+    ]
+   }
+
+    run17  dpts:0..35  effs:17,486  asgs:(209,noefs=7,fails=146)  fails:2,152  wrgs:2,602  wck:0.92  ngds:332  sols:8  bounds:9..65
+    run18  dpts:0..9  effs:20,116  asgs:(122,noefs=0,fails=100)  fails:2,252  wrgs:2,719  wck:1.02  ngds:365  sols:8  bounds:9..65
+    run19  dpts:0..5  effs:22,884  asgs:(132,noefs=0,fails=110)  fails:2,362  wrgs:2,845  wck:1.08  ngds:399  sols:8  bounds:9..65
+    run20  dpts:0..4  effs:25,688  asgs:(136,noefs=0,fails=121)  fails:2,483  wrgs:2,978  wck:1.18  ngds:423  sols:8  bounds:9..65
+    run21  dpts:0..6  effs:28,093  asgs:(163,noefs=1,fails=133)  fails:2,616  wrgs:3,132  wck:1.25  ngds:448  sols:8  bounds:9..65
+    run22  dpts:0..5  effs:31,049  asgs:(177,noefs=0,fails=146)  fails:2,762  wrgs:3,305  wck:1.34  ngds:463  sols:8  bounds:9..65
+    run23  dpts:0..14  effs:33,674  asgs:(205,noefs=1,fails=161)  fails:2,923  wrgs:3,489  wck:1.43  ngds:490  sols:8  bounds:9..65
+[92mo 63[0m   1.89  ham=41 (31 0 10)  opth=1
+   {
+    s: [
+     [  6,   8,  33,  40,  49,  57],
+     [  0,   9,  15,  33,  44,  55],
+     [  0,   6,  11,  21,  31,  35],
+     [  9,  15,  25,  31,  43,  53],
+     [ 15,  25,  29,  44,  55,  60],
+     [ 15,  19,  23,  33,  52,  57]
+    ]
+   }
+
+    run24  dpts:0..35  effs:35,150  asgs:(106,noefs=9,fails=65)  fails:2,988  wrgs:3,560  wck:1.50  ngds:490  sols:9  bounds:9..62
+
+  [94mglobal[0m
+    effs:35,150  noefs:291  ngds:490
+    stop:FULL_EXPLORATION  wrgs:3,560  bound:63  boundWck:1.887  sols:9  sol1Cpu:1.389
+    wck:1.94  cpu:2.632  mem:23M294
+
+
+  Solution 9 in JSON-like format:
+   {
+    s: [
+     [  6,   8,  33,  40,  49,  57],
+     [  0,   9,  15,  33,  44,  55],
+     [  0,   6,  11,  21,  31,  35],
+     [  9,  15,  25,  31,  43,  53],
+     [ 15,  25,  29,  44,  55,  60],
+     [ 15,  19,  23,  33,  52,  57]
+    ]
+   }
+
+[92ms OPTIMUM FOUND[0m
+[92m
+v[0m  <instantiation id='sol9' type='solution' cost='63'> <list> s[][] </list> <values> 6 8 33 40 49 57 0 9 15 33 44 55 0 6 11 21 31 35 9 15 25 31 43 53 15 25 29 44 55 60 15 19 23 33 52 57 </values> </instantiation>
+[92m
+d BOUND[0m  63  (9 sols)
+[92m
+d WRONG DECISIONS[0m  3,560  (2370.17 wrg/s)
+
+[92md WCK SOL 1[0m  0.67 (105)
+[92md WCK SOL-1[0m  1.89 (63)
+[92md CPU       [0m 2.64
+
+[92md COMPLETE EXPLORATION[0m

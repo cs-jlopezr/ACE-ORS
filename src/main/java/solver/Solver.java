@@ -748,33 +748,40 @@ public class Solver implements ObserverOnBacktracksSystematic {
 	public final Profiler profiler;
 
 	public class SolverTracker {
-		// Map: Level -> Set of Variables modified at that level
-		private final Map<Integer, Set<Variable>> modifiedAtLevel = new HashMap<>();
+		private final List<Variable>[] modifiedAtLevel;
+
+		@SuppressWarnings("unchecked")
+		public SolverTracker(int maxDepth) {
+			modifiedAtLevel = new ArrayList[maxDepth + 2];
+			for (int i = 0; i < modifiedAtLevel.length; i++) {
+				modifiedAtLevel[i] = new ArrayList<>(32);
+			}
+		}
 
 		/**
 		 * Called by TimeRobustDomain whenever a 'clearShadowBit' occurs
 		 * for the first time at a new level.
 		 */
 		public void markAsModified(Variable var, int level) {
-			modifiedAtLevel.computeIfAbsent(level, k -> new HashSet<>()).add(var);
+			modifiedAtLevel[level].add(var);
 		}
 
 		/**
 		 * Returns the variables that need restoration for a specific level.
 		 */
-		public Set<Variable> getModified(int level) {
-			return modifiedAtLevel.getOrDefault(level, Collections.emptySet());
+		public Iterable<Variable> getModified(int level) {
+			return modifiedAtLevel[level];
 		}
 
 		/**
 		 * Clears the set for a level once backtracking is complete.
 		 */
 		public void clearLevel(int level) {
-			modifiedAtLevel.remove(level);
+			modifiedAtLevel[level].clear();
 		}
 	}
 
-	public SolverTracker solverTracker = new SolverTracker();
+	public SolverTracker solverTracker;
 
 	/**
 	 * @return true if after full exploration of the search space no solution has been found
@@ -828,6 +835,7 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		this.head = head;
 		this.problem = head.problem;
 		this.problem.solver = this;
+		this.solverTracker = new SolverTracker(problem.variables.length);
 
 		this.solutions = new Solutions(this, head.control.general.solLimit);
 		// BE CAREFUL: build solutions before propagation
@@ -1093,7 +1101,7 @@ public class Solver implements ObserverOnBacktracksSystematic {
 				stopping = Stopping.FULL_EXPLORATION;
 			else {
 				// 2. Get the set of variables that were modified at this specific level
-				Set<Variable> changedVars = solverTracker.getModified(currentLevel);
+				Iterable<Variable> changedVars = solverTracker.getModified(currentLevel);
 				if (changedVars != null) {
 					for (Variable var : changedVars) {
 						// 3. Tell the Virtual Domain to restore its bitset
@@ -1128,8 +1136,20 @@ public class Solver implements ObserverOnBacktracksSystematic {
 				maxDepth = Math.max(maxDepth, depth());
 				Variable x = heuristic.bestVariable();
 				if(x == Variable.TAG && Objects.nonNull(problem.scpRobustness)) {
-					boolean constraintsSat = Stream.of(problem.constraints).allMatch(c -> c.isSatisfiedByCurrentInstantiation());
-					boolean isRobust = Stream.of(problem.scpRobustness).allMatch(v -> v.robustDomain.checkVariableForRC(depth()));
+					boolean constraintsSat = true;
+					for (Constraint c : problem.constraints) {
+						if (!c.isSatisfiedByCurrentInstantiation()) {
+							constraintsSat = false;
+							break;
+						}
+					}
+					boolean isRobust = true;
+					for (Variable v : problem.scpRobustness) {
+						if (!v.robustDomain.checkVariableForRC(depth())) {
+							isRobust = false;
+							break;
+						}
+					}
 					if (!constraintsSat || !isRobust) {
 						manageContradiction(null);
 						continue;

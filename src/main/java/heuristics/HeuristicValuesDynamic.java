@@ -463,4 +463,17 @@ public abstract class HeuristicValuesDynamic extends HeuristicValues {
 		}
 	}
 
+	public static class RobVal extends HeuristicValuesDynamic implements TagMaximize {
+		public RobVal(Variable x, boolean anti) {
+			super(x, anti);
+		}
+
+		@Override
+		protected double scoreOf(int a) {
+			if (x.robustnessInvolved && x.robustDomain != null) {
+				return x.robustDomain.getRobustWeight(dx.toVal(a));
+			}
+			return 1.0;
+		}
+	}
 }
