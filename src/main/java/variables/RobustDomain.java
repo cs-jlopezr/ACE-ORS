@@ -20,4 +20,9 @@ public interface RobustDomain {
         return 0; // Default implementation
     }
 
+    public boolean isRobustBase(int v);
+    
+    default int getBestPossibleRobustWeight() {
+        return 0;
+    }
 }

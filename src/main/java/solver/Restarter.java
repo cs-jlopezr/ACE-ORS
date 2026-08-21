@@ -375,6 +375,8 @@ public class Restarter implements ObserverOnRuns {
 			public static HeuristicFreezing buildFor(RestarterLNS restarter) {
 				if (restarter.solver.head.control.lns.clazz.equals("Impact"))
 					return new Impact(restarter);
+				if (restarter.solver.head.control.lns.clazz.equals("BasedOnWdegOnDom"))
+					return new WdegOnDom(restarter);
 				return new Rand(restarter);
 			}
 
@@ -455,6 +457,41 @@ public class Restarter implements ObserverOnRuns {
 				@Override
 				public void freezeVariables(int[] solution) {
 					Kit.shuffle(fragment.dense, restarter.solver.head.random);
+				}
+			}
+
+			public static final class WdegOnDom extends HeuristicFreezing {
+				private final Variable[] variables;
+
+				public WdegOnDom(RestarterLNS restarter) {
+					super(restarter);
+					this.variables = restarter.solver.problem.variables;
+				}
+
+				@Override
+				public void freezeVariables(int[] solution) {
+					int[] dense = fragment.dense;
+					
+					// Box the array to use standard sorting
+					Integer[] indices = new Integer[dense.length];
+					for (int i = 0; i < dense.length; i++) indices[i] = dense[i];
+					
+					// Shuffle first to break ties randomly (diversification)
+					java.util.Collections.shuffle(java.util.Arrays.asList(indices), restarter.solver.head.random);
+					
+					// USER IDEA: 10% chance to completely randomize the neighborhood to prevent LNS stagnation!
+					if (restarter.solver.head.random.nextDouble() >= 0.1) {
+						// 90% of the time, sort variables so that LOWEST wdegOnDom (safest) are at the beginning (frozen).
+						// HIGHEST wdegOnDom (conflict-heavy bottlenecks) are at the end (relaxed).
+						java.util.Arrays.sort(indices, (i, j) -> {
+							double wI = variables[i].wdegOnRobDom();
+							double wJ = variables[j].wdegOnRobDom();
+							return Double.compare(wI, wJ);
+						});
+					}
+					
+					// Write back to dense
+					for (int i = 0; i < dense.length; i++) dense[i] = indices[i];
 				}
 			}
 		}

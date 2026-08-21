@@ -106,17 +106,11 @@ public class GraphRobustDomain implements RobustDomain {
             return isBase.get(v); // Fail if the assignment isn't robust
         }
 
-        // --- 3. DOMAIN PRUNING ---
-        int v = var.dom.first();
-        while (v != -1) {
-            int nextV = var.dom.next(v);
-            if (!isBase.get(v)) {
-                var.dom.removeElementary(v);
-                if (var.dom.size() < 1) return false;
-            }
-            v = nextV;
-        }
-
+        // --- 3. FULL DOMAIN PRUNING (Disabled for CSOP) ---
+        // In a CSOP, robustness is an objective function, not a hard constraint.
+        // We do NOT hard prune values that lack K backups, because a variable is 
+        // allowed to have 0 backups (it just contributes 0 to the objective sum).
+        
         return true;
     }
 
@@ -228,5 +222,11 @@ public class GraphRobustDomain implements RobustDomain {
     public int getRobustWeight(int v) {
         if (v < 0 || v >= n) return 0;
         return succAsc[v].cardinality() + succDesc[v].cardinality();
+    }
+
+    @Override
+    public boolean isRobustBase(int v) {
+        if (v < 0 || v >= n) return false;
+        return isBase.get(v);
     }
 }

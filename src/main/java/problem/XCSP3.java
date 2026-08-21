@@ -1013,11 +1013,13 @@ public class XCSP3 implements ProblemAPI, XCallbacks2 {
 
 	@Override
 	public void buildObjToMinimize(String id, TypeObjective type, XVarInteger[] list, int[] coeffs) {
+		if (type == null) return;
 		problem.minimize(type, trVars(list), coeffs);
 	}
 
 	@Override
 	public void buildObjToMaximize(String id, TypeObjective type, XVarInteger[] list, int[] coeffs) {
+		if (type == null) return;
 		problem.maximize(type, trVars(list), coeffs);
 	}
 

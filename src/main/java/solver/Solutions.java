@@ -304,7 +304,48 @@ public final class Solutions {
 			sb.append(solver.problem.framework != CSP ? " cost='" + solver.problem.optimizer.valueWithGap(bestBound) + "'" : "").append(">");
 			sb.append(" <list> ").append(xmlVars).append(" </list> <values> ");
 			sb.append(vals(solver.problem.options.xmlCompact, true));
-			return sb.append(" </values> </instantiation>").toString();
+			sb.append(" </values>").append(computeRobustCounts()).append(" </instantiation>");
+			return sb.toString();
+		}
+		
+		private String computeRobustCounts() {
+			if (solver.problem.scpRobustness == null) return "";
+			StringBuilder sb = new StringBuilder();
+			sb.append("\n <robust_counts> ");
+			int kCount = solver.problem.head.control.robust.k;
+			
+			for (variables.Variable x : solver.problem.variables) { 
+				if (!x.robustnessInvolved) continue;
+				int assignedIdx = last.idxs[x.num];
+				int assignedVal = x.dom.toVal(assignedIdx);
+				int validBackups = 0;
+				for (int k = 1; k <= kCount; k++) {
+					int backupVal = assignedVal + k;
+					int backupIdx = x.dom.toIdx(backupVal);
+					if (backupIdx == -1) break; // Out of bounds
+					
+					boolean isBackupValid = true;
+					for (constraints.Constraint ctr : x.ctrs) {
+						int indexThis = -1;
+						for (int i = 0; i < ctr.scp.length; i++) {
+							if (ctr.scp[i] == x) { indexThis = i; break; }
+						}
+						int[] tuple = new int[ctr.scp.length];
+						for (int i = 0; i < ctr.scp.length; i++) {
+							if (i == indexThis) tuple[i] = backupIdx;
+							else tuple[i] = last.idxs[ctr.scp[i].num];
+						}
+						if (!ctr.checkIndexes(tuple)) {
+							isBackupValid = false;
+							break;
+						}
+					}
+					if (isBackupValid) validBackups++;
+				}
+				sb.append(validBackups).append(" ");
+			}
+			sb.append("</robust_counts>");
+			return sb.toString();
 		}
 	}
 
@@ -485,11 +526,13 @@ public final class Solutions {
 			}
 		}
 	}
-
-	/**
-	 * This method must be called whenever a new solution is found by the solver
-	 */
 	public void handleNewSolution() {
+		if (!solver.isTimeRobustDomainActive) {
+			solver.isTimeRobustDomainActive = true;
+			if (solver.head.control.robust.activateTRD) {
+				System.out.println("c [Phase 2] TimeRobustDomain activated.");
+			}
+		}
 		synchronized (lock) {
 			if (!lock.get()) {
 				lock.set(true);

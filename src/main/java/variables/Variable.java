@@ -871,6 +871,15 @@ public abstract class Variable implements ObserveronBacktracksUnsystematic, Comp
 		return wdeg() / dom.size();
 	}
 
+	public final double wdegOnRobDom() {
+		int size = dom.size();
+		if (robustnessInvolved && robustDomain != null) {
+			size = robustDomain.getRobustDomainSize();
+		}
+		if (size == 0) return Double.MAX_VALUE;
+		return wdeg() / size;
+	}
+
 	public final double frOnDom() {
 		return problem.solver.stats.varAssignments[num].failureRate() / dom.size();
 	}

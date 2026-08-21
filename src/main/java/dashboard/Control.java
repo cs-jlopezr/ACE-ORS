@@ -723,7 +723,8 @@ public final class Control {
 		public final int k_offset = addI("k_offset", "k_offset", 0, "Offset for temporal k-schemes");
 		public final String scheme = addS("scheme", "sSch", "", "string with the functions and predicates");
 		public final String rpolicy = addS("rpolicy", "rpolicy", "stride", "string with the functions and predicates");
-		public final boolean tdom = addB("tdom", "tdom", false, "Must we use TimeRobustDomain? (GraphRobustDomain if false)");
+		public final boolean activateTRD = addB("activateTRD", "activateTRD", false, "Must we activate TimeRobustDomain? (If false, surrogate bounds are used)");
+		public final boolean isStrict = addB("isStrict", "isStrict", true, "Is strict robustness required (no partial scores)?");
 	}
 
 	public class OptionsLNS extends OptionGroup {

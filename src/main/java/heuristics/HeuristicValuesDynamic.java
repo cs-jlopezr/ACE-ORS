@@ -305,6 +305,132 @@ public abstract class HeuristicValuesDynamic extends HeuristicValues {
 		}
 	}
 
+	/************************************************************************************************/
+	/************************************************************************************************/
+
+	/**
+	 * Optimal hybrid heuristic for Scheduling LNS.
+	 * Honors the Earliest Start Time (firstValue) philosophy while enforcing robustness.
+	 */
+	public static class FirstRobustValue extends HeuristicValuesDynamic {
+
+		public FirstRobustValue(Variable x, boolean anti) {
+			super(x, anti);
+		}
+
+		@Override
+		public int computeBestValueIndex() {
+			if (x.robustDomain == null) {
+				return dx.first(); // Fallback if not robust
+			}
+
+			// Scan from earliest to latest to preserve Scheduling's EST philosophy
+			int bestFallback = -1;
+			int maxWeight = -1;
+
+			for (int a = dx.first(); a != -1; a = dx.next(a)) {
+				// If fully robust, return immediately (Earliest Robust Start Time)
+				if (x.robustDomain.isRobustBase(a)) {
+					return a;
+				}
+
+				// If we are in partial LNS mode and no full robust bases exist,
+				// we track the earliest value that has the highest partial weight.
+				int weight = x.robustDomain.getRobustWeight(a);
+				if (weight > maxWeight) {
+					maxWeight = weight;
+					bestFallback = a;
+				}
+			}
+
+			// If no values were fully robust, return the best partial one we found, or just the first.
+			return bestFallback != -1 ? bestFallback : dx.first();
+		}
+
+		@Override
+		public double scoreOf(int a) {
+			return 0; // Handled directly in computeBestValueIndex
+		}
+	}
+
+	public static class ImpactOnRobustnessPastVar extends HeuristicValuesDynamic {
+
+		public ImpactOnRobustnessPastVar(Variable x, boolean anti) {
+			super(x, anti);
+		}
+
+		@Override
+		public int computeBestValueIndex() {
+			if ((x.problem.solver.solutions.found == 0) && x.problem.solver != null && !x.problem.solver.isTimeRobustDomainActive) {
+				return dx.first(); // Lightning-fast earliest start time for Phase 1!
+			}
+			
+			int bestIndex = -1;
+			int maxValidConstraints = -1;
+			int fallback = dx.first();
+
+			for (int a = dx.first(); a != -1; a = dx.next(a)) {
+				int numberOfValidConstraints = 0;
+				int kCount = x.problem.head.control.robust.k;
+
+				for (Constraint ctr : x.ctrs) {
+					// Cache indexThis outside the variable loop to avoid redundant nested loops
+					int indexThis = -1;
+					for (int index = 0; index < ctr.scp.length; index++) {
+						if (ctr.scp[index] == x) {
+							indexThis = index;
+							break;
+						}
+					}
+
+					// We only check constraints that link to already assigned variables
+					for (int indexRelated = 0; indexRelated < ctr.scp.length; indexRelated++) {
+						if (indexRelated == indexThis) continue;
+						
+						Variable var = ctr.scp[indexRelated];
+						if (var.assigned() && var.robustnessInvolved) {
+							int assignedIdx = var.dom.single();
+							int assignedVal = var.dom.toVal(assignedIdx);
+							// Check if `x=a` supports the k backup values of `var`
+							for (int k = 1; k <= kCount; k++) {
+								int backupVal = assignedVal + k;
+								int backupIdx = var.dom.toIdx(backupVal);
+								if (backupIdx != -1) {
+									// Build full tuple for fast O(1) check
+									int[] tuple = new int[ctr.scp.length];
+									for (int i = 0; i < ctr.scp.length; i++) {
+										if (i == indexThis) tuple[i] = a;
+										else if (i == indexRelated) tuple[i] = backupIdx;
+										else {
+											Variable other = ctr.scp[i];
+											if (other.assigned()) tuple[i] = other.dom.single();
+											else tuple[i] = other.dom.first(); // Optimistic evaluation for unassigned
+										}
+									}
+									
+									if (ctr.checkIndexes(tuple)) {
+										numberOfValidConstraints++;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				if (numberOfValidConstraints > maxValidConstraints) {
+					maxValidConstraints = numberOfValidConstraints;
+					bestIndex = a;
+				}
+			}
+			return bestIndex != -1 ? bestIndex : fallback;
+		}
+
+		@Override
+		public double scoreOf(int a) {
+			return 0; 
+		}
+	}
+
 	// ************************************************************************
 	// ***** BIVS variants
 	// ************************************************************************
@@ -470,10 +596,52 @@ public abstract class HeuristicValuesDynamic extends HeuristicValues {
 
 		@Override
 		protected double scoreOf(int a) {
-			if (x.robustnessInvolved && x.robustDomain != null) {
-				return x.robustDomain.getRobustWeight(dx.toVal(a));
+			if (!x.robustnessInvolved) return 1.0;
+			
+			int testIdx = a;
+			int kCount = x.problem.head.control.robust.k;
+			int score = 0;
+			
+			for (constraints.Constraint c : x.ctrs) {
+				if (c instanceof constraints.global.Sum.RobustSumSimple) continue;
+				int indexThis = -1;
+				for (int i = 0; i < c.scp.length; i++) {
+					if (c.scp[i] == x) { indexThis = i; break; }
+				}
+				
+				for (int pastIdx = 0; pastIdx < c.scp.length; pastIdx++) {
+					if (pastIdx == indexThis) continue;
+					variables.Variable pastVar = c.scp[pastIdx];
+					if (pastVar.assigned() && pastVar.robustnessInvolved) {
+						int pastVal = pastVar.dom.toVal(pastVar.dom.single());
+						for (int k = 1; k <= kCount; k++) {
+							int backupVal = pastVal + k;
+							int backupIdx = pastVar.dom.toIdx(backupVal);
+							if (backupIdx == -1) break;
+							
+							// Build full tuple for fast O(1) check
+							int[] tuple = new int[c.scp.length];
+							boolean allAssigned = true;
+							for (int i = 0; i < c.scp.length; i++) {
+								if (i == indexThis) tuple[i] = testIdx;
+								else if (i == pastIdx) tuple[i] = backupIdx;
+								else {
+									variables.Variable other = c.scp[i];
+									if (other.assigned()) tuple[i] = other.dom.single();
+									else {
+										tuple[i] = other.dom.first(); // Optimistic evaluation for unassigned
+									}
+								}
+							}
+							
+							if (c.checkIndexes(tuple)) {
+								score++;
+							}
+						}
+					}
+				}
 			}
-			return 1.0;
+			return score;
 		}
 	}
 }

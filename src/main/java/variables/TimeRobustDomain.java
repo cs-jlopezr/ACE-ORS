@@ -26,12 +26,15 @@ public class TimeRobustDomain implements RobustDomain{
     private int historySize = 0;
     private int lastModifiedLevel = -1;
 
+    private final boolean isPartial;
+
     public TimeRobustDomain(Variable var, int n, int K, int H, int offset) {
         this.var = var;
         this.n = n;
         this.K = K;
         this.H = H;
         this.offset = offset;
+        this.isPartial = !var.problem.head.control.robust.isStrict;
 
         int numLongs = (n + 63) / 64; //Adding 63 to round up to the next integer
         this.aliveValues = new long[numLongs];
@@ -130,6 +133,7 @@ public class TimeRobustDomain implements RobustDomain{
 
     @Override
     public boolean checkVariableForRC(int currentLevel) {
+        if (var.problem.solver != null && !var.problem.solver.isTimeRobustDomainActive) return true;
         // --- 1. FULL SHADOW SYNC (Checks ALL shadow values, not just bounds) ---
         boolean shadowChanged = false;
 
@@ -139,7 +143,7 @@ public class TimeRobustDomain implements RobustDomain{
                 int bitIndex = Long.numberOfTrailingZeros(word);
                 int v = (i << 6) + bitIndex;
 
-                if (!var.dom.contains(v)) {
+                if (!var.dom.containsValue(v)) {
                     if (!isGacSupported(v)) {
                         clearShadowBit(v, currentLevel);
                         shadowChanged = true;
@@ -164,24 +168,20 @@ public class TimeRobustDomain implements RobustDomain{
             return isBitSet(baseValues, var.dom.single());
         }
 
-        // --- 3. FULL DOMAIN PRUNING (Checks ALL physical values, not just bounds) ---
-        int v = var.dom.first();
-        while (v != -1) {
-            int nextV = var.dom.next(v);
-            if (!isBitSet(baseValues, v)) {
-                var.dom.removeElementary(v);
-                if (var.dom.size() < 1) return false;
-            }
-            v = nextV;
-        }
-
+        // --- 3. FULL DOMAIN PRUNING (Disabled for CSOP) ---
+        // In a CSOP, robustness is an objective function, not a hard constraint.
+        // We do NOT hard prune values that lack K backups, because a variable is 
+        // allowed to have 0 backups (it just contributes 0 to the objective sum).
+        
         return true;
     }
 
     // Helper to keep the logic clean
     private boolean isGacSupported(int v) {
+        int idx = var.dom.toIdx(v);
+        if (idx == -1) return false;
         for (Constraint c : var.ctrs) {
-            if (!c.seekFirstSupportWith(c.positionOf(var), v)) return false;
+            if (!c.seekFirstSupportWith(c.positionOf(var), idx)) return false;
         }
         return true;
     }
@@ -246,6 +246,31 @@ public class TimeRobustDomain implements RobustDomain{
             }
         }
         return -1;
+    }
+    
+    @Override
+    public boolean isRobustBase(int v) {
+        return isBitSet(baseValues, v);
+    }
+
+    @Override
+    public int getRobustWeight(int v) {
+        // Partial robustness fallback
+        if (!isPartial) {
+            return isRobustBase(v) ? var.problem.head.control.robust.k : 0;
+        }
+        
+        int weight = 0;
+        if (H == 0) {
+            for (int k = 1; k <= K; k++) {
+                if (isBitSet(aliveValues, v + (k * offset))) weight++;
+                else break; // Contiguous backup broken
+            }
+        } else {
+            // Not implemented for partial H>0 yet, fallback to all-or-nothing
+            return isRobustBase(v) ? var.problem.head.control.robust.k : 0;
+        }
+        return weight;
     }
 
     /**

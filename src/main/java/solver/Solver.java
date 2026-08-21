@@ -929,6 +929,8 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		return entailed.contains(c.num);
 	}
 
+	public boolean isTimeRobustDomainActive = false;
+
 	/**
 	 * Assigns the specified value index to the specified variable
 	 * 
@@ -959,6 +961,20 @@ public class Solver implements ObserverOnBacktracksSystematic {
 			observer.afterUnassignment(x);
 		for (ObserverOnBacktracksSystematic observer : observersOnBacktracksSystematic)
 			observer.restoreBefore(depthBeforeBacktrack);
+			
+		// Safely trail the shadow domains for this specific level
+		if (solverTracker != null) {
+			Iterable<Variable> changedVars = solverTracker.getModified(depthBeforeBacktrack);
+			if (changedVars != null) {
+				for (Variable var : changedVars) {
+					if (var.robustDomain != null) {
+						var.robustDomain.backtrackTo(depthBeforeBacktrack);
+					}
+				}
+				solverTracker.clearLevel(depthBeforeBacktrack);
+			}
+		}
+
 		propagation.clear();
 		profiler.afterBacktracking();
 	}
@@ -1060,7 +1076,7 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		decisions.addNegativeDecision(x, a);
 
 		// --- CASE 2 REFUTATION ---
-		if (x.robustnessInvolved) {
+		if (x.robustnessInvolved && x.robustDomain != null) {
 			x.robustDomain.removeAsBaseOnly(a, depth()); // Keep in shadow, remove from choices
 		} else {
 			x.dom.removeElementary(a);
@@ -1100,17 +1116,6 @@ public class Solver implements ObserverOnBacktracksSystematic {
 			if (x == lastPastBeforeRun[nRecursiveRuns - 1] && !head.control.lns.enabled)
 				stopping = Stopping.FULL_EXPLORATION;
 			else {
-				// 2. Get the set of variables that were modified at this specific level
-				Iterable<Variable> changedVars = solverTracker.getModified(currentLevel);
-				if (changedVars != null) {
-					for (Variable var : changedVars) {
-						// 3. Tell the Virtual Domain to restore its bitset
-						// This will internally call updateRobustness()
-						var.robustDomain.backtrackTo(currentLevel-1);
-					}
-					// 4. Clear the tracker for this level so it's fresh for the next branch
-					solverTracker.clearLevel(currentLevel);
-				}
 				int a = x.dom.single();
 				backtrack(x);
 				// 3. LOGIC GUARD: Only try refutation if 'a' is a valid value (not -1)
@@ -1145,7 +1150,7 @@ public class Solver implements ObserverOnBacktracksSystematic {
 					}
 					boolean isRobust = true;
 					for (Variable v : problem.scpRobustness) {
-						if (!v.robustDomain.checkVariableForRC(depth())) {
+						if (v.robustDomain != null && !v.robustDomain.checkVariableForRC(depth())) {
 							isRobust = false;
 							break;
 						}
@@ -1263,13 +1268,6 @@ public class Solver implements ObserverOnBacktracksSystematic {
 		explore();
 		Variable v = lastPastBeforeRun[--nRecursiveRuns];
 		backtrackTo(v);
-		if(Objects.nonNull(this.problem.scpRobustness))
-			for(Variable var : this.problem.scpRobustness) {
-				if(Objects.isNull(v))
-					var.robustDomain.backtrackTo(0);
-				else
-					var.robustDomain.backtrackTo(v.assignmentLevel);
-			}
 		return this;
 	}
 

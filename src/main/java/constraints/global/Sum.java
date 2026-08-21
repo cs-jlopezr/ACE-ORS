@@ -1722,4 +1722,122 @@ public abstract class Sum extends ConstraintGlobal implements TagCallCompleteFil
 		}
 	}
 
+
+	public static abstract class RobustSumSimple extends Sum implements interfaces.Tags.TagSymmetric {
+		protected long min, max;
+
+		protected final boolean isPartial;
+		
+		public RobustSumSimple(problem.Problem pb, variables.Variable[] scp, long limit) {
+			super(pb, scp);
+			for(variables.Variable var: scp) var.robustnessInvolved = true;
+			this.isPartial = !scp[0].problem.head.control.robust.isStrict;
+			setLimit(limit);
+			defineKey(limit);
+		}
+		
+		public final long minComputableObjectiveValue() { return 0; }
+		public final long maxComputableObjectiveValue() {
+			return scp.length * scp[0].problem.head.control.robust.k;
+		}
+		
+		protected final void recomputeBounds() {
+			min = max = 0;
+			int kCount = scp[0].problem.head.control.robust.k;
+			boolean useExact = scp[0].problem.solver != null && scp[0].problem.solver.isTimeRobustDomainActive;
+			
+			for (variables.Variable x : scp) {
+				if (x.assigned()) {
+					int assignedIdx = x.dom.single();
+					int assignedVal = x.dom.toVal(assignedIdx);
+					
+					if (useExact && x.robustDomain != null) {
+						max += x.robustDomain.getRobustWeight(assignedVal);
+					} else {
+						int validBackups = 0;
+						boolean isContiguous = true;
+						for (int k = 1; k <= kCount; k++) {
+							int backupVal = assignedVal + k;
+							int backupIdx = x.dom.toIdx(backupVal);
+							if (backupIdx == -1) {
+								isContiguous = false;
+								break;
+							}
+							
+							boolean isBackupValid = true;
+							for (constraints.Constraint ctr : x.ctrs) {
+								int indexThis = -1;
+								for (int i = 0; i < ctr.scp.length; i++) {
+									if (ctr.scp[i] == x) { indexThis = i; break; }
+								}
+								int[] tuple = new int[ctr.scp.length];
+								boolean allAssigned = true;
+								for (int i = 0; i < ctr.scp.length; i++) {
+									if (i == indexThis) tuple[i] = backupIdx;
+									else {
+										variables.Variable other = ctr.scp[i];
+										if (other.assigned()) {
+											tuple[i] = other.dom.single();
+										} else {
+											allAssigned = false;
+											tuple[i] = other.dom.first(); 
+										}
+									}
+								}
+								if (allAssigned) {
+									if (!ctr.checkIndexes(tuple)) {
+										isBackupValid = false;
+										break;
+									}
+								}
+							}
+							if (isBackupValid) {
+								validBackups++;
+							} else {
+								isContiguous = false;
+								break;
+							}
+						}
+						
+						if (isPartial) {
+							max += validBackups;
+						} else {
+							if (validBackups == kCount) {
+								max += kCount;
+							}
+						}
+					}
+				} else {
+					if (useExact && x.robustDomain != null) {
+						max += Math.min(x.dom.size() - 1, kCount);
+					} else {
+						max += kCount;
+					}
+				}
+			}
+		}
+
+		public static final class RobustSumSimpleGE extends RobustSumSimple implements interfaces.Tags.TagAC, optimization.Optimizable {
+			public RobustSumSimpleGE(problem.Problem pb, variables.Variable[] scp, long limit) { super(pb, scp, limit); }
+			@Override public long minCurrentObjectiveValue() { return 0; }
+			@Override public long maxCurrentObjectiveValue() { recomputeBounds(); return max; }
+			@Override public long objectiveValue() { recomputeBounds(); return max; } // exact at leaf
+			@Override public boolean isSatisfiedBy(int[] t) { return true; } // evaluated by optimization framework
+			@Override public boolean runPropagator(variables.Variable x) {
+				if (limit <= 0) return true;
+				recomputeBounds();
+				if (max < limit) return x == null ? false : x.dom.fail();
+				return true;
+			}
+		}
+
+		public static final class RobustSumSimpleLE extends RobustSumSimple implements interfaces.Tags.TagAC, optimization.Optimizable {
+			public RobustSumSimpleLE(problem.Problem pb, variables.Variable[] scp, long limit) { super(pb, scp, limit); }
+			@Override public long minCurrentObjectiveValue() { return 0; }
+			@Override public long maxCurrentObjectiveValue() { return maxComputableObjectiveValue(); }
+			@Override public long objectiveValue() { recomputeBounds(); return max; }
+			@Override public boolean isSatisfiedBy(int[] t) { return true; }
+			@Override public boolean runPropagator(variables.Variable x) { return true; }
+		}
+	}
 }

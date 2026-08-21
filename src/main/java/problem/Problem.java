@@ -4276,7 +4276,7 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 	}
 
 	private ObjEntity optimize(TypeOptimization opt, TypeObjective type, Variable[] list) {
-		control(type.generalizable() && list.length > 0);
+		control((type == null || type.generalizable()) && list.length > 0);
 		if (!switchToSatisfaction(opt, type, null, list)) {
 			if (list.length == 1) {
 				control(type != NVALUES);
@@ -4284,7 +4284,7 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 			}
 			long lb = head.control.optimization.lb, ub = head.control.optimization.ub;
 			if (!Variable.areAllDistinct(list)) {
-				if (type == SUM) {
+				if (type == SUM || type == null) {
 					Term[] terms = handleSumTerms(list, null);
 					list = Stream.of(terms).map(t -> t.variable).toArray(Variable[]::new);
 					int[] coeffs = Stream.of(terms).mapToInt(t -> (int) t.coeff).toArray();
@@ -4297,10 +4297,12 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 
 			// TODO what about several occurrences of the same variable in list?
 			// if SUM, should we transform into weighted sum, or just fail?
-			Constraint clb = type == SUM ? new SumSimpleGE(this, list, lb)
+			Constraint clb = type == null ? new constraints.global.Sum.RobustSumSimple.RobustSumSimpleGE(this, list, lb)
+					: type == SUM ? new SumSimpleGE(this, list, lb)
 					: type == MINIMUM ? new MinimumCstGE(this, list, lb)
 							: type == MAXIMUM ? new MaximumCstGE(this, list, lb) : new NValuesCstGE(this, list, lb);
-			Constraint cub = type == SUM ? new SumSimpleLE(this, list, ub)
+			Constraint cub = type == null ? new constraints.global.Sum.RobustSumSimple.RobustSumSimpleLE(this, list, ub)
+					: type == SUM ? new SumSimpleLE(this, list, ub)
 					: type == MINIMUM ? new MinimumCstLE(this, list, ub)
 							: type == MAXIMUM ? new MaximumCstLE(this, list, ub) : new NValuesCstLE(this, list, ub);
 			optimizer = buildOptimizer(opt, postObj(clb), postObj(cub));
@@ -4319,7 +4321,7 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 	}
 
 	private ObjEntity optimize(TypeOptimization opt, TypeObjective type, Variable[] list, int[] coeffs) {
-		control(type == SUM && coeffs != null && list.length == coeffs.length && list.length > 0);
+		control((type == SUM || type == null) && coeffs != null && list.length == coeffs.length && list.length > 0);
 		if (!switchToSatisfaction(opt, type, coeffs, list)) {
 			// we discard terms of coeff 0
 			Variable[] filtered_list = IntStream.range(0, list.length).filter(i -> coeffs[i] != 0).mapToObj(i -> list[i]).toArray(Variable[]::new);
@@ -4327,9 +4329,9 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 			if (filtered_list.length == 1)
 				return optimize(opt, mul(filtered_list[0], filtered_coeffs[0]));
 			long lb = head.control.optimization.lb, ub = head.control.optimization.ub;
-			Optimizable clb = (Optimizable) ((CtrAlone) sum(filtered_list, filtered_coeffs, GE, lb, NOT_INVERSABLE)).ctr;
-			Optimizable cub = (Optimizable) ((CtrAlone) sum(filtered_list, filtered_coeffs, LE, ub, NOT_INVERSABLE)).ctr;
-			optimizer = buildOptimizer(opt, clb, cub);
+			Constraint clb = type == null ? new constraints.global.Sum.RobustSumSimple.RobustSumSimpleGE(this, filtered_list, lb) : (Constraint)((CtrAlone) sum(filtered_list, filtered_coeffs, GE, lb, NOT_INVERSABLE)).ctr;
+			Constraint cub = type == null ? new constraints.global.Sum.RobustSumSimple.RobustSumSimpleLE(this, filtered_list, ub) : (Constraint)((CtrAlone) sum(filtered_list, filtered_coeffs, LE, ub, NOT_INVERSABLE)).ctr;
+			optimizer = buildOptimizer(opt, postObj(clb), postObj(cub));
 		}
 		return null;
 	}
@@ -4375,7 +4377,7 @@ public final class Problem extends ProblemIMP implements ObserverOnConstruction 
 			optimizer.gapBound = Stream.of(trees).mapToInt(tree -> tree.val(0) * (x_add_k.matches(tree) ? 1 : -1)).sum(); // TODO control no overflow?
 			return objEntity;
 		}
-		// if (type == SUM)
+		// if (type == SUM || type == null)
 		// return optimize(opt, type, translate(replaceByBoundVariables(trees)));
 		return optimize(opt, type, translate(replaceByVariables(trees)));
 	}

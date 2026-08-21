@@ -458,38 +458,22 @@ public class Head extends Thread {
 			}
 		}
 
-		RobustUtils.initializeSchema(control.robust.scheme, control.robust.tdom, control.robust.h, control.robust.k, control.robust.h_offset, control.robust.k_offset);
+		RobustUtils.initializeSchema(control.robust.scheme, control.robust.activateTRD, control.robust.h, control.robust.k, control.robust.h_offset, control.robust.k_offset);
 		
-		final RobustProfileManager finalManager = profileManager;
-		if(!control.robust.tdom){
-			Arrays.stream(problem.variables).forEach(v->{
-				if(v.robustnessInvolved) {
-				    if (finalManager != null) {
-				        int day = finalManager.getDay(v.id());
-				        int offIdx = v.dom.initSize() - 1; // Assuming OFF is the last index
-				        BiPredicate<Integer, Integer> predicate = (s1, s2) -> {
-				            // If s1 is a critical shift AND s1 is not OFF
-				            if (finalManager.isCritical(day, s1) && s1 != offIdx) {
-				                // Force the neighbor to be OFF
-				                return s2 == offIdx;
-				            }
-				            // Non-critical shifts do not require an alternative shift, so they can transition to themselves
-				            if (s1.equals(s2)) return true;
-				            
-				            // For other cases, use standard predicates
-				            return s2 < s1 ? (RobustUtils.leftPredicate == null || RobustUtils.leftPredicate.test(s1, s2))
-				                           : (RobustUtils.rightPredicate == null || RobustUtils.rightPredicate.test(s1, s2));
-				        };
-				        v.robustDomain = new GraphRobustDomain(v, v.dom.initSize(), RobustUtils.h, RobustUtils.k, predicate);
-				    } else {
-					    v.robustDomain = new GraphRobustDomain(v, v.dom.initSize(), RobustUtils.h, RobustUtils.k);
-				    }
-				}
-			});
-		}else{
+		// If TimeRobustDomain is enabled, intercept variables before search begins
+		if(control.robust.activateTRD){
 			Arrays.stream(problem.variables).forEach(v->{
 				if(v.robustnessInvolved) {
 					v.robustDomain = new TimeRobustDomain(v, v.dom.initSize(), control.robust.k, control.robust.h, control.robust.k_offset);
+				}
+			});
+		} else {
+		    // Naive mode: We deliberately do NOT instantiate any robust domain (neither TimeRobustDomain nor GraphRobustDomain).
+		    // This saves massive amounts of memory and completely bypasses the catastrophic 
+		    // GraphRobustDomain O(N^k) initialization loop that was hanging the solver.
+		    Arrays.stream(problem.variables).forEach(v->{
+				if(v.robustnessInvolved) {
+					v.robustDomain = null;
 				}
 			});
 		}
